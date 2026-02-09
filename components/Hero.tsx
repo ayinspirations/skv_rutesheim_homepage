@@ -40,7 +40,7 @@ export const Hero: React.FC<HeroProps> = ({ onNavigateMembership }) => {
           <img 
             src="/hero-bg.jpg" 
             alt="Sports Grass Field" 
-            className="w-full h-full object-cover blur-[6px] scale-105 opacity-90"
+            className="w-full h-full object-cover blur-[3px] scale-105 opacity-90"
           />
           <div className="absolute inset-0 bg-black/25"></div>
         </div>
@@ -57,7 +57,7 @@ export const Hero: React.FC<HeroProps> = ({ onNavigateMembership }) => {
               <motion.span 
                 initial={{ opacity: 0, x: -20 }}
                 animate={{ opacity: 1, x: 0 }}
-                transition={{ delay: 0.8 }}
+                transition={{ delay: 1.8 }}
                 className="text-[8px] md:text-[10px] font-black uppercase tracking-[0.3em] text-white/40 mb-1 ml-4"
               >
                 Nächste Termine
@@ -69,7 +69,7 @@ export const Hero: React.FC<HeroProps> = ({ onNavigateMembership }) => {
                   animate={{ opacity: 1, x: 0, scale: 1 }}
                   transition={{ 
                     duration: 0.8, 
-                    delay: 1 + (idx * 0.2), 
+                    delay: 2 + (idx * 1), 
                     ease: [0.16, 1, 0.3, 1] 
                   }}
                   whileHover={{ scale: 1.02, x: 5 }}
