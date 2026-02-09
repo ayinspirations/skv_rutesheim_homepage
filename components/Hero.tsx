@@ -144,7 +144,7 @@ export const Hero: React.FC<HeroProps> = ({ onNavigateMembership }) => {
               transition={{ duration: 0.8, delay: 0.4 }}
               className="text-white tracking-tighter leading-[0.9] mb-8 md:mb-10 font-black max-w-5xl text-[1.75rem] sm:text-[2.5rem] md:text-[4rem] lg:text-[5.5rem] xl:text-[6.8rem]"
             >
-              Mehr als ein Verein.<br className="hidden md:block" /><span className="md:hidden"> </span>Eine Gemeinschaft.
+              Mehr als ein Verein.<br />Eine Gemeinschaft.
             </motion.h1>
             
             <motion.div
