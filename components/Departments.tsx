@@ -34,7 +34,7 @@ const departments = [
   },
   {
     title: "Sänger",
-    image: "https://images.unsplash.com/photo-1508700115892-45ecd05ae2ad?auto=format&fit=crop&q=80&w=1000",
+    image: "/saenger.jpg",
     tag: "Kultur"
   },
   {
