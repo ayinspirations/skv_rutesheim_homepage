@@ -97,7 +97,7 @@ export const Hero: React.FC<HeroProps> = ({ onNavigateMembership }) => {
               className="hidden md:block w-full max-w-[240px] z-30"
             >
               <div className="bg-white/10 backdrop-blur-3xl border border-white/20 p-2 rounded-[2rem] shadow-2xl group cursor-default">
-                <div className="flex items-center gap-2 mb-3 px-1">
+                <div className="flex items-center gap-2 mb-3 px-3">
                   <div className="w-8 h-8 bg-[#D4FF6B] rounded-lg flex items-center justify-center shrink-0 shadow-lg shadow-[#D4FF6B]/20">
                     <span className="text-xs">📍</span>
                   </div>
