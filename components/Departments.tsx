@@ -24,7 +24,7 @@ const departments = [
   },
   {
     title: "Rad",
-    image: "https://images.unsplash.com/photo-1474139224675-84a39be87d40?auto=format&fit=crop&q=80&w=1000",
+    image: "/rad.jpg",
     tag: "Outdoor"
   },
   {
