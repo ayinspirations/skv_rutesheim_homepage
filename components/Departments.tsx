@@ -14,7 +14,7 @@ const departments = [
   },
   {
     title: "Handball",
-    image: "https://images.unsplash.com/photo-1628891890377-57bc230e793d?auto=format&fit=crop&q=80&w=1000",
+    image: "/handball.jpg",
     tag: "Dynamik"
   },
   {
