@@ -19,7 +19,7 @@ const departments = [
   },
   {
     title: "Volleyball",
-    image: "https://images.unsplash.com/photo-1612872086822-67cad662769b?auto=format&fit=crop&q=80&w=1000",
+    image: "/volleyball.jpg",
     tag: "Teamgeist"
   },
   {
