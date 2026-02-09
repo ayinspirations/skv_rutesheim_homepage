@@ -40,7 +40,7 @@ export const Hero: React.FC<HeroProps> = ({ onNavigateMembership }) => {
           <img 
             src="/hero-bg.jpg" 
             alt="Sports Grass Field" 
-            className="w-full h-full object-cover blur-[14px] scale-105 opacity-90"
+            className="w-full h-full object-cover blur-[6px] scale-105 opacity-90"
           />
           <div className="absolute inset-0 bg-black/25"></div>
         </div>
