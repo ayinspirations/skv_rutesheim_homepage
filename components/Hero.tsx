@@ -142,10 +142,9 @@ export const Hero: React.FC<HeroProps> = ({ onNavigateMembership }) => {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.4 }}
-              className="text-white tracking-tighter leading-[0.9] mb-8 md:mb-10 font-black max-w-5xl"
-              style={{ fontSize: 'clamp(2.5rem, 9vw, 6.8rem)' }}
+              className="text-white tracking-tighter leading-[0.9] mb-8 md:mb-10 font-black max-w-5xl text-[1.75rem] sm:text-[2.5rem] md:text-[4rem] lg:text-[5.5rem] xl:text-[6.8rem]"
             >
-              Mehr als ein Verein.<br />Eine Gemeinschaft.
+              Mehr als ein Verein.<br className="hidden md:block" /><span className="md:hidden"> </span>Eine Gemeinschaft.
             </motion.h1>
             
             <motion.div
