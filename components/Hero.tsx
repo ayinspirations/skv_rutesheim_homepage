@@ -38,7 +38,7 @@ export const Hero: React.FC<HeroProps> = ({ onNavigateMembership }) => {
         {/* Background: Grass with blur */}
         <div className="absolute inset-0 z-0">
           <img 
-            src="https://images.unsplash.com/photo-1551698618-1fed5d965596?auto=format&fit=crop&q=80&w=2070" 
+            src="/hero-bg.jpg" 
             alt="Sports Grass Field" 
             className="w-full h-full object-cover blur-[14px] scale-105 opacity-90"
           />
