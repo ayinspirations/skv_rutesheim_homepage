@@ -39,7 +39,7 @@ const departments = [
   },
   {
     title: "Sportabzeichen",
-    image: "https://images.unsplash.com/photo-1533560274420-23c6a337c39b?auto=format&fit=crop&q=80&w=1000",
+    image: "/sportabzeichen.jpg",
     tag: "Fitness"
   }
 ];
