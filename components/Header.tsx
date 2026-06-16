@@ -50,9 +50,9 @@ export const Header: React.FC<HeaderProps> = ({ onNavigate, currentPage, onOpenC
 
   return (
     <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${isScrolled || currentPage !== 'home' ? 'py-1.5 bg-white/95 backdrop-blur-xl border-b border-black/5' : 'py-2.5 md:py-3'}`}>
-      <div className="w-full px-3 md:max-w-[96%] md:mx-auto flex items-center justify-between gap-4">
+      <div className="w-full px-3 md:max-w-[96%] md:mx-auto flex items-center gap-4">
         <div
-          className="flex items-center gap-2 md:gap-3 shrink-0 h-8 md:h-10 cursor-pointer group pl-1 md:pl-0"
+          className="flex items-center gap-2 md:gap-3 flex-none h-8 md:h-10 cursor-pointer group pl-1 md:pl-0"
           onClick={handleHomeClick}
         >
           <ClubLogo className="h-full w-auto transition-transform group-hover:scale-105" variant="dark" />
@@ -96,7 +96,7 @@ export const Header: React.FC<HeaderProps> = ({ onNavigate, currentPage, onOpenC
           </button>
         </div>
 
-        <div className="flex items-center gap-2 shrink-0">
+        <div className="flex items-center gap-2 flex-none ml-auto">
           <button 
             onClick={() => onNavigate('membership')}
             className="hidden md:flex bg-black text-white px-4 py-1.5 md:px-5 md:py-2 rounded-full shadow-lg hover:scale-105 active:scale-95 transition-all text-[10px] md:text-xs font-bold text-center tracking-wide h-8 md:h-10 items-center justify-center min-w-[100px] md:min-w-[130px]"
