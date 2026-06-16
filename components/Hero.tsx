@@ -22,13 +22,12 @@ const upcomingEvents = [
 ];
 
 const VIDEO_SRC = '/sportpark_buehl.MOV';
-const CROSSFADE_DURATION = 800; // ms
-const CROSSFADE_BEFORE_END = 1.2; // seconds before end to start crossfade
+const CROSSFADE_BEFORE_END = 1.5; // seconds before end to start crossfade
+const CROSSFADE_DURATION = 1200; // ms
 
 export const Hero: React.FC<HeroProps> = ({ onNavigateMembership }) => {
   const videoARef = useRef<HTMLVideoElement>(null);
   const videoBRef = useRef<HTMLVideoElement>(null);
-  // activeRef points to the currently visible video (A=true, B=false)
   const activeIsA = useRef(true);
   const crossfading = useRef(false);
   const rafId = useRef<number>(0);
@@ -38,43 +37,68 @@ export const Hero: React.FC<HeroProps> = ({ onNavigateMembership }) => {
     const videoB = videoBRef.current;
     if (!videoA || !videoB) return;
 
-    // Initial state: A visible, B hidden underneath
+    // Both start invisible; CSS transition set once so it applies during crossfades
     videoA.style.opacity = '0';
     videoB.style.opacity = '0';
+    videoA.style.transition = `opacity ${CROSSFADE_DURATION}ms ease-in-out`;
+    videoB.style.transition = `opacity ${CROSSFADE_DURATION}ms ease-in-out`;
 
-    // Fade in A once it has enough data to play
-    const handleReady = () => {
-      videoA.style.transition = 'opacity 0.6s ease';
-      videoA.style.opacity = '1';
+    // Pre-render standby video's first frame so it's never blank when needed
+    const primeStandby = (v: HTMLVideoElement) => {
+      v.currentTime = 0;
+      v.play().then(() => v.pause()).catch(() => {});
     };
-    videoA.addEventListener('canplaythrough', handleReady, { once: true });
-    videoA.addEventListener('loadeddata', handleReady, { once: true });
+
+    // Once A can play: show it, then prime B's first frame
+    const onAReady = () => {
+      videoA.style.opacity = '1';
+      primeStandby(videoB);
+    };
+
+    if (videoA.readyState >= 3) {
+      onAReady();
+    } else {
+      videoA.addEventListener('canplaythrough', onAReady, { once: true });
+    }
+
+    videoA.play().catch(() => {});
 
     const doCrossfade = () => {
       if (crossfading.current) return;
-      crossfading.current = true;
 
       const incoming = activeIsA.current ? videoB : videoA;
       const outgoing = activeIsA.current ? videoA : videoB;
 
+      // Only proceed when incoming has frame data ready
+      if (incoming.readyState < 3) return;
+
+      crossfading.current = true;
+
+      // Start incoming from frame 0 and play
       incoming.currentTime = 0;
       incoming.play().catch(() => {});
 
-      // Crossfade: incoming fades in, outgoing fades out simultaneously
-      incoming.style.transition = `opacity ${CROSSFADE_DURATION}ms ease`;
-      outgoing.style.transition = `opacity ${CROSSFADE_DURATION}ms ease`;
-      incoming.style.opacity = '1';
+      // Swap opacities — CSS transition handles the ease-in-out fade
       outgoing.style.opacity = '0';
+      incoming.style.opacity = '1';
 
       activeIsA.current = !activeIsA.current;
-      setTimeout(() => { crossfading.current = false; }, CROSSFADE_DURATION + 100);
+
+      // After crossfade completes: pause and reset the now-standby video
+      setTimeout(() => {
+        outgoing.pause();
+        outgoing.currentTime = 0;
+        // Re-prime: seek to 0 and render one frame so it's ready next loop
+        outgoing.play().then(() => outgoing.pause()).catch(() => {});
+        crossfading.current = false;
+      }, CROSSFADE_DURATION + 100);
     };
 
     const checkTime = () => {
       const active = activeIsA.current ? videoA : videoB;
       if (
         !crossfading.current &&
-        active.duration &&
+        active.duration > 0 &&
         active.currentTime >= active.duration - CROSSFADE_BEFORE_END
       ) {
         doCrossfade();
@@ -86,8 +110,7 @@ export const Hero: React.FC<HeroProps> = ({ onNavigateMembership }) => {
 
     return () => {
       cancelAnimationFrame(rafId.current);
-      videoA.removeEventListener('canplaythrough', handleReady);
-      videoA.removeEventListener('loadeddata', handleReady);
+      videoA.removeEventListener('canplaythrough', onAReady);
     };
   }, []);
 
