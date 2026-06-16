@@ -1,5 +1,5 @@
 
-import React from 'react';
+import React, { useRef, useEffect } from 'react';
 import { motion } from 'framer-motion';
 
 interface HeroProps {
@@ -22,6 +22,32 @@ const upcomingEvents = [
 ];
 
 export const Hero: React.FC<HeroProps> = ({ onNavigateMembership }) => {
+  const videoRef = useRef<HTMLVideoElement>(null);
+
+  useEffect(() => {
+    const video = videoRef.current;
+    if (!video) return;
+
+    let fading = false;
+
+    const handleTimeUpdate = () => {
+      if (!fading && video.duration && video.currentTime >= video.duration - 1) {
+        fading = true;
+        video.style.transition = 'opacity 0.5s ease';
+        video.style.opacity = '0';
+        setTimeout(() => {
+          video.currentTime = 0;
+          video.play();
+          video.style.opacity = '1';
+          setTimeout(() => { fading = false; }, 600);
+        }, 500);
+      }
+    };
+
+    video.addEventListener('timeupdate', handleTimeUpdate);
+    return () => video.removeEventListener('timeupdate', handleTimeUpdate);
+  }, []);
+
   const scrollToDepartments = () => {
     const element = document.getElementById('abteilungen');
     if (element) {
@@ -35,14 +61,28 @@ export const Hero: React.FC<HeroProps> = ({ onNavigateMembership }) => {
   return (
     <section className="relative px-3 md:px-5 pt-14 md:pt-16 pb-3 md:pb-5 min-h-[100svh] md:h-screen overflow-hidden flex flex-col">
       <div className="relative flex-1 w-full bg-zinc-400 rounded-[2rem] md:rounded-[3rem] overflow-hidden shadow-2xl flex flex-col">
-        {/* Background: Grass with blur */}
+        {/* Background: Looping video */}
         <div className="absolute inset-0 z-0">
-          <img 
-            src="/hero-bg.jpg" 
-            alt="Sports Grass Field" 
-            className="w-full h-full object-cover blur-[3px] scale-105 opacity-90"
-          />
-          <div className="absolute inset-0 bg-black/25"></div>
+          <video
+            ref={videoRef}
+            autoPlay
+            muted
+            loop={false}
+            playsInline
+            style={{
+              position: 'absolute',
+              top: 0,
+              left: 0,
+              width: '100%',
+              height: '100%',
+              objectFit: 'cover',
+              objectPosition: 'center center',
+              transition: 'opacity 0.5s ease',
+            }}
+          >
+            <source src="/sportpark_buehl.MOV" type="video/mp4" />
+          </video>
+          <div className="absolute inset-0 bg-black/35"></div>
         </div>
 
         {/* Content Container */}
