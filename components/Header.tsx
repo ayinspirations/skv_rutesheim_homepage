@@ -55,7 +55,7 @@ export const Header: React.FC<HeaderProps> = ({ onNavigate, currentPage, onOpenC
           className="flex items-center gap-2 md:gap-3 flex-none h-8 md:h-10 cursor-pointer group pl-1 md:pl-0"
           onClick={handleHomeClick}
         >
-          <ClubLogo className="h-full w-auto transition-transform group-hover:scale-105" variant="dark" />
+          <ClubLogo className="h-full w-8 md:w-auto transition-transform group-hover:scale-105" variant="dark" />
           <div className="hidden md:flex flex-col justify-center">
             <span className="font-black tracking-tighter text-sm md:text-lg leading-none">SKV RUTESHEIM</span>
             <span className="text-[6px] md:text-[8px] font-bold text-black/40 uppercase tracking-widest mt-0.5 leading-none">1945 e. V.</span>
