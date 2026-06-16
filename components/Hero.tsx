@@ -21,31 +21,74 @@ const upcomingEvents = [
   }
 ];
 
+const VIDEO_SRC = '/sportpark_buehl.MOV';
+const CROSSFADE_DURATION = 800; // ms
+const CROSSFADE_BEFORE_END = 1.2; // seconds before end to start crossfade
+
 export const Hero: React.FC<HeroProps> = ({ onNavigateMembership }) => {
-  const videoRef = useRef<HTMLVideoElement>(null);
+  const videoARef = useRef<HTMLVideoElement>(null);
+  const videoBRef = useRef<HTMLVideoElement>(null);
+  // activeRef points to the currently visible video (A=true, B=false)
+  const activeIsA = useRef(true);
+  const crossfading = useRef(false);
+  const rafId = useRef<number>(0);
 
   useEffect(() => {
-    const video = videoRef.current;
-    if (!video) return;
+    const videoA = videoARef.current;
+    const videoB = videoBRef.current;
+    if (!videoA || !videoB) return;
 
-    let fading = false;
+    // Initial state: A visible, B hidden underneath
+    videoA.style.opacity = '0';
+    videoB.style.opacity = '0';
 
-    const handleTimeUpdate = () => {
-      if (!fading && video.duration && video.currentTime >= video.duration - 1) {
-        fading = true;
-        video.style.transition = 'opacity 0.5s ease';
-        video.style.opacity = '0';
-        setTimeout(() => {
-          video.currentTime = 0;
-          video.play();
-          video.style.opacity = '1';
-          setTimeout(() => { fading = false; }, 600);
-        }, 500);
-      }
+    // Fade in A once it has enough data to play
+    const handleReady = () => {
+      videoA.style.transition = 'opacity 0.6s ease';
+      videoA.style.opacity = '1';
+    };
+    videoA.addEventListener('canplaythrough', handleReady, { once: true });
+    videoA.addEventListener('loadeddata', handleReady, { once: true });
+
+    const doCrossfade = () => {
+      if (crossfading.current) return;
+      crossfading.current = true;
+
+      const incoming = activeIsA.current ? videoB : videoA;
+      const outgoing = activeIsA.current ? videoA : videoB;
+
+      incoming.currentTime = 0;
+      incoming.play().catch(() => {});
+
+      // Crossfade: incoming fades in, outgoing fades out simultaneously
+      incoming.style.transition = `opacity ${CROSSFADE_DURATION}ms ease`;
+      outgoing.style.transition = `opacity ${CROSSFADE_DURATION}ms ease`;
+      incoming.style.opacity = '1';
+      outgoing.style.opacity = '0';
+
+      activeIsA.current = !activeIsA.current;
+      setTimeout(() => { crossfading.current = false; }, CROSSFADE_DURATION + 100);
     };
 
-    video.addEventListener('timeupdate', handleTimeUpdate);
-    return () => video.removeEventListener('timeupdate', handleTimeUpdate);
+    const checkTime = () => {
+      const active = activeIsA.current ? videoA : videoB;
+      if (
+        !crossfading.current &&
+        active.duration &&
+        active.currentTime >= active.duration - CROSSFADE_BEFORE_END
+      ) {
+        doCrossfade();
+      }
+      rafId.current = requestAnimationFrame(checkTime);
+    };
+
+    rafId.current = requestAnimationFrame(checkTime);
+
+    return () => {
+      cancelAnimationFrame(rafId.current);
+      videoA.removeEventListener('canplaythrough', handleReady);
+      videoA.removeEventListener('loadeddata', handleReady);
+    };
   }, []);
 
   const scrollToDepartments = () => {
@@ -61,28 +104,42 @@ export const Hero: React.FC<HeroProps> = ({ onNavigateMembership }) => {
   return (
     <section className="relative px-3 md:px-5 pt-14 md:pt-16 pb-3 md:pb-5 min-h-[100svh] md:h-screen overflow-hidden flex flex-col">
       <div className="relative flex-1 w-full bg-zinc-400 rounded-[2rem] md:rounded-[3rem] overflow-hidden shadow-2xl flex flex-col">
-        {/* Background: Looping video */}
+        {/* Background: Dual looping video with crossfade */}
         <div className="absolute inset-0 z-0">
           <video
-            ref={videoRef}
+            ref={videoARef}
             autoPlay
             muted
-            loop={false}
             playsInline
+            preload="auto"
             style={{
               position: 'absolute',
-              top: 0,
-              left: 0,
-              width: '100%',
-              height: '100%',
+              top: 0, left: 0,
+              width: '100%', height: '100%',
               objectFit: 'cover',
               objectPosition: 'center center',
-              transition: 'opacity 0.5s ease',
+              opacity: 0,
             }}
           >
-            <source src="/sportpark_buehl.MOV" type="video/mp4" />
+            <source src={VIDEO_SRC} type="video/mp4" />
           </video>
-          <div className="absolute inset-0 bg-black/35"></div>
+          <video
+            ref={videoBRef}
+            muted
+            playsInline
+            preload="auto"
+            style={{
+              position: 'absolute',
+              top: 0, left: 0,
+              width: '100%', height: '100%',
+              objectFit: 'cover',
+              objectPosition: 'center center',
+              opacity: 0,
+            }}
+          >
+            <source src={VIDEO_SRC} type="video/mp4" />
+          </video>
+          <div className="absolute inset-0 bg-black/35" style={{ willChange: 'opacity' }}></div>
         </div>
 
         {/* Content Container */}
