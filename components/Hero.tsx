@@ -250,13 +250,13 @@ export const Hero: React.FC<HeroProps> = ({ onNavigateMembership }) => {
 
           {/* Section 2: Headline Area
               Mobile: flex-col with a larger spacer above the badge/headline than
-              below it, so the block lands at roughly 55-60% down the section —
-              a slight downward bias off dead-center, not touching the exact
-              middle. The lower spacer also creates the breathing room between
-              the headline and the CTA row, which docks to the bottom via its
-              own small pb (on top of the section's own padding). */}
+              below it, so the block lands a bit above center — a slight downward
+              bias off dead-center, not touching the exact middle. The lower spacer
+              also creates the breathing room between the headline and the CTA row,
+              which docks to the bottom via its own small pb (on top of the
+              section's own padding). */}
           <div className="pointer-events-none relative z-20 flex-1 flex flex-col md:mt-auto md:flex-none md:block">
-            <div className="flex-[3] md:hidden" aria-hidden="true"></div>
+            <div className="flex-[2] md:hidden" aria-hidden="true"></div>
             <div>
               <motion.div
                 initial={{ opacity: 0, y: 10 }}
