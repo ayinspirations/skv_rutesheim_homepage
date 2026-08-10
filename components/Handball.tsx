@@ -1,6 +1,6 @@
 
-import React from 'react';
-import { motion } from 'framer-motion';
+import React, { useState } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
 
 interface HandballProps {
   onBack: () => void;
@@ -13,13 +13,186 @@ interface HandballProps {
 const MISSION_TEXT =
   "Die Handballabteilung des SKV Rutesheim steht für Begeisterung, Teamgeist und eine nachhaltige Förderung des Handballsports – von den Kleinsten bis zu den Erwachsenen. Besonders im Kinder- und Jugendhandball legen wir großen Wert darauf, den Spaß an Bewegung und Spiel zu vermitteln und gleichzeitig sportliche sowie persönliche Entwicklung zu fördern. Gemeinsam mit unseren Partnervereinen aus Renningen und Magstadt bilden wir das HandballTeam Heckengäu und schaffen damit optimale Bedingungen für Ausbildung, Training und Wettkampfbetrieb. Durch den Zusammenschluss können wir unseren Spielerinnen und Spielern ein attraktives sportliches Umfeld und eine starke Gemeinschaft bieten. So verbinden wir leistungsorientierten Handball mit Freude am Sport und einem lebendigen Vereinsleben.";
 
-// TODO: Platzhalter-Links — echte Artikelseiten/-links liegen noch nicht vor.
-const neuigkeiten = [
-  "Abteilungsversammlung 2026",
-  "Jahreshauptversammlung HFR 2026",
-  "SKV Rutesheim Handball: Erfolgreicher Jahresrückblick 2025 und klarer Blick nach vorne",
-  "10. Auflage des Grundschulaktionstages in Kooperation mit der Theodor-Heuss-Schule",
-  "Unser neuer HT Heckengäu Fan Shop ist online",
+interface NewsItem {
+  title: string;
+  modalTitle?: string;
+  modalBody?: React.ReactNode;
+}
+
+const newsParagraph = "text-black/70 font-medium leading-relaxed mb-4";
+const newsOrderedList = "space-y-2 mb-4 pl-5 list-decimal marker:font-black marker:text-black";
+const newsSubList = "space-y-1 mt-2 mb-1 pl-5 list-[lower-alpha] marker:font-bold marker:text-black/50 text-black/70";
+
+const abteilungsversammlungBody = (
+  <>
+    <p className={newsParagraph}>Liebe Mitglieder der Handballabteilung,</p>
+    <p className={newsParagraph}>
+      wir laden euch herzlich zur nächsten Abteilungsversammlung unserer Handballabteilung ein.
+    </p>
+    <p className={newsParagraph}>
+      Die Versammlung findet am 08. Mai 2026 um 19 Uhr im Nebenzimmer der Sportgaststätte Bühl statt.
+    </p>
+
+    <p className="text-black font-black text-sm uppercase tracking-widest mb-3">Die Tagesordnung</p>
+    <ol className={newsOrderedList}>
+      <li>Begrüßung durch den Abteilungsleiter</li>
+      <li>Rückblick auf die vergangene Saison durch Offizielle und Trainer</li>
+      <li>Finanzbericht</li>
+      <li>
+        Entlastungen
+        <ol className={newsSubList}>
+          <li>Abteilungsleiter</li>
+          <li>Stellv. Abteilungsleiter</li>
+          <li>Kasse</li>
+          <li>Jugendleitung</li>
+        </ol>
+      </li>
+      <li>
+        Wahlen
+        <ol className={newsSubList}>
+          <li>Stellv. Abteilungsleiter</li>
+          <li>Jugendleitung</li>
+        </ol>
+      </li>
+      <li>Ausblick Spielgemeinschaft HT Heckengäu</li>
+      <li>Sonstiges</li>
+    </ol>
+
+    <p className={newsParagraph}>
+      Eventuelle Anträge bitten wir bis eine Woche vor der Versammlung beim Abteilungsleiter, Stefan Kugel, unter{' '}
+      <a
+        href="https://www.handball-rutesheim.de/de/news/Abteilungsversammlung-2026.php#wEmpty"
+        target="_blank"
+        rel="noopener noreferrer"
+        className="text-black font-bold underline underline-offset-2 hover:text-black/60 transition-colors"
+      >
+        abteilungsleitung@handball-rutesheim.de
+      </a>{' '}
+      einzureichen.
+    </p>
+
+    <p className={newsParagraph}>
+      Mit sportlichen Grüßen,
+      <br />
+      Stefan Kugel und Maximilian Hoffart
+      <br />
+      Abteilungsleitung
+    </p>
+  </>
+);
+
+const jahreshauptversammlungHFRBody = (
+  <>
+    <p className={newsParagraph}>Liebe Mitglieder,</p>
+    <p className={newsParagraph}>
+      am Freitag, den 08. Mai 2026 findet im Anschluss an die Jahreshauptversammlung der Handballabteilung des SKV
+      Rutesheim e.V. in der Sportgaststätte Bühl im Nebenzimmer unsere diesjährige Jahreshauptversammlung statt.
+      Hierzu möchten wir Euch herzlich einladen – Beginn ca. 20:00 Uhr.
+    </p>
+
+    <p className="text-black font-black text-sm uppercase tracking-widest mb-3">Tagesordnungspunkte</p>
+    <ol className={newsOrderedList}>
+      <li>
+        Lagebericht
+        <ol className={newsSubList}>
+          <li>Mitglieder</li>
+          <li>Sponsoren</li>
+          <li>HT Heckengäu</li>
+          <li>Bewirtung</li>
+        </ol>
+      </li>
+      <li>Finanzbericht 2025</li>
+      <li>Finanzentwurf 2026</li>
+      <li>Entlastungen</li>
+      <li>Neuwahlen</li>
+      <li>
+        Sonstiges
+        <ol className={newsSubList}>
+          <li>Sommerfest 2026</li>
+          <li>Neue Bewirtungseinnahmequellen</li>
+        </ol>
+      </li>
+    </ol>
+
+    <p className={newsParagraph}>
+      Anträge auf etwaige Tagesordnungspunkte sind bis zum 28. April 2026 schriftlich beim Vorstand einzureichen.
+    </p>
+
+    <p className={newsParagraph}>Wir freuen uns Euch zahlreich begrüßen zu dürfen.</p>
+
+    <p className={newsParagraph}>
+      Mit sportlichen Grüßen
+      <br />
+      Handballförderverein Region Rutesheim e.V.
+    </p>
+
+    <p className={`${newsParagraph} mb-0`}>
+      Dusica Cvetkovic (1. Vorsitzende)
+      <br />
+      Sophie Polster (2. Vorsitzende)
+    </p>
+  </>
+);
+
+const jahresrueckblick2025Body = (
+  <>
+    <p className={newsParagraph}>
+      Die SKV Rutesheim Handball blickt auf ein ereignisreiches und erfolgreiches Jahr 2025 zurück. Besonders
+      prägend war der Start in das zweite Jahr der Jugendspielgemeinschaft mit der Spvgg Renningen und dem SV
+      Magstadt, die sich sportlich wie organisatorisch weiter gefestigt hat und großen Anklang findet. Parallel
+      dazu wurden wichtige Weichen für die Zukunft gestellt: Die Vorbereitungen zur Weiterentwicklung der
+      Jugendspielgemeinschaft hin zu einer Gesamtspielgemeinschaft ab der Saison 2026/2027 wurden konsequent
+      vorangetrieben. Hinter den Kulissen wird in vielen Arbeitsgruppen eifrig auf den Zusammenschluss
+      hingearbeitet um auch künftig attraktiven Handball im Aktivenbereich in der Region anbieten zu können.
+    </p>
+    <p className={newsParagraph}>
+      Ein besonderes Highlight zum Jahresende war auch wieder der Grundschulaktionstag in Kooperation mit der
+      Theodor-Heuss-Schule in Rutesheim – in seiner bereits 10. Auflage wurde der Handball begeisternden Kindern
+      spielerisch nahegebracht.
+    </p>
+    <p className={newsParagraph}>
+      Im Rutesheimer Kinderhandball konnten auch 2025, nach dem Zusammenschluss der beiden Handballverbände aus
+      Württemberg und Baden zum neuen BWHV, wieder Spieltage im F- und E-Jugendbereich durchgeführt werden und
+      unsere Teams waren bisher sehr erfolgreich. Wir freuen uns auf eine Fortsetzung in 2026. Zum Start des
+      Kalenderjahres 2026 sollen auch die ersten Minispieltage folgen - unsere Kleinsten sind schon voller
+      Vorfreude.
+    </p>
+    <p className={newsParagraph}>
+      Aus Sicht der Kinder bildeten die Weihnachtsfeiern der Minis sowie der F- und E-Jugenden einen fröhlichen
+      Jahresabschluss 2025. Für leuchtende Kinderaugen, liebevolle Geschenke und ein leckeres Essen sorgte der
+      Handballförderverein Rutesheim e.V., der diese Feiern finanziell unterstützt hat. Außerdem werden auch die
+      vielen Trainingsmaterialien, Handbälle, Trikots und vieles mehr im Kinder- und Jugendbereich über den
+      Förderverein finanziert. Für die wertvolle Unterstützung möchten wir uns herzlich bedanken!
+    </p>
+    <p className={newsParagraph}>
+      Wer mehr über den HFR erfahren möchten oder durch eine Mitgliedschaft den Kinder- und Jugendhandball in
+      Rutesheim unterstützen möchte, kann sich gerne hier auf unserer Homepage weiter umbeischauen.
+    </p>
+    <p className={`${newsParagraph} mb-0`}>
+      Ein großer Dank gilt darüber hinaus natürlich auch allen Trainerinnen und Trainern, Betreuerinnen und
+      Betreuern sowie den zahlreichen ehrenamtlichen Helferinnen und Helfern, die mit ihrem Engagement den
+      Handballbetrieb im Verein erst möglich machen. Ebenso danken wir den Eltern für ihre kontinuierliche
+      Unterstützung, ihre Mithilfe bei Spieltagen und Veranstaltungen sowie das entgegengebrachte Vertrauen. Die
+      SKV Rutesheim freut sich auf ein sportlich erfolgreiches Jahr 2026.
+    </p>
+  </>
+);
+
+// TODO: Platzhalter-Links — echte Artikelseiten/-links für die übrigen Meldungen liegen noch nicht vor.
+const neuigkeiten: NewsItem[] = [
+  { title: "Abteilungsversammlung 2026", modalTitle: "Abteilungsversammlung 2026", modalBody: abteilungsversammlungBody },
+  {
+    title: "Jahreshauptversammlung HFR 2026",
+    modalTitle: "Einladung zur Jahreshauptversammlung 2026 des Handballförderverein Region Rutesheim e.V.",
+    modalBody: jahreshauptversammlungHFRBody,
+  },
+  {
+    title: "SKV Rutesheim Handball: Erfolgreicher Jahresrückblick 2025 und klarer Blick nach vorne",
+    modalTitle: "SKV Rutesheim Handball: Erfolgreicher Jahresrückblick 2025 und klarer Blick nach vorne",
+    modalBody: jahresrueckblick2025Body,
+  },
+  { title: "10. Auflage des Grundschulaktionstages in Kooperation mit der Theodor-Heuss-Schule" },
+  { title: "Unser neuer HT Heckengäu Fan Shop ist online" },
 ];
 
 // TODO: Platzhalter-Links — echte Berichts-PDFs/-Seiten liegen noch nicht vor.
@@ -250,6 +423,40 @@ const AccordionSection: React.FC<{ title: string; id?: string; children: React.R
   </details>
 );
 
+const NewsModal: React.FC<{ item: NewsItem | null; onClose: () => void }> = ({ item, onClose }) => (
+  <AnimatePresence>
+    {item && (
+      <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 md:p-6">
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          onClick={onClose}
+          className="absolute inset-0 bg-black/40 backdrop-blur-md"
+        />
+        <motion.div
+          initial={{ opacity: 0, scale: 0.9, y: 20 }}
+          animate={{ opacity: 1, scale: 1, y: 0 }}
+          exit={{ opacity: 0, scale: 0.9, y: 20 }}
+          transition={{ type: 'spring', damping: 25, stiffness: 300 }}
+          className="relative w-full max-w-2xl max-h-[85vh] overflow-y-auto bg-white rounded-[2.5rem] shadow-2xl border border-black/5"
+        >
+          <button
+            onClick={onClose}
+            className="sticky top-6 float-right mr-6 w-8 h-8 rounded-full bg-zinc-100 flex items-center justify-center text-black/40 hover:text-black hover:bg-zinc-200 transition-all z-10"
+          >
+            ✕
+          </button>
+          <div className="p-8 md:p-12 pt-16">
+            <h2 className="text-2xl md:text-3xl font-black tracking-tight leading-tight mb-8">{item.modalTitle}</h2>
+            {item.modalBody}
+          </div>
+        </motion.div>
+      </div>
+    )}
+  </AnimatePresence>
+);
+
 export const Handball: React.FC<HandballProps> = ({
   onBack,
   ctaPrimaryLabel = "Ansprechpartner kontaktieren",
@@ -257,6 +464,8 @@ export const Handball: React.FC<HandballProps> = ({
   ctaSecondaryLabel = "Förderverein unterstützen",
   ctaSecondaryHref = "#foerderverein",
 }) => {
+  const [activeNewsIndex, setActiveNewsIndex] = useState<number | null>(null);
+
   return (
     <div className="pt-24 pb-32">
       {/* Hero */}
@@ -271,14 +480,32 @@ export const Handball: React.FC<HandballProps> = ({
             <span>←</span> Zurück zur Startseite
           </motion.button>
 
-          <div className="max-w-4xl">
+          {/* Überschrift + Logo: gleich breite Spalten (lg:w-1/2), damit eine gedachte
+              Mittellinie denselben Abstand zur Überschrift wie zum Logo hält. Auf
+              Mobile/Tablet stapelt sich das Logo unter die Überschrift. */}
+          <div className="flex flex-col lg:flex-row lg:items-center gap-8 lg:gap-12 mb-8">
             <motion.h1
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              className="text-5xl md:text-8xl font-black tracking-tighter leading-[0.9] mb-6"
+              className="text-5xl md:text-8xl font-black tracking-tighter leading-[0.9] lg:w-1/2"
             >
               SKV Rutesheim <span className="text-black/20">Handball.</span>
             </motion.h1>
+            <motion.div
+              initial={{ opacity: 0, scale: 0.95 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ delay: 0.15 }}
+              className="lg:w-1/2 flex justify-center lg:justify-start"
+            >
+              <img
+                src="/Handball_Rutesheim.png"
+                alt="Logo Handball Rutesheim"
+                className="w-36 sm:w-44 lg:w-56 xl:w-64 h-auto object-contain"
+              />
+            </motion.div>
+          </div>
+
+          <div className="max-w-4xl">
             <motion.p
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
@@ -336,13 +563,24 @@ export const Handball: React.FC<HandballProps> = ({
           <div id="neuigkeiten" className={`${cardClass} scroll-mt-32`}>
             <h2 className="text-2xl md:text-3xl font-black tracking-tight mb-8">Neuigkeiten</h2>
             <ul className="space-y-4">
-              {neuigkeiten.map((title, idx) => (
+              {neuigkeiten.map((item, idx) => (
                 <li key={idx} className="border-b border-black/5 pb-4 last:border-b-0 last:pb-0">
-                  {/* TODO: Platzhalter-Link — echte Artikelseite folgt */}
-                  <a href="#" className="flex items-center justify-between gap-4 text-sm md:text-base font-bold text-black hover:text-black/50 transition-colors">
-                    <span>{title}</span>
-                    <span className="shrink-0 text-black/20">→</span>
-                  </a>
+                  {item.modalBody ? (
+                    <button
+                      type="button"
+                      onClick={() => setActiveNewsIndex(idx)}
+                      className="w-full flex items-center justify-between gap-4 text-sm md:text-base font-bold text-black hover:text-black/50 transition-colors text-left"
+                    >
+                      <span>{item.title}</span>
+                      <span className="shrink-0 text-black/20">→</span>
+                    </button>
+                  ) : (
+                    // TODO: Platzhalter-Link — echte Artikelseite folgt
+                    <a href="#" className="flex items-center justify-between gap-4 text-sm md:text-base font-bold text-black hover:text-black/50 transition-colors">
+                      <span>{item.title}</span>
+                      <span className="shrink-0 text-black/20">→</span>
+                    </a>
+                  )}
                 </li>
               ))}
             </ul>
@@ -509,7 +747,16 @@ export const Handball: React.FC<HandballProps> = ({
       {/* Förderverein */}
       <section id="foerderverein" className="px-6 scroll-mt-32">
         <div className="max-w-7xl mx-auto bg-black text-white rounded-[3rem] p-10 md:p-20">
-          <h2 className="text-3xl md:text-5xl font-black tracking-tight mb-8">Handballförderverein Region Rutesheim e.V.</h2>
+          <div className="flex flex-col sm:flex-row sm:items-center gap-6 mb-8">
+            <div className="shrink-0 w-20 h-20 sm:w-24 sm:h-24 bg-white rounded-2xl p-3 flex items-center justify-center shadow-lg">
+              <img
+                src="/logo_HFR-blau.png"
+                alt="Logo Handballförderverein Region Rutesheim"
+                className="w-full h-full object-contain"
+              />
+            </div>
+            <h2 className="text-3xl md:text-5xl font-black tracking-tight">Handballförderverein Region Rutesheim e.V.</h2>
+          </div>
           <p className="text-white/60 leading-relaxed font-medium mb-14 max-w-3xl">
             Der Handballförderverein Region Rutesheim e.V. unterstützt mit großem ehrenamtlichem Engagement die Handballabteilung des SKV Rutesheim. Ziel ist es, allen jungen Handballerinnen und Handballern optimale Bedingungen für ihre sportliche und persönliche Entwicklung zu bieten und den Handballsport in unserer Region nachhaltig zu stärken. Durch Mitgliedsbeiträge, Spenden und Sponsoring werden unter anderem Trainingsmaterialien, Veranstaltungen und besondere Projekte gefördert. So trägt der Förderverein maßgeblich dazu bei, die Zukunft des Handballs in Rutesheim und im HandballTeam Heckengäu aktiv mitzugestalten. Jede Unterstützung hilft dabei, unsere ehrenamtliche Arbeit im Handball erfolgreich weiterzuentwickeln.
           </p>
@@ -552,15 +799,18 @@ export const Handball: React.FC<HandballProps> = ({
             </div>
           </div>
 
-          {/* TODO: Mitgliedsantrag-PDF liegt noch nicht vor — Platzhalter-Link */}
           <a
-            href="#"
+            href="/Beitrittserklaerung_HFR.pdf"
+            target="_blank"
+            rel="noopener noreferrer"
             className="inline-flex items-center gap-3 px-8 py-5 bg-white text-black rounded-2xl font-black text-xs uppercase tracking-widest hover:bg-[#D4FF6B] transition-colors"
           >
             Mitgliedsantrag herunterladen (PDF)
           </a>
         </div>
       </section>
+
+      <NewsModal item={activeNewsIndex !== null ? neuigkeiten[activeNewsIndex] : null} onClose={() => setActiveNewsIndex(null)} />
     </div>
   );
 };
