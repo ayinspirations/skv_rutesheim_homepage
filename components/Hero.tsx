@@ -157,7 +157,7 @@ export const Hero: React.FC<HeroProps> = ({ onNavigateMembership }) => {
 
         {/* Content Container */}
         {/* Mobile: flex-col-reverse puts Section 2 (Headline) above Section 1 (Notif). justify-start anchors it at top. */}
-        <div className="relative z-10 flex flex-col-reverse md:flex-col h-full p-6 md:p-10 lg:p-14 justify-start md:justify-between gap-8 md:gap-0 overflow-y-auto md:overflow-hidden no-scrollbar">
+        <div className="relative z-10 flex flex-col-reverse md:flex-col flex-1 p-6 md:p-10 lg:p-14 justify-start md:justify-between gap-8 md:gap-0 overflow-y-auto md:overflow-hidden no-scrollbar">
           
           {/* Section 1: Notifications & Map */}
           <div className="relative w-full flex flex-col md:flex-row justify-between items-start gap-6 md:gap-4 mb-8 md:mb-0">
@@ -239,8 +239,11 @@ export const Hero: React.FC<HeroProps> = ({ onNavigateMembership }) => {
             </motion.div>
           </div>
 
-          {/* Section 2: Headline Area */}
-          <div className="pointer-events-none relative z-20 pt-16 md:pt-0 mb-4 md:mb-0 md:mt-auto">
+          {/* Section 2: Headline Area
+              Mobile: flex-col + items-center + text-center centers the badge/headline,
+              flex-1 lets this block claim the leftover height so mt-auto on the CTA
+              row below can push both buttons down toward the bottom of the hero card. */}
+          <div className="pointer-events-none relative z-20 pt-16 md:pt-0 mb-4 md:mb-0 md:mt-auto flex-1 flex flex-col items-center text-center md:flex-none md:block md:text-left">
             <motion.div
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
@@ -249,8 +252,8 @@ export const Hero: React.FC<HeroProps> = ({ onNavigateMembership }) => {
               <div className="w-1.5 h-1.5 bg-black rounded-full animate-pulse"></div>
               <span className="text-[7px] md:text-[9px] font-black uppercase tracking-[0.2em] text-black leading-none">Willkommen bei der SKV</span>
             </motion.div>
-            
-            <motion.h1 
+
+            <motion.h1
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.4 }}
@@ -258,24 +261,24 @@ export const Hero: React.FC<HeroProps> = ({ onNavigateMembership }) => {
             >
               Mehr als ein Verein.<br />Eine Gemeinschaft.
             </motion.h1>
-            
+
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.6 }}
-              className="pointer-events-auto flex flex-col sm:flex-row items-start sm:items-center gap-4 sm:gap-10"
+              className="pointer-events-auto flex flex-col sm:flex-row items-center gap-4 sm:gap-10 mt-auto md:mt-0"
             >
-              <button 
+              <button
                 onClick={onNavigateMembership}
                 className="w-full sm:w-auto px-6 py-4 md:px-10 md:py-5 bg-white text-black rounded-xl md:rounded-2xl font-black text-[11px] md:text-sm hover:bg-[#D4FF6B] hover:scale-105 active:scale-95 transition-all shadow-2xl flex items-center justify-center gap-3 group"
               >
                 Jetzt Mitglied werden
                 <span className="text-sm md:text-xl transition-transform group-hover:translate-x-1 group-hover:-translate-y-1">↗</span>
               </button>
-              
-              <button 
+
+              <button
                 onClick={scrollToDepartments}
-                className="px-2 py-2 text-white/70 hover:text-white font-black text-[11px] md:text-sm transition-all flex items-center gap-3 group mx-auto sm:mx-0"
+                className="px-2 py-2 text-white/70 hover:text-white font-black text-[11px] md:text-sm transition-all flex items-center gap-3 group"
               >
                 Zu den Abteilungen
                 <span className="text-sm md:text-xl opacity-50 group-hover:opacity-100 transition-all group-hover:translate-y-1">↓</span>
