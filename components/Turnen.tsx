@@ -28,7 +28,11 @@ const AccordionSection: React.FC<{ title: string; id?: string; defaultOpen?: boo
   <details id={id} open={defaultOpen} className="group scroll-mt-32">
     <summary className="cursor-pointer list-none flex items-center justify-between gap-4">
       <span className="text-lg md:text-2xl font-black tracking-tight">{title}</span>
-      <span className="shrink-0 w-8 h-8 md:w-9 md:h-9 rounded-full bg-black text-white flex items-center justify-center text-sm transition-transform group-open:rotate-45">+</span>
+      <span className="shrink-0 w-8 h-8 md:w-9 md:h-9 rounded-full bg-black text-white flex items-center justify-center transition-transform duration-300 group-open:rotate-180">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
+          <polyline points="6 9 12 15 18 9"></polyline>
+        </svg>
+      </span>
     </summary>
     <div className="mt-8">{children}</div>
   </details>
@@ -504,62 +508,86 @@ export const Turnen: React.FC<TurnenProps> = ({
 
           <div className="space-y-4">
             {news.map((item, idx) => (
-              <div
+              <details
                 key={idx}
-                className={item.highlighted ? "bg-black text-white rounded-[2rem] p-6 md:p-8" : `${cardClass.replace('p-8 md:p-14', 'p-6 md:p-8')}`}
+                className={`group ${item.highlighted ? "bg-black text-white rounded-[2rem] p-6 md:p-8" : `${cardClass.replace('p-8 md:p-14', 'p-6 md:p-8')}`}`}
               >
-                <span className={`text-[10px] font-black uppercase tracking-widest mb-2 block ${item.highlighted ? 'text-[#D4FF6B]' : 'text-black/30'}`}>{item.date}</span>
-                <h3 className="text-lg md:text-xl font-black tracking-tight mb-3">{item.title}</h3>
-                <p className={`text-sm leading-relaxed mb-4 ${item.highlighted ? 'text-white/60' : 'text-black/60'} font-medium`}>{item.body}</p>
-
-                {item.jumpHref && (
-                  <a href={item.jumpHref} className="text-xs font-black text-black hover:text-black/50 transition-colors">
-                    Kursangebote →
-                  </a>
-                )}
-
-                {item.links && (
-                  <div className="flex flex-wrap gap-4">
-                    {item.links.map((l, lIdx) => (
-                      <a key={lIdx} href={l.href} target="_blank" rel="noopener noreferrer" className="text-xs font-black text-black hover:text-black/50 transition-colors">
-                        {l.label} ↗
-                      </a>
-                    ))}
+                <summary className="cursor-pointer list-none flex items-start justify-between gap-4">
+                  <div>
+                    <span className={`text-[10px] font-black uppercase tracking-widest mb-2 block ${item.highlighted ? 'text-[#D4FF6B]' : 'text-black/30'}`}>{item.date}</span>
+                    <h3 className="text-lg md:text-xl font-black tracking-tight">{item.title}</h3>
                   </div>
-                )}
+                  <span className={`shrink-0 w-8 h-8 rounded-full flex items-center justify-center transition-transform duration-300 group-open:rotate-180 ${item.highlighted ? 'bg-white text-black' : 'bg-black text-white'}`}>
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
+                      <polyline points="6 9 12 15 18 9"></polyline>
+                    </svg>
+                  </span>
+                </summary>
 
-                {item.contactEmail && (
-                  <a href={mailHref(item.contactEmail)} className="inline-flex items-center gap-2 text-sm font-black text-[#D4FF6B] hover:text-white transition-colors mt-2">
-                    <span>✉️</span> {item.contactEmail}
-                  </a>
-                )}
-              </div>
+                <div className="mt-4">
+                  <p className={`text-sm leading-relaxed mb-4 ${item.highlighted ? 'text-white/60' : 'text-black/60'} font-medium`}>{item.body}</p>
+
+                  {item.jumpHref && (
+                    <a href={item.jumpHref} className="text-xs font-black text-black hover:text-black/50 transition-colors">
+                      Kursangebote →
+                    </a>
+                  )}
+
+                  {item.links && (
+                    <div className="flex flex-wrap gap-4">
+                      {item.links.map((l, lIdx) => (
+                        <a key={lIdx} href={l.href} target="_blank" rel="noopener noreferrer" className="text-xs font-black text-black hover:text-black/50 transition-colors">
+                          {l.label} ↗
+                        </a>
+                      ))}
+                    </div>
+                  )}
+
+                  {item.contactEmail && (
+                    <a href={mailHref(item.contactEmail)} className="inline-flex items-center gap-2 text-sm font-black text-[#D4FF6B] hover:text-white transition-colors mt-2">
+                      <span>✉️</span> {item.contactEmail}
+                    </a>
+                  )}
+                </div>
+              </details>
             ))}
 
             {/* Generic Übungsleiter/Helfer-gesucht post — no date given in source content */}
-            <div className={cardClass.replace('p-8 md:p-14', 'p-6 md:p-8')}>
-              <span className="text-[10px] font-black uppercase tracking-widest text-black/30 mb-2 block">ohne Datum</span>
-              <h3 className="text-lg md:text-xl font-black tracking-tight mb-4">Übungsleiterinnen, Fitnesstrainerinnen und Helferinnen gesucht</h3>
-              <p className="text-sm text-black/60 leading-relaxed font-medium mb-4">
-                Die Turnabteilung der SKV Rutesheim braucht dringend Unterstützung. Für folgende Bereiche suchen wir Sie als Übungsleiterin oder Kursleiter*in:
-              </p>
-              <ul className="space-y-1 mb-4">
-                <li className="text-sm text-black/60 font-medium">– Breitensport Erwachsene — Mittwoch 20:00–21:30 Uhr</li>
-                <li className="text-sm text-black/60 font-medium">– Yoga oder Pilates — Mittwoch 18:00–20:00 Uhr</li>
-              </ul>
-              <p className="text-sm text-black/60 leading-relaxed font-medium mb-4">Für folgende Bereiche suchen wir Sie als Übungsleiterinnen oder Helferinnen:</p>
-              <ul className="space-y-1 mb-4">
-                <li className="text-sm text-black/60 font-medium">– Kinderturnen — Montag- und/oder Dienstagnachmittag</li>
-              </ul>
-              <p className="text-sm text-black/60 leading-relaxed font-medium mb-4">
-                DAS BIETEN WIR: Monetäre Aufwandsentschädigung, kostenfreie Aus- und Weiterbildungsmöglichkeit, aktives Vereinsleben. Auch Neueinsteiger sind herzlich willkommen.
-              </p>
-              <p className="text-sm text-black/60 leading-relaxed font-medium">
-                Bei Interesse: <a href={telHref('0151 15721516')} className="font-black text-black hover:text-black/50 transition-colors">Sven Heller: 0151-15721516</a>{' '}
-                {/* TODO: keine konkrete E-Mail-Adresse für "Mail an die Turnabteilung" mitgeliefert */}
-                oder eine Mail an die Turnabteilung.
-              </p>
-            </div>
+            <details className={`group ${cardClass.replace('p-8 md:p-14', 'p-6 md:p-8')}`}>
+              <summary className="cursor-pointer list-none flex items-start justify-between gap-4">
+                <div>
+                  <span className="text-[10px] font-black uppercase tracking-widest text-black/30 mb-2 block">ohne Datum</span>
+                  <h3 className="text-lg md:text-xl font-black tracking-tight">Übungsleiterinnen, Fitnesstrainerinnen und Helferinnen gesucht</h3>
+                </div>
+                <span className="shrink-0 w-8 h-8 rounded-full bg-black text-white flex items-center justify-center transition-transform duration-300 group-open:rotate-180">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
+                    <polyline points="6 9 12 15 18 9"></polyline>
+                  </svg>
+                </span>
+              </summary>
+
+              <div className="mt-4">
+                <p className="text-sm text-black/60 leading-relaxed font-medium mb-4">
+                  Die Turnabteilung der SKV Rutesheim braucht dringend Unterstützung. Für folgende Bereiche suchen wir Sie als Übungsleiterin oder Kursleiter*in:
+                </p>
+                <ul className="space-y-1 mb-4">
+                  <li className="text-sm text-black/60 font-medium">– Breitensport Erwachsene — Mittwoch 20:00–21:30 Uhr</li>
+                  <li className="text-sm text-black/60 font-medium">– Yoga oder Pilates — Mittwoch 18:00–20:00 Uhr</li>
+                </ul>
+                <p className="text-sm text-black/60 leading-relaxed font-medium mb-4">Für folgende Bereiche suchen wir Sie als Übungsleiterinnen oder Helferinnen:</p>
+                <ul className="space-y-1 mb-4">
+                  <li className="text-sm text-black/60 font-medium">– Kinderturnen — Montag- und/oder Dienstagnachmittag</li>
+                </ul>
+                <p className="text-sm text-black/60 leading-relaxed font-medium mb-4">
+                  DAS BIETEN WIR: Monetäre Aufwandsentschädigung, kostenfreie Aus- und Weiterbildungsmöglichkeit, aktives Vereinsleben. Auch Neueinsteiger sind herzlich willkommen.
+                </p>
+                <p className="text-sm text-black/60 leading-relaxed font-medium">
+                  Bei Interesse: <a href={telHref('0151 15721516')} className="font-black text-black hover:text-black/50 transition-colors">Sven Heller: 0151-15721516</a>{' '}
+                  {/* TODO: keine konkrete E-Mail-Adresse für "Mail an die Turnabteilung" mitgeliefert */}
+                  oder eine Mail an die Turnabteilung.
+                </p>
+              </div>
+            </details>
           </div>
         </div>
       </section>
