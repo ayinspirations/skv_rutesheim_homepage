@@ -10,10 +10,10 @@ const tabs = [
 ];
 
 const mainBoard = [
-  { role: "1. Vorsitzender", name: "Volker Epple", image: "https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&q=80&w=400" },
-  { role: "2. Vorsitzender", name: "Helmut Bolay", image: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=crop&q=80&w=400" },
-  { role: "Schatzmeister", name: "Helmut Eck", image: "https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?auto=format&fit=crop&q=80&w=400" },
-  { role: "Geschäftsstellenleiterin", name: "Sandra Koch", image: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&q=80&w=400" }
+  { role: "1. Vorsitzender", name: "Volker Epple" },
+  { role: "2. Vorsitzender", name: "Helmut Bolay" },
+  { role: "Schatzmeister", name: "Helmut Eck" },
+  { role: "Geschäftsstellenleiterin", name: "Sandra Koch" }
 ];
 
 const committee = [
@@ -168,12 +168,16 @@ export const Organization: React.FC = () => {
                 {/* Executive Board Grid */}
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6 mb-16 md:mb-24">
                   {mainBoard.map((member, idx) => (
-                    <div key={idx} className="group aspect-square relative rounded-[2rem] md:rounded-[2.5rem] overflow-hidden bg-zinc-100 shadow-sm border border-black/5">
-                      <img src={member.image} alt={member.name} className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
-                      <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent"></div>
-                      <div className="absolute inset-0 p-6 md:p-8 flex flex-col justify-end">
-                        <span className="text-[8px] md:text-[10px] font-black uppercase tracking-widest text-white/50 mb-1">{member.role}</span>
-                        <h3 className="text-lg md:text-xl font-black text-white leading-tight">{member.name}</h3>
+                    <div key={idx} className="group aspect-square relative rounded-[2rem] md:rounded-[2.5rem] overflow-hidden bg-zinc-100 shadow-sm border border-black/5 flex flex-col">
+                      <div className="flex-1 flex items-center justify-center">
+                        <svg viewBox="0 0 24 24" fill="none" className="w-1/3 h-1/3 text-black/15" aria-hidden="true">
+                          <circle cx="12" cy="8" r="4" fill="currentColor" />
+                          <path d="M4 20c0-4.4 3.6-8 8-8s8 3.6 8 8" fill="currentColor" />
+                        </svg>
+                      </div>
+                      <div className="p-6 md:p-8 pt-0">
+                        <span className="text-[8px] md:text-[10px] font-black uppercase tracking-widest text-black/40 mb-1 block">{member.role}</span>
+                        <h3 className="text-lg md:text-xl font-black text-black leading-tight">{member.name}</h3>
                       </div>
                     </div>
                   ))}

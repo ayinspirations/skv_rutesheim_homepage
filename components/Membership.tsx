@@ -67,9 +67,14 @@ export const Membership: React.FC<MembershipProps> = ({ onBack }) => {
                 Nutze unser Online-Portal für eine schnelle und unkomplizierte Anmeldung. Sicher, papierlos und sofort aktiv.
               </p>
             </div>
-            <button className="w-full py-5 bg-[#D4FF6B] text-black rounded-2xl font-black text-sm uppercase tracking-widest hover:scale-[1.02] transition-transform">
+            <a
+              href="https://skvrutesheim.pw-ng.de/Frontend/Home/NewMember"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="w-full py-5 bg-[#D4FF6B] text-black rounded-2xl font-black text-sm uppercase tracking-widest hover:scale-[1.02] transition-transform text-center"
+            >
               Zum Online-Portal ↗
-            </button>
+            </a>
           </motion.div>
 
           {/* Classic Path */}
@@ -85,12 +90,22 @@ export const Membership: React.FC<MembershipProps> = ({ onBack }) => {
               </p>
             </div>
             <div className="space-y-3">
-              <button className="w-full py-4 bg-white border border-black/10 text-black rounded-xl font-bold text-xs flex items-center justify-center gap-3 hover:bg-zinc-100 transition-colors">
+              <a
+                href="/Aufnahmeantrag2026.pdf"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-full py-4 bg-white border border-black/10 text-black rounded-xl font-bold text-xs flex items-center justify-center gap-3 hover:bg-zinc-100 transition-colors"
+              >
                 📄 Aufnahmeantrag (PDF)
-              </button>
-              <button className="w-full py-4 bg-white border border-black/10 text-black rounded-xl font-bold text-xs flex items-center justify-center gap-3 hover:bg-zinc-100 transition-colors">
+              </a>
+              <a
+                href="/AntragBeitragVerguenstigung.pdf"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-full py-4 bg-white border border-black/10 text-black rounded-xl font-bold text-xs flex items-center justify-center gap-3 hover:bg-zinc-100 transition-colors"
+              >
                 📄 Beitragsvergünstigung (PDF)
-              </button>
+              </a>
             </div>
           </motion.div>
         </div>
@@ -161,9 +176,14 @@ export const Membership: React.FC<MembershipProps> = ({ onBack }) => {
           
           <div className="mt-20 pt-12 border-t border-white/10 flex flex-col md:flex-row justify-between items-center gap-8">
             <p className="text-white/30 text-xs font-bold uppercase tracking-widest">Beschlossen am 22.03.2024</p>
-            <button className="px-8 py-4 bg-white text-black rounded-xl font-black text-[10px] uppercase tracking-widest hover:bg-[#D4FF6B] transition-colors">
+            <a
+              href="/BeitragsordnungAb2025.pdf"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="px-8 py-4 bg-white text-black rounded-xl font-black text-[10px] uppercase tracking-widest hover:bg-[#D4FF6B] transition-colors"
+            >
               Ganze Beitragsordnung laden (PDF)
-            </button>
+            </a>
           </div>
         </div>
       </section>
