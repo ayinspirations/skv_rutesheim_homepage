@@ -240,33 +240,36 @@ export const Hero: React.FC<HeroProps> = ({ onNavigateMembership }) => {
           </div>
 
           {/* Section 2: Headline Area
-              Mobile: flex-col + items-center + text-center centers the badge/headline,
-              flex-1 lets this block claim the leftover height so mt-auto on the CTA
-              row below can push both buttons down toward the bottom of the hero card. */}
-          <div className="pointer-events-none relative z-20 pt-16 md:pt-0 mb-4 md:mb-0 md:mt-auto flex-1 flex flex-col items-center text-center md:flex-none md:block md:text-left">
-            <motion.div
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              className="inline-flex items-center gap-1.5 bg-[#D4FF6B] px-3 py-1 rounded-full mb-4 md:mb-5 border border-black/5 shadow-lg pointer-events-auto"
-            >
-              <div className="w-1.5 h-1.5 bg-black rounded-full animate-pulse"></div>
-              <span className="text-[7px] md:text-[9px] font-black uppercase tracking-[0.2em] text-black leading-none">Willkommen bei der SKV</span>
-            </motion.div>
+              Mobile: grid with rows [1fr, auto] — the badge/headline group (row 1) is
+              vertically centered (self-center) within the flexible row while staying
+              left-aligned text; the CTA row (row 2, auto height) naturally lands at the
+              bottom, with its buttons centered horizontally via items-center. */}
+          <div className="pointer-events-none relative z-20 mb-4 md:mb-0 md:mt-auto flex-1 grid grid-rows-[1fr_auto] md:flex-none md:block">
+            <div className="self-center">
+              <motion.div
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                className="inline-flex items-center gap-1.5 bg-[#D4FF6B] px-3 py-1 rounded-full mb-4 md:mb-5 border border-black/5 shadow-lg pointer-events-auto"
+              >
+                <div className="w-1.5 h-1.5 bg-black rounded-full animate-pulse"></div>
+                <span className="text-[7px] md:text-[9px] font-black uppercase tracking-[0.2em] text-black leading-none">Willkommen bei der SKV</span>
+              </motion.div>
 
-            <motion.h1
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.4 }}
-              className="text-white tracking-tighter leading-[0.9] mb-8 md:mb-10 font-black max-w-5xl text-[1.75rem] sm:text-[2.5rem] md:text-[4rem] lg:text-[5.5rem] xl:text-[6.8rem]"
-            >
-              Mehr als ein Verein.<br />Eine Gemeinschaft.
-            </motion.h1>
+              <motion.h1
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.8, delay: 0.4 }}
+                className="text-white tracking-tighter leading-[0.9] mb-8 md:mb-10 font-black max-w-5xl text-[1.75rem] sm:text-[2.5rem] md:text-[4rem] lg:text-[5.5rem] xl:text-[6.8rem]"
+              >
+                Mehr als ein Verein.<br />Eine Gemeinschaft.
+              </motion.h1>
+            </div>
 
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.6 }}
-              className="pointer-events-auto flex flex-col sm:flex-row items-center gap-4 sm:gap-10 mt-auto md:mt-0"
+              className="pointer-events-auto flex flex-col sm:flex-row items-center gap-4 sm:gap-10"
             >
               <button
                 onClick={onNavigateMembership}
