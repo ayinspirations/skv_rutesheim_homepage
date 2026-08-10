@@ -26,28 +26,36 @@ const quickLinks = [
 
 const termine2026 = ["21.07.", "28.07.", "08.09.", "15.09.", "22.09."];
 
-// TODO: Namen des 8-köpfigen Sportabzeichen-Teams liegen noch nicht vor
-// (folgt laut Kunde in einem separaten Anhang/Prompt) — 1:1 übernehmen, sobald geliefert.
-const team = ["Name folgt", "Name folgt", "Name folgt", "Name folgt", "Name folgt", "Name folgt", "Name folgt", "Name folgt"];
-
-// TODO: Exakte URLs zu beiden Leistungskatalogen liegen noch nicht vor
-// (folgt laut Kunde in einem separaten Anhang/Prompt) — 1:1 übernehmen, sobald geliefert.
 const leistungskataloge = [
-  { label: "Leistungskatalog Erwachsene (PDF)", href: "#" },
-  { label: "Leistungskatalog Kinder/Jugendliche (PDF)", href: "#" },
+  {
+    label: "Leistungskatalog Erwachsene (PDF)",
+    href: "https://cdn.dosb.de/user_upload/www.deutsches-sportabzeichen.de/Materialien/2024/DSA_Poster_Zielerfu__llung_Erwachsene_A3_2024_SCREEN.pdf",
+  },
+  {
+    label: "Leistungskatalog Kinder/Jugendliche (PDF)",
+    href: "https://cdn.dosb.de/user_upload/www.deutsches-sportabzeichen.de/Materialien/2024/DSA_Poster_Zielerfu__llung_KiJu_A3_2024_SCREEN.pdf",
+  },
 ];
 
 interface SeasonEntry {
   treffpunkt: string;
-  zeit: string;
+  zeiten: string[];
 }
 
-// TODO: Exakte Treffpunkte/Zeiten für Winter und Sommer liegen noch nicht vor
-// (folgt laut Kunde in einem separaten Anhang/Prompt) — 1:1 übernehmen, sobald geliefert.
-const lauftreffWinter: SeasonEntry[] = [{ treffpunkt: "Treffpunkt folgt", zeit: "Zeit folgt" }];
-const lauftreffSommer: SeasonEntry[] = [{ treffpunkt: "Treffpunkt folgt", zeit: "Zeit folgt" }];
-const walkingtreffWinter: SeasonEntry[] = [{ treffpunkt: "Treffpunkt folgt", zeit: "Zeit folgt" }];
-const walkingtreffSommer: SeasonEntry[] = [{ treffpunkt: "Treffpunkt folgt", zeit: "Zeit folgt" }];
+const lauftreffWinter: SeasonEntry[] = [
+  { treffpunkt: "Flachter Tor", zeiten: ["Samstag: 15:30 Uhr", "Mittwoch: 8:30 Uhr"] },
+  { treffpunkt: "Bushaltestelle Ford-Epple", zeiten: ["Mittwoch: 19:00 Uhr"] },
+];
+const lauftreffSommer: SeasonEntry[] = [
+  { treffpunkt: "Flachter Tor", zeiten: ["Montag: 19:00 Uhr", "Mittwoch: 8:00 Uhr"] },
+  { treffpunkt: "Waldparkplatz Perouse", zeiten: ["Donnerstag: 18:30 Uhr"] },
+];
+const walkingtreffWinter: SeasonEntry[] = [
+  { treffpunkt: "Flachter Tor", zeiten: ["Montag und Mittwoch: 15:00 Uhr", "Samstag: 14:30 Uhr"] },
+];
+const walkingtreffSommer: SeasonEntry[] = [
+  { treffpunkt: "Flachter Tor", zeiten: ["Montag: 15:00 Uhr", "Mittwoch: 15:00 und 18:30 Uhr"] },
+];
 
 const SeasonSchedule: React.FC<{ winter: SeasonEntry[]; sommer: SeasonEntry[] }> = ({ winter, sommer }) => (
   <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
@@ -56,8 +64,10 @@ const SeasonSchedule: React.FC<{ winter: SeasonEntry[]; sommer: SeasonEntry[] }>
       <div className="space-y-3">
         {winter.map((entry, idx) => (
           <div key={idx} className="bg-white p-4 rounded-xl border border-black/5">
-            <span className="block text-sm font-black">{entry.treffpunkt}</span>
-            <span className="block text-xs font-bold text-black/40">{entry.zeit}</span>
+            <span className="block text-sm font-black mb-1">{entry.treffpunkt}</span>
+            {entry.zeiten.map((zeit, zIdx) => (
+              <span key={zIdx} className="block text-xs font-bold text-black/40">{zeit}</span>
+            ))}
           </div>
         ))}
       </div>
@@ -67,8 +77,10 @@ const SeasonSchedule: React.FC<{ winter: SeasonEntry[]; sommer: SeasonEntry[] }>
       <div className="space-y-3">
         {sommer.map((entry, idx) => (
           <div key={idx} className="bg-white p-4 rounded-xl border border-black/5">
-            <span className="block text-sm font-black">{entry.treffpunkt}</span>
-            <span className="block text-xs font-bold text-black/40">{entry.zeit}</span>
+            <span className="block text-sm font-black mb-1">{entry.treffpunkt}</span>
+            {entry.zeiten.map((zeit, zIdx) => (
+              <span key={zIdx} className="block text-xs font-bold text-black/40">{zeit}</span>
+            ))}
           </div>
         ))}
       </div>
@@ -198,15 +210,6 @@ export const Sportabzeichen: React.FC<SportabzeichenProps> = ({
             </div>
 
             <div className="pt-10 border-t border-black/5">
-              <h3 className="text-xs font-black uppercase tracking-[0.3em] text-black/30 mb-4">Unser Team</h3>
-              <div className="flex flex-wrap gap-2">
-                {team.map((name, idx) => (
-                  <span key={idx} className="px-4 py-2 bg-white border border-black/5 rounded-xl font-bold text-sm">{name}</span>
-                ))}
-              </div>
-            </div>
-
-            <div className="pt-10 border-t border-black/5">
               <h3 className="text-xs font-black uppercase tracking-[0.3em] text-black/30 mb-4">Kontakt</h3>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-12 gap-y-6">
                 <div>
@@ -286,6 +289,10 @@ export const Sportabzeichen: React.FC<SportabzeichenProps> = ({
               <h3 className="text-xs font-black uppercase tracking-[0.3em] text-black/30 mb-4">Treffpunkte & Zeiten</h3>
               <SeasonSchedule winter={walkingtreffWinter} sommer={walkingtreffSommer} />
             </div>
+
+            <p className={`${bodyText} text-sm pt-10 border-t border-black/5`}>
+              Also testen Sie sich und steigen Sie wieder ein. Wir würden uns freuen.
+            </p>
           </div>
         </div>
       </section>
