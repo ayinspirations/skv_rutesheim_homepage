@@ -6,20 +6,10 @@ interface HeroProps {
   onNavigateMembership?: () => void;
 }
 
-const upcomingEvents = [
-  {
-    title: "Jahreshauptversammlung",
-    date: "20. März 2026",
-    info: "Vereinsheim · 19:00 Uhr",
-    icon: "📅"
-  },
-  {
-    title: "Fleckenfest",
-    date: "27./28. Juni 2026",
-    info: "Rutesheim Stadtmitte",
-    icon: "🎡"
-  }
-];
+// Termine sind aktuell ausgeblendet, da veraltet.
+// Neuen Termin einfach hier als Objekt eintragen, um ihn wieder einzublenden:
+// { title: "Jahreshauptversammlung", date: "20. März 2026", info: "Vereinsheim · 19:00 Uhr", icon: "📅" },
+const upcomingEvents: { title: string; date: string; info: string; icon: string }[] = [];
 
 const VIDEO_SRC = '/sportpark_buehl.MOV';
 const CROSSFADE_BEFORE_END = 1.5; // seconds before end to start crossfade
@@ -173,48 +163,50 @@ export const Hero: React.FC<HeroProps> = ({ onNavigateMembership }) => {
           <div className="relative w-full flex flex-col md:flex-row justify-between items-start gap-6 md:gap-4 mb-8 md:mb-0">
             
             {/* Left: Notifications (Apple Style) */}
-            <div className="flex flex-col gap-2.5 w-full max-w-[280px] md:max-w-[320px] z-30">
-              <motion.span 
-                initial={{ opacity: 0, x: -20 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ delay: 1.8 }}
-                className="text-[8px] md:text-[10px] font-black uppercase tracking-[0.3em] text-white/40 mb-1 ml-4"
-              >
-                Nächste Termine
-              </motion.span>
-              {upcomingEvents.map((event, idx) => (
-                <motion.div
-                  key={idx}
-                  initial={{ opacity: 0, x: -30, scale: 0.9 }}
-                  animate={{ opacity: 1, x: 0, scale: 1 }}
-                  transition={{ 
-                    duration: 0.8, 
-                    delay: 2 + (idx * 1), 
-                    ease: [0.16, 1, 0.3, 1] 
-                  }}
-                  whileHover={{ scale: 1.02, x: 5 }}
-                  className="bg-white/10 backdrop-blur-3xl border border-white/20 p-3 md:p-4 rounded-[1.2rem] md:rounded-[1.5rem] shadow-xl flex items-center gap-3 md:gap-4 group cursor-default"
+            {upcomingEvents.length > 0 && (
+              <div className="flex flex-col gap-2.5 w-full max-w-[280px] md:max-w-[320px] z-30">
+                <motion.span
+                  initial={{ opacity: 0, x: -20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ delay: 1.8 }}
+                  className="text-[8px] md:text-[10px] font-black uppercase tracking-[0.3em] text-white/40 mb-1 ml-4"
                 >
-                  <div className="w-8 h-8 md:w-10 md:h-10 bg-white/10 rounded-lg md:rounded-xl flex items-center justify-center text-base md:text-lg shrink-0 border border-white/10">
-                    {event.icon}
-                  </div>
-                  <div className="flex flex-col min-w-0">
-                    <div className="flex justify-between items-center gap-2">
-                      <span className="text-white font-black text-[10px] md:text-xs truncate">{event.title}</span>
+                  Nächste Termine
+                </motion.span>
+                {upcomingEvents.map((event, idx) => (
+                  <motion.div
+                    key={idx}
+                    initial={{ opacity: 0, x: -30, scale: 0.9 }}
+                    animate={{ opacity: 1, x: 0, scale: 1 }}
+                    transition={{
+                      duration: 0.8,
+                      delay: 2 + (idx * 1),
+                      ease: [0.16, 1, 0.3, 1]
+                    }}
+                    whileHover={{ scale: 1.02, x: 5 }}
+                    className="bg-white/10 backdrop-blur-3xl border border-white/20 p-3 md:p-4 rounded-[1.2rem] md:rounded-[1.5rem] shadow-xl flex items-center gap-3 md:gap-4 group cursor-default"
+                  >
+                    <div className="w-8 h-8 md:w-10 md:h-10 bg-white/10 rounded-lg md:rounded-xl flex items-center justify-center text-base md:text-lg shrink-0 border border-white/10">
+                      {event.icon}
                     </div>
-                    <span className="text-white/80 text-[9px] md:text-[10px] font-bold mt-0.5">{event.date}</span>
-                    <span className="text-white/40 text-[8px] md:text-[9px] font-medium truncate">{event.info}</span>
-                  </div>
-                </motion.div>
-              ))}
-            </div>
+                    <div className="flex flex-col min-w-0">
+                      <div className="flex justify-between items-center gap-2">
+                        <span className="text-white font-black text-[10px] md:text-xs truncate">{event.title}</span>
+                      </div>
+                      <span className="text-white/80 text-[9px] md:text-[10px] font-bold mt-0.5">{event.date}</span>
+                      <span className="text-white/40 text-[8px] md:text-[9px] font-medium truncate">{event.info}</span>
+                    </div>
+                  </motion.div>
+                ))}
+              </div>
+            )}
 
             {/* Right: Map Card (Only on Web/Desktop) */}
             <motion.div 
               initial={{ opacity: 0, y: -20, scale: 0.95 }}
               animate={{ opacity: 1, y: 0, scale: 1 }}
               transition={{ duration: 1, ease: [0.16, 1, 0.3, 1], delay: 0.2 }}
-              className="hidden md:block w-full max-w-[240px] z-30"
+              className="hidden md:block w-full max-w-[240px] z-30 md:ml-auto"
             >
               <div className="bg-white/10 backdrop-blur-3xl border border-white/20 p-2 rounded-[2rem] shadow-2xl group cursor-default">
                 <div className="flex items-center gap-2 mb-3 px-3">

@@ -9,10 +9,11 @@ import { CallToAction } from './components/CallToAction';
 import { Footer } from './components/Footer';
 import { Membership } from './components/Membership';
 import { Clubhouse } from './components/Clubhouse';
+import { Leitbild } from './components/Leitbild';
 import { ContactModal } from './components/ContactModal';
 
 function App() {
-  const [currentPage, setCurrentPage] = useState<'home' | 'membership' | 'clubhouse'>('home');
+  const [currentPage, setCurrentPage] = useState<'home' | 'membership' | 'clubhouse' | 'leitbild'>('home');
   const [isContactOpen, setIsContactOpen] = useState(false);
 
   // Scroll to top when page changes
@@ -32,7 +33,7 @@ function App() {
           <>
             <Hero onNavigateMembership={() => setCurrentPage('membership')} />
             <Stats />
-            <Organization />
+            <Organization onNavigateLeitbild={() => setCurrentPage('leitbild')} />
             <Departments />
             <CallToAction onNavigate={() => setCurrentPage('membership')} />
           </>
@@ -44,6 +45,10 @@ function App() {
 
         {currentPage === 'clubhouse' && (
           <Clubhouse onBack={() => setCurrentPage('home')} />
+        )}
+
+        {currentPage === 'leitbild' && (
+          <Leitbild onBack={() => setCurrentPage('home')} />
         )}
       </main>
       <Footer onNavigate={setCurrentPage} />

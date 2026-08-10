@@ -24,7 +24,11 @@ const committee = [
   { role: "Wirtschaftsführer", names: "Maik Sippel" }
 ];
 
-export const Organization: React.FC = () => {
+interface OrganizationProps {
+  onNavigateLeitbild?: () => void;
+}
+
+export const Organization: React.FC<OrganizationProps> = ({ onNavigateLeitbild }) => {
   const [activeTab, setActiveTab] = useState('verein');
 
   return (
@@ -146,8 +150,11 @@ export const Organization: React.FC = () => {
                   </div>
                   
                   <div className="mt-14 pt-10 border-t border-black/5">
-                    <button className="group px-8 py-5 bg-black text-white rounded-2xl font-black text-[10px] md:text-xs uppercase tracking-[0.2em] hover:bg-[#D4FF6B] hover:text-black transition-all flex items-center gap-4 shadow-xl">
-                      Zu den Vertrauensleuten der SKV 
+                    <button
+                      onClick={onNavigateLeitbild}
+                      className="group px-8 py-5 bg-black text-white rounded-2xl font-black text-[10px] md:text-xs uppercase tracking-[0.2em] hover:bg-[#D4FF6B] hover:text-black transition-all flex items-center gap-4 shadow-xl"
+                    >
+                      Weitere Informationen
                       <span className="text-lg transition-transform group-hover:translate-x-1">→</span>
                     </button>
                   </div>
