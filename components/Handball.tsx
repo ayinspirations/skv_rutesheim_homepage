@@ -17,6 +17,7 @@ interface NewsItem {
   title: string;
   modalTitle?: string;
   modalBody?: React.ReactNode;
+  href?: string;
 }
 
 const newsParagraph = "text-black/70 font-medium leading-relaxed mb-4";
@@ -178,7 +179,48 @@ const jahresrueckblick2025Body = (
   </>
 );
 
-// TODO: Platzhalter-Links — echte Artikelseiten/-links für die übrigen Meldungen liegen noch nicht vor.
+const grundschulaktionstagBody = (
+  <>
+    <p className="text-black font-black text-sm uppercase tracking-widest mb-3">Grundschulaktionstag</p>
+    <p className={newsParagraph}>
+      Der Handball begeistert – und das bereits bei den Jüngsten: Der bundesweite Handball-Grundschulaktionstag hat
+      sich in den vergangenen Jahren zur größten Bewegungs- und Mitmachaktion des deutschen Handballs entwickelt.
+      Nachdem die Veranstaltung im vergangenen Jahr noch von den Verbänden aus Baden, Südbaden und Württemberg
+      organisiert und durchgeführt wurde, koordiniert der Baden-Württembergische Handball-Verband e.V. (BWHV) nach
+      der Fusion die Aktion nun im ganzen Bundesland.
+    </p>
+    <p className={newsParagraph}>
+      Auch in Rutesheim beteiligten sich rund 160 Schülerinnen und Schüler aus sechs Klassen am
+      Grundschulaktionstag 2025, die von den Mitgliedern der Handballabteilung der SKV Rutesheim betreut wurden.
+      In diesem Jahr war es bereits die 10. Auflage der erfolgreichen Kooperation mit der Theodor-Heuss-Schule.
+      Im Rahmen des diesjährigen Jubiläums überreichten die Vertreter der Abteilung Handball, Abteilungsleiter
+      Stefan Kugel und Jugendleiter Markus Polster, der Schulleiterin Friederike Bailer eine Auszeichnung als
+      offizielle Partnerschule des Grundschulaktionstag – eine tolle Ehrung zum Jubiläum.
+    </p>
+    <p className={newsParagraph}>
+      Wie in den vergangenen Jahren haben alle Kinder nach dem Absolvieren der Einheiten den{' '}
+      <strong className="font-black text-black">Hanniball-Pass</strong> erhalten, der ihre erfolgreiche Teilnahme
+      dokumentiert. Außerdem haben die Schülerinnen und Schüler kindgerechte Regelhefte sowie in diesem Jahr einen
+      Adventskalender und Hauttattoos, die speziell für die Frauen-Heimweltmeisterschaft erstellt wurden, bekommen.
+      Das überaus erfolgreiche Konzept, Kindern bereits in der Grundschule den Handballsport nahezubringen, wurde
+      inzwischen vom Deutschen Handballbund (DHB) übernommen. Allein in Baden-Württemberg haben sich in diesem
+      Jahr mehr als <strong className="font-black text-black">37.000 Kinder</strong> aus{' '}
+      <strong className="font-black text-black">rund 600 Schulen</strong> zum Mitmachen angemeldet. Auch
+      BWHV-Präsident Peter Knapp (Oftersheim) zeigt sich beeindruckt von den Teilnehmerzahlen: „Wir freuen uns,
+      dass das Interesse in den Schulen ungebrochen ist. Das ist ein Beleg dafür, welch großartige Arbeit die
+      Vereine beim Grundschulaktionstag leisten."
+    </p>
+    <p className={`${newsParagraph} mb-0`}>
+      Unser Dank gilt daher allen ehrenamtlichen Helfern im Sportverein und an der Schule für ihr Engagement. Ohne
+      diese Arbeit an der Basis wäre der Grundschulaktionstag nicht möglich. Wir freuen uns schon, auf das nächste
+      Jahr wenn es wieder heißt - der Handball begeistert auch in Rutesheim.
+    </p>
+  </>
+);
+
+const SHOP_URL = "https://ht-heckengaeu.teamservice24.shop/";
+
+// TODO: Platzhalter-Link — echte Artikelseite für die Jahreshauptversammlungs-News liegt noch nicht vor.
 const neuigkeiten: NewsItem[] = [
   { title: "Abteilungsversammlung 2026", modalTitle: "Abteilungsversammlung 2026", modalBody: abteilungsversammlungBody },
   {
@@ -191,15 +233,15 @@ const neuigkeiten: NewsItem[] = [
     modalTitle: "SKV Rutesheim Handball: Erfolgreicher Jahresrückblick 2025 und klarer Blick nach vorne",
     modalBody: jahresrueckblick2025Body,
   },
-  { title: "10. Auflage des Grundschulaktionstages in Kooperation mit der Theodor-Heuss-Schule" },
-  { title: "Unser neuer HT Heckengäu Fan Shop ist online" },
+  {
+    title: "10. Auflage des Grundschulaktionstages in Kooperation mit der Theodor-Heuss-Schule",
+    modalTitle: "Jubiläum in Rutesheim - 10. Auflage des Grundschulaktionstages in Kooperation mit der Theodor-Heuss-Schule",
+    modalBody: grundschulaktionstagBody,
+  },
+  { title: "Unser neuer HT Heckengäu Fan Shop ist online", href: SHOP_URL },
 ];
 
-// TODO: Platzhalter-Links — echte Berichts-PDFs/-Seiten liegen noch nicht vor.
-const berichte = [
-  "Bericht der Jahreshauptversammlung 2025",
-  "Bericht der Jahreshauptversammlung 2024 der SKV Rutesheim – Abteilung Handball",
-];
+const termine = ["107,7 Party am 7.11.26"];
 
 interface Sponsor {
   name: string;
@@ -383,8 +425,6 @@ export const hallen: Halle[] = [
   },
 ];
 
-const schiedsrichter = ["Fabian Kersten", "Katharina Sattler-Riethmüller", "Sarah Weber", "Fabian Weber"];
-
 // Hinweis: Die bisherige Live-Website nannte einen abweichenden Vorstand (Dusica Cvetkovic als
 // Vorsitzende, Sophie Polster als stellv. Vorsitzende, Valentina Rebuli als Kassiererin,
 // Stefanie Baum als Schriftführerin). TODO: vor Go-Live beim Kunden bestätigen, welche Besetzung
@@ -397,18 +437,15 @@ const foerdervereinAnsprechpartner = [
 
 const quickLinks = [
   { id: "neuigkeiten", label: "Neuigkeiten" },
-  { id: "berichte", label: "Berichte" },
-  { id: "links", label: "Links" },
+  { id: "termine", label: "Termine" },
   { id: "abteilungen", label: "Abteilungen" },
-  { id: "staetten", label: "Spiel- & Trainingsstätten" },
-  { id: "schiedsrichter", label: "Schiedsrichterteam" },
-  { id: "sponsoren", label: "Sponsoren" },
+  { id: "links", label: "Links" },
   { id: "foerderverein", label: "Förderverein" },
+  { id: "sponsoren", label: "Sponsoren" },
 ];
 
 const badgeClass = "inline-block px-3 py-1 bg-[#D4FF6B] text-black text-[9px] font-black uppercase tracking-widest rounded-full mb-6";
 const cardClass = "bg-zinc-50 rounded-[2.5rem] p-8 md:p-14 border border-black/5";
-const bodyText = "text-black/60 font-medium leading-relaxed";
 const pillLinkClass = "px-5 py-3 rounded-full text-[10px] md:text-xs font-black uppercase tracking-widest transition-all whitespace-nowrap border border-transparent bg-zinc-50/50 text-black/40 hover:bg-zinc-100 hover:text-black/60";
 
 const mailHref = (email: string) => `mailto:${email}`;
@@ -577,7 +614,7 @@ export const Handball: React.FC<HandballProps> = ({
         </div>
       </section>
 
-      {/* Neuigkeiten + Berichte */}
+      {/* Neuigkeiten + Termine */}
       <section className="px-6 mb-20 md:mb-32">
         <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-10">
           <div id="neuigkeiten" className={`${cardClass} scroll-mt-32`}>
@@ -594,6 +631,16 @@ export const Handball: React.FC<HandballProps> = ({
                       <span>{item.title}</span>
                       <span className="shrink-0 text-black/20">→</span>
                     </button>
+                  ) : item.href ? (
+                    <a
+                      href={item.href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="flex items-center justify-between gap-4 text-sm md:text-base font-bold text-black hover:text-black/50 transition-colors"
+                    >
+                      <span>{item.title}</span>
+                      <span className="shrink-0 text-black/20">↗</span>
+                    </a>
                   ) : (
                     // TODO: Platzhalter-Link — echte Artikelseite folgt
                     <a href="#" className="flex items-center justify-between gap-4 text-sm md:text-base font-bold text-black hover:text-black/50 transition-colors">
@@ -606,16 +653,12 @@ export const Handball: React.FC<HandballProps> = ({
             </ul>
           </div>
 
-          <div id="berichte" className={`${cardClass} scroll-mt-32`}>
-            <h2 className="text-2xl md:text-3xl font-black tracking-tight mb-8">Berichte</h2>
+          <div id="termine" className={`${cardClass} scroll-mt-32`}>
+            <h2 className="text-2xl md:text-3xl font-black tracking-tight mb-8">Termine</h2>
             <ul className="space-y-4">
-              {berichte.map((title, idx) => (
+              {termine.map((title, idx) => (
                 <li key={idx} className="border-b border-black/5 pb-4 last:border-b-0 last:pb-0">
-                  {/* TODO: Platzhalter-Link — echter Bericht folgt */}
-                  <a href="#" className="flex items-center justify-between gap-4 text-sm md:text-base font-bold text-black hover:text-black/50 transition-colors">
-                    <span>{title}</span>
-                    <span className="shrink-0 text-black/20">→</span>
-                  </a>
+                  <span className="block text-sm md:text-base font-bold text-black">{title}</span>
                 </li>
               ))}
             </ul>
@@ -626,38 +669,6 @@ export const Handball: React.FC<HandballProps> = ({
       {/* Abteilungen */}
       <section id="abteilungen" className="px-6 mb-20 md:mb-32 scroll-mt-32">
         <div className="max-w-5xl mx-auto">
-          <span className={badgeClass}>Abteilungen</span>
-          <h2 className="text-3xl md:text-5xl font-black tracking-tighter mb-8">Die Handballabteilung</h2>
-          <p className={`${bodyText} text-lg mb-10 max-w-3xl`}>{MISSION_TEXT}</p>
-
-          <span id="links" className="text-[10px] font-black uppercase tracking-widest text-black/30 mb-3 block scroll-mt-32">Links</span>
-          <div className="flex flex-col sm:flex-row flex-wrap gap-3 mb-14">
-            <a
-              href="https://www.skv-rutesheim.de"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 px-5 py-3 bg-white border border-black/10 rounded-xl font-bold text-xs hover:bg-zinc-100 transition-colors"
-            >
-              Hauptverein: skv-rutesheim.de <span>↗</span>
-            </a>
-            <a
-              href="https://www.ht-heckengaeu.de"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 px-5 py-3 bg-white border border-black/10 rounded-xl font-bold text-xs hover:bg-zinc-100 transition-colors"
-            >
-              Spielgemeinschaft: ht-heckengaeu.de <span>↗</span>
-            </a>
-            <a
-              href="https://ht-heckengaeu.teamservice24.shop/"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 px-5 py-3 bg-white border border-black/10 rounded-xl font-bold text-xs hover:bg-zinc-100 transition-colors"
-            >
-              Shop <span>↗</span>
-            </a>
-          </div>
-
           <div className={`${cardClass} space-y-10`}>
             <AccordionSection title="Ansprechpartner der Abteilung" id="ansprechpartner">
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-12 gap-y-10">
@@ -714,92 +725,40 @@ export const Handball: React.FC<HandballProps> = ({
         </div>
       </section>
 
-      {/* Spiel- und Trainingsstätten */}
-      <section id="staetten" className="px-6 mb-20 md:mb-32 scroll-mt-32">
-        <div className="max-w-5xl mx-auto">
-          <span className={badgeClass}>Hallen</span>
-          <h2 className="text-3xl md:text-5xl font-black tracking-tighter mb-10">Spiel- und Trainingsstätten</h2>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-            {hallen.map((halle, idx) => (
-              <div key={idx} className="bg-white p-6 rounded-[2rem] border border-black/5 flex flex-col gap-4">
-                {/* TODO: Hallenfoto ergänzen, sobald verfügbar */}
-                <PhotoPlaceholder />
-                <div>
-                  <span className="text-[10px] font-black uppercase tracking-widest text-black/30 mb-1 block">{halle.subtitle}</span>
-                  <h4 className="text-lg font-black tracking-tight mb-2">{halle.name}</h4>
-                  <p className="text-black/60 text-sm font-bold">{halle.address}</p>
-                </div>
-                {halle.notes && (
-                  <ul className="space-y-1 pt-4 border-t border-black/5">
-                    {halle.notes.map((note, noteIdx) => (
-                      <li key={noteIdx} className="text-black/40 text-xs font-medium leading-relaxed">{note}</li>
-                    ))}
-                  </ul>
-                )}
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Schiedsrichterteam */}
-      <section id="schiedsrichter" className="px-6 mb-20 md:mb-32 scroll-mt-32">
+      {/* Links */}
+      <section id="links" className="px-6 mb-20 md:mb-32 scroll-mt-32">
         <div className="max-w-5xl mx-auto">
-          <span className={badgeClass}>Schiedsrichter</span>
-          <h2 className="text-3xl md:text-5xl font-black tracking-tighter mb-8">Das Schiedsrichterteam</h2>
-          <div className={cardClass}>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-10 items-center">
-              {/* TODO: Teamfoto Schiedsrichterteam ergänzen, sobald verfügbar */}
-              <PhotoPlaceholder />
-              <div>
-                <p className={`${bodyText} mb-6`}>Aktuell stehen folgende Kollegen zur Verfügung:</p>
-                <ul className="space-y-2">
-                  {schiedsrichter.map((name, idx) => (
-                    <li key={idx} className="text-lg font-black tracking-tight">{name}</li>
-                  ))}
-                </ul>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Sponsoren */}
-      <section id="sponsoren" className="px-6 mb-20 md:mb-32 scroll-mt-32">
-        <div className="max-w-5xl mx-auto">
-          <span className={badgeClass}>Sponsoren</span>
-          <h2 className="text-3xl md:text-5xl font-black tracking-tighter mb-10">Unsere Sponsoren</h2>
-          <div className="grid grid-cols-2 sm:grid-cols-3 gap-6">
-            {sponsoren.map((sponsor, idx) => {
-              const logoImg = (
-                <img
-                  src={sponsor.logo}
-                  alt={sponsor.name}
-                  className="max-w-full max-h-full object-contain"
-                />
-              );
-              return (
-                <div
-                  key={idx}
-                  className="bg-white h-28 sm:h-32 p-6 rounded-[2rem] border border-black/5 flex items-center justify-center"
-                >
-                  {sponsor.href ? (
-                    <a
-                      href={sponsor.href}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="w-full h-full flex items-center justify-center hover:opacity-70 transition-opacity"
-                      aria-label={sponsor.name}
-                    >
-                      {logoImg}
-                    </a>
-                  ) : (
-                    logoImg
-                  )}
-                </div>
-              );
-            })}
+          <span className={badgeClass}>Links</span>
+          <h2 className="text-3xl md:text-5xl font-black tracking-tighter mb-10">Weiterführende Links</h2>
+          <div className="grid grid-cols-2 gap-6 max-w-md">
+            <a
+              href="https://www.ht-heckengaeu.de"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Spielgemeinschaft HT Heckengäu"
+              className="bg-white h-28 sm:h-32 p-6 rounded-[2rem] border border-black/5 flex items-center justify-center hover:opacity-70 transition-opacity"
+            >
+              <img
+                src="/logo-hth-claim-rechts-schwarz-rot-4c.png"
+                alt="Spielgemeinschaft HT Heckengäu"
+                className="max-w-full max-h-full object-contain"
+              />
+            </a>
+            <a
+              href={SHOP_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Shop"
+              className="bg-white h-28 sm:h-32 p-6 rounded-[2rem] border border-black/5 flex flex-col items-center justify-center gap-2 hover:opacity-70 transition-opacity"
+            >
+              <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z" />
+                <path d="M3 6h18" />
+                <path d="M16 10a4 4 0 0 1-8 0" />
+              </svg>
+              <span className="text-[10px] font-black uppercase tracking-widest text-black/40">Shop</span>
+            </a>
           </div>
         </div>
       </section>
@@ -867,6 +826,45 @@ export const Handball: React.FC<HandballProps> = ({
           >
             Mitgliedsantrag herunterladen (PDF)
           </a>
+        </div>
+      </section>
+
+      {/* Sponsoren */}
+      <section id="sponsoren" className="px-6 mt-20 md:mt-32 scroll-mt-32">
+        <div className="max-w-5xl mx-auto">
+          <span className={badgeClass}>Sponsoren</span>
+          <h2 className="text-3xl md:text-5xl font-black tracking-tighter mb-10">Unsere Sponsoren</h2>
+          <div className="grid grid-cols-2 sm:grid-cols-3 gap-6">
+            {sponsoren.map((sponsor, idx) => {
+              const logoImg = (
+                <img
+                  src={sponsor.logo}
+                  alt={sponsor.name}
+                  className="max-w-full max-h-full object-contain"
+                />
+              );
+              return (
+                <div
+                  key={idx}
+                  className="bg-white h-28 sm:h-32 p-6 rounded-[2rem] border border-black/5 flex items-center justify-center"
+                >
+                  {sponsor.href ? (
+                    <a
+                      href={sponsor.href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="w-full h-full flex items-center justify-center hover:opacity-70 transition-opacity"
+                      aria-label={sponsor.name}
+                    >
+                      {logoImg}
+                    </a>
+                  ) : (
+                    logoImg
+                  )}
+                </div>
+              );
+            })}
+          </div>
         </div>
       </section>
 
