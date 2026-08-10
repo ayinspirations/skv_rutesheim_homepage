@@ -91,7 +91,13 @@ export const FacilityMap: React.FC = () => {
 
       {/* Info panel + Legende — funktioniert eigenständig ohne die Karte (Barrierefreiheit / Mobile-Fallback) */}
       <div className="flex flex-col gap-6">
-        <div className="bg-black text-white rounded-[2rem] p-6 md:p-8">
+        {/* min-h reserves space for the longest note (measured across all 8 hotspots at
+            each layout: ~163px stacked below lg, ~156px in the lg 2-col grid) so the panel
+            never resizes when switching hotspots — without it, switching to a longer/shorter
+            note shifted the hotspot list below it, which could move a different list item
+            under a stationary cursor and fire another hover, changing the active hotspot
+            again and re-triggering the same shift ("flattert"). */}
+        <div className="bg-black text-white rounded-[2rem] p-6 md:p-8 min-h-[168px] lg:min-h-[160px]">
           <span className="text-[#D4FF6B] font-black uppercase tracking-widest text-xs mb-2 block">{active.id}. {active.label}</span>
           <p className="text-white/60 text-sm leading-relaxed">{active.note}</p>
         </div>
