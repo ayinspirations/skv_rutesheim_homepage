@@ -201,9 +201,17 @@ const berichte = [
   "Bericht der Jahreshauptversammlung 2024 der SKV Rutesheim – Abteilung Handball",
 ];
 
-const wichtigeLinks = [
-  { title: "Spielgemeinschaft", href: "https://www.ht-heckengaeu.de" },
-  { title: "Shop Spielgemeinschaft", href: "https://ht-heckengaeu.teamservice24.shop/" },
+interface Sponsor {
+  name: string;
+  logo: string;
+  href?: string;
+}
+
+const sponsoren: Sponsor[] = [
+  { name: "Hagebau Bolay", logo: "/logo-hagebau-bolay-traegerflaeche-rgb.png", href: "https://www.hagebau-bolay.de/" },
+  { name: "Bäckerei Diefenbach", logo: "/diefenbach.gif", href: "https://www.baeckerei-diefenbach.de/" },
+  // TODO: Website/Link für Böhmler noch vom Kunden anzufordern.
+  { name: "Böhmler", logo: "/boehmler.jpg" },
 ];
 
 const ansprechpartnerAbteilung = [
@@ -394,6 +402,7 @@ const quickLinks = [
   { id: "abteilungen", label: "Abteilungen" },
   { id: "staetten", label: "Spiel- & Trainingsstätten" },
   { id: "schiedsrichter", label: "Schiedsrichterteam" },
+  { id: "sponsoren", label: "Sponsoren" },
   { id: "foerderverein", label: "Förderverein" },
 ];
 
@@ -490,14 +499,15 @@ export const Handball: React.FC<HandballProps> = ({
             <span>←</span> Zurück zur Startseite
           </motion.button>
 
-          {/* Überschrift + Logo: gleich breite Spalten (lg:w-1/2), damit eine gedachte
-              Mittellinie denselben Abstand zur Überschrift wie zum Logo hält. Auf
-              Mobile/Tablet stapelt sich das Logo unter die Überschrift. */}
-          <div className="flex flex-col lg:flex-row lg:items-center gap-8 lg:gap-12 mb-8">
+          {/* Überschrift + Logo: die Überschrift behält ihre eigene (schrumpfbare)
+              Breite, das Logo sitzt in der verbleibenden Fläche daneben und wird
+              darin horizontal zentriert — dadurch rutscht es auf breiten Screens
+              weit nach rechts, genau zwischen Textende und rechtem Rand. */}
+          <div className="flex flex-row items-center gap-3 sm:gap-6 lg:gap-10 mb-8">
             <motion.h1
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              className="text-5xl md:text-8xl font-black tracking-tighter leading-[0.9] lg:w-1/2"
+              className="shrink-0 max-w-[10.5rem] sm:max-w-xs md:max-w-sm lg:max-w-xl text-3xl sm:text-4xl md:text-6xl lg:text-7xl xl:text-8xl font-black tracking-tighter leading-[0.9]"
             >
               SKV Rutesheim <span className="text-black/20">Handball.</span>
             </motion.h1>
@@ -505,12 +515,12 @@ export const Handball: React.FC<HandballProps> = ({
               initial={{ opacity: 0, scale: 0.95 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ delay: 0.15 }}
-              className="lg:w-1/2 flex justify-center lg:justify-start"
+              className="flex-1 flex justify-center items-center min-w-0"
             >
               <img
                 src="/Handball_Rutesheim.png"
                 alt="Logo Handball Rutesheim"
-                className="w-36 sm:w-44 lg:w-56 xl:w-64 h-auto object-contain"
+                className="w-16 sm:w-24 md:w-32 lg:w-48 xl:w-56 h-auto object-contain"
               />
             </motion.div>
           </div>
@@ -567,9 +577,9 @@ export const Handball: React.FC<HandballProps> = ({
         </div>
       </section>
 
-      {/* Neuigkeiten + Berichte + Links */}
+      {/* Neuigkeiten + Berichte */}
       <section className="px-6 mb-20 md:mb-32">
-        <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-10">
+        <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-10">
           <div id="neuigkeiten" className={`${cardClass} scroll-mt-32`}>
             <h2 className="text-2xl md:text-3xl font-black tracking-tight mb-8">Neuigkeiten</h2>
             <ul className="space-y-4">
@@ -610,25 +620,6 @@ export const Handball: React.FC<HandballProps> = ({
               ))}
             </ul>
           </div>
-
-          <div id="links" className={`${cardClass} scroll-mt-32`}>
-            <h2 className="text-2xl md:text-3xl font-black tracking-tight mb-8">Links</h2>
-            <ul className="space-y-4">
-              {wichtigeLinks.map((link, idx) => (
-                <li key={idx} className="border-b border-black/5 pb-4 last:border-b-0 last:pb-0">
-                  <a
-                    href={link.href}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="flex items-center justify-between gap-4 text-sm md:text-base font-bold text-black hover:text-black/50 transition-colors"
-                  >
-                    <span>{link.title}</span>
-                    <span className="shrink-0 text-black/20">↗</span>
-                  </a>
-                </li>
-              ))}
-            </ul>
-          </div>
         </div>
       </section>
 
@@ -639,6 +630,7 @@ export const Handball: React.FC<HandballProps> = ({
           <h2 className="text-3xl md:text-5xl font-black tracking-tighter mb-8">Die Handballabteilung</h2>
           <p className={`${bodyText} text-lg mb-10 max-w-3xl`}>{MISSION_TEXT}</p>
 
+          <span id="links" className="text-[10px] font-black uppercase tracking-widest text-black/30 mb-3 block scroll-mt-32">Links</span>
           <div className="flex flex-col sm:flex-row flex-wrap gap-3 mb-14">
             <a
               href="https://www.skv-rutesheim.de"
@@ -769,6 +761,45 @@ export const Handball: React.FC<HandballProps> = ({
                 </ul>
               </div>
             </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Sponsoren */}
+      <section id="sponsoren" className="px-6 mb-20 md:mb-32 scroll-mt-32">
+        <div className="max-w-5xl mx-auto">
+          <span className={badgeClass}>Sponsoren</span>
+          <h2 className="text-3xl md:text-5xl font-black tracking-tighter mb-10">Unsere Sponsoren</h2>
+          <div className="grid grid-cols-2 sm:grid-cols-3 gap-6">
+            {sponsoren.map((sponsor, idx) => {
+              const logoImg = (
+                <img
+                  src={sponsor.logo}
+                  alt={sponsor.name}
+                  className="max-w-full max-h-full object-contain"
+                />
+              );
+              return (
+                <div
+                  key={idx}
+                  className="bg-white h-28 sm:h-32 p-6 rounded-[2rem] border border-black/5 flex items-center justify-center"
+                >
+                  {sponsor.href ? (
+                    <a
+                      href={sponsor.href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="w-full h-full flex items-center justify-center hover:opacity-70 transition-opacity"
+                      aria-label={sponsor.name}
+                    >
+                      {logoImg}
+                    </a>
+                  ) : (
+                    logoImg
+                  )}
+                </div>
+              );
+            })}
           </div>
         </div>
       </section>
