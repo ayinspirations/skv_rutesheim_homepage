@@ -32,7 +32,10 @@ const departments = [
   {
     title: "Rad",
     image: "/rad.jpg",
-    tag: "Outdoor"
+    tag: "Outdoor",
+    link: "/rad",
+    internal: true,
+    route: "rad"
   },
   {
     title: "Tischtennis",
@@ -55,12 +58,14 @@ const departments = [
 interface DepartmentsProps {
   onNavigateHandball?: () => void;
   onNavigateTurnen?: () => void;
+  onNavigateRad?: () => void;
 }
 
-export const Departments: React.FC<DepartmentsProps> = ({ onNavigateHandball, onNavigateTurnen }) => {
+export const Departments: React.FC<DepartmentsProps> = ({ onNavigateHandball, onNavigateTurnen, onNavigateRad }) => {
   const internalRoutes: Record<string, (() => void) | undefined> = {
     handball: onNavigateHandball,
     turnen: onNavigateTurnen,
+    rad: onNavigateRad,
   };
 
   return (
