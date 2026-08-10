@@ -61,6 +61,11 @@ export const FacilityMap: React.FC = () => {
           {hotspots.map((h) => {
             const isActive = h.id === activeId;
             return (
+              // Hit area (button) is a fixed size — only the inner span scales for the
+              // active-state pop effect. Scaling the button itself grew its hit box mid-
+              // transition, which for closely-spaced hotspots (e.g. #4/#5) fed back into
+              // rapid mouseenter/mouseleave toggling ("rattert") whenever the cursor sat
+              // near the shared edge.
               <button
                 key={h.id}
                 type="button"
@@ -69,11 +74,15 @@ export const FacilityMap: React.FC = () => {
                 onFocus={() => setActiveId(h.id)}
                 onClick={() => setActiveId(h.id)}
                 style={{ left: `${h.leftPct}%`, top: `${h.topPct}%` }}
-                className={`absolute -translate-x-1/2 -translate-y-1/2 w-5 h-5 md:w-6 md:h-6 rounded-full flex items-center justify-center text-[10px] md:text-xs font-black outline-none transition-all ${
-                  isActive ? 'bg-[#D4FF6B] text-black scale-125 ring-2 ring-black z-10' : 'bg-black text-white hover:scale-110'
-                }`}
+                className={`absolute -translate-x-1/2 -translate-y-1/2 w-5 h-5 md:w-6 md:h-6 outline-none ${isActive ? 'z-10' : 'z-0'}`}
               >
-                {h.id}
+                <span
+                  className={`pointer-events-none w-full h-full rounded-full flex items-center justify-center text-[10px] md:text-xs font-black transition-all ${
+                    isActive ? 'bg-[#D4FF6B] text-black scale-125 ring-2 ring-black' : 'bg-black text-white'
+                  }`}
+                >
+                  {h.id}
+                </span>
               </button>
             );
           })}
