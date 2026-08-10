@@ -41,10 +41,10 @@ const hotspots: Hotspot[] = [
     id: 1,
     label: 'Stadion Bühl',
     note: 'Tartanbahn / Leichtathletik-Rundlaufbahn. Hier trainiert u. a. die Leichtathletik-Gruppe (Fr, Stadion Bühl).',
-    // Ring drawn separately (two ellipses), see render below.
+    // Stadionform (zwei gedrehte Pillen), siehe Render unten.
     path: '',
     fill: PEACH,
-    badge: { x: 1010, y: 148 },
+    badge: { x: 1015, y: 145 },
   },
   {
     id: 2,
@@ -58,25 +58,25 @@ const hotspots: Hotspot[] = [
     id: 3,
     label: 'Rasenplatz',
     note: 'Rasenspielfeld, links neben dem Kunstrasen.',
-    path: 'M 690,190 L 785,200 L 770,290 L 685,280 Z',
+    path: 'M 695,205 L 790,213 L 776,300 L 690,292 Z',
     fill: MINT,
-    badge: { x: 730, y: 240 },
+    badge: { x: 735, y: 250 },
   },
   {
     id: 4,
     label: 'Sporthalle Bühl 1',
     note: `${addressFor('Sporthalle Bühl 1') ?? 'Adresse folgt'}`,
-    path: 'M 745,290 L 830,280 L 840,365 L 775,375 L 745,345 Z',
+    path: 'M 735,300 L 815,292 L 822,365 L 760,372 L 735,345 Z',
     fill: SALMON,
-    badge: { x: 793, y: 330 },
+    badge: { x: 780, y: 335 },
   },
   {
     id: 5,
     label: 'Sporthalle Bühl 2',
     note: `${addressFor('Sporthalle Bühl 2') ?? 'Adresse folgt'} — u. a. Bühl 2 Halle 1/2/3: Bubenturnen, Mädchenturnen, Wettkampfturnen, Fitness-Mix.`,
-    path: 'M 855,300 L 935,295 L 940,360 L 860,365 Z',
+    path: 'M 840,335 L 910,328 L 916,388 L 845,393 Z',
     fill: SALMON,
-    badge: { x: 897, y: 330 },
+    badge: { x: 878, y: 362 },
   },
   // Hinweis: /handball führt diese Halle als "Theodor-Heuss-Turnhalle", /turnen-Inhalte
   // sprechen von "Theodor-Heuss-Halle" — Adresse ist identisch, nur der Name weicht ab.
@@ -92,19 +92,23 @@ const hotspots: Hotspot[] = [
     id: 7,
     label: 'SKV Vereinsheim',
     note: 'Vereinsheim der SKV Rutesheim.',
-    path: 'M 950,300 L 995,297 L 1000,340 L 955,343 Z',
+    path: 'M 925,375 L 975,370 L 982,412 L 930,417 Z',
     fill: SALMON,
-    badge: { x: 975, y: 320 },
+    badge: { x: 953, y: 394 },
   },
   {
     id: 8,
     label: 'Kleinspielfeld',
     note: 'Kleines Spielfeld zwischen Stadion und Hallen.',
-    path: 'M 800,200 L 875,205 L 870,245 L 800,240 Z',
+    path: 'M 805,200 L 880,205 L 875,248 L 805,243 Z',
     fill: PEACH,
-    badge: { x: 835, y: 222 },
+    badge: { x: 840, y: 224 },
   },
 ];
+
+const TRACK_CX = 985;
+const TRACK_CY = 150;
+const TRACK_ROTATE = -18;
 
 export const FacilityMap: React.FC = () => {
   // No hotspot is active until the user actually hovers/clicks/focuses one, so the map
@@ -185,18 +189,24 @@ export const FacilityMap: React.FC = () => {
             return (
               <g key={h.id} {...commonProps}>
                 {h.id === 1 ? (
-                  <>
-                    <ellipse cx={995} cy={155} rx={88} ry={148} fill={PEACH} stroke="#333" strokeWidth={1.5} />
-                    <ellipse cx={995} cy={155} rx={55} ry={108} fill={BG} />
-                    <rect x={985} y={12} width={20} height={12} rx={2} fill="#f4d35e" />
-                    <rect x={930} y={205} width={32} height={12} rx={2} fill="#f4d35e" transform="rotate(-25, 946, 211)" />
-                  </>
+                  <g transform={`rotate(${TRACK_ROTATE}, ${TRACK_CX}, ${TRACK_CY})`}>
+                    {/* Laufbahn als Stadionform (Pille): volle Eckabrundung ergibt die
+                        typische Rundlaufbahn-Silhouette statt einer reinen Ellipse. */}
+                    <rect x={TRACK_CX - 145} y={TRACK_CY - 82} width={290} height={164} rx={82} fill={PEACH} stroke="#333" strokeWidth={1.5} />
+                    <rect x={TRACK_CX - 85} y={TRACK_CY - 47} width={170} height={94} rx={47} fill={BG} />
+                    <rect x={TRACK_CX - 12} y={TRACK_CY - 78} width={22} height={12} rx={2} fill="#f4d35e" />
+                    <rect x={TRACK_CX - 70} y={TRACK_CY + 44} width={34} height={12} rx={2} fill="#f4d35e" />
+                  </g>
                 ) : (
                   <path d={h.path} fill={h.fill} stroke="#333" strokeWidth={1.5} />
                 )}
                 {isActive && (
                   h.id === 1
-                    ? <ellipse cx={995} cy={155} rx={92} ry={152} fill="none" stroke="#D4FF6B" strokeWidth={4} />
+                    ? (
+                      <g transform={`rotate(${TRACK_ROTATE}, ${TRACK_CX}, ${TRACK_CY})`}>
+                        <rect x={TRACK_CX - 149} y={TRACK_CY - 86} width={298} height={172} rx={86} fill="none" stroke="#D4FF6B" strokeWidth={4} />
+                      </g>
+                    )
                     : <path d={h.path} fill="none" stroke="#D4FF6B" strokeWidth={4} />
                 )}
               </g>
