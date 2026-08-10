@@ -11,7 +11,13 @@ interface HeroProps {
 // { title: "Jahreshauptversammlung", date: "20. März 2026", info: "Vereinsheim · 19:00 Uhr", icon: "📅" },
 const upcomingEvents: { title: string; date: string; info: string; icon: string }[] = [];
 
-const VIDEO_SRC = '/sportpark_buehl.MOV';
+// H.264/faststart MP4 (re-encoded from the original HEVC .MOV, which many browsers
+// can't decode at all and which had its moov atom at the end of the file — both of
+// which forced a full download before any frame could show, i.e. the grey placeholder
+// sat there far longer than needed). Poster is the video's own first frame, so there's
+// a real image on screen immediately instead of the plain background color.
+const VIDEO_SRC = '/sportpark_buehl.mp4';
+const POSTER_SRC = '/sportpark_buehl-poster.jpg';
 const CROSSFADE_BEFORE_END = 1.5; // seconds before end to start crossfade
 const CROSSFADE_DURATION = 1200; // ms
 
@@ -27,8 +33,10 @@ export const Hero: React.FC<HeroProps> = ({ onNavigateMembership }) => {
     const videoB = videoBRef.current;
     if (!videoA || !videoB) return;
 
-    // Both start invisible; CSS transition set once so it applies during crossfades
-    videoA.style.opacity = '0';
+    // A is visible from the first paint (its poster covers the gap until real frames
+    // arrive); only B (the standby crossfade video) starts hidden. Transition is set on
+    // both so later crossfades still fade smoothly.
+    videoA.style.opacity = '1';
     videoB.style.opacity = '0';
     videoA.style.transition = `opacity ${CROSSFADE_DURATION}ms ease-in-out`;
     videoB.style.transition = `opacity ${CROSSFADE_DURATION}ms ease-in-out`;
@@ -39,9 +47,8 @@ export const Hero: React.FC<HeroProps> = ({ onNavigateMembership }) => {
       v.play().then(() => v.pause()).catch(() => {});
     };
 
-    // Once A can play: show it, then prime B's first frame
+    // Once A can play through: prime B's first frame so it's ready for the first crossfade
     const onAReady = () => {
-      videoA.style.opacity = '1';
       primeStandby(videoB);
     };
 
@@ -125,13 +132,14 @@ export const Hero: React.FC<HeroProps> = ({ onNavigateMembership }) => {
             muted
             playsInline
             preload="auto"
+            poster={POSTER_SRC}
             style={{
               position: 'absolute',
               top: 0, left: 0,
               width: '100%', height: '100%',
               objectFit: 'cover',
               objectPosition: 'center center',
-              opacity: 0,
+              opacity: 1,
             }}
           >
             <source src={VIDEO_SRC} type="video/mp4" />
@@ -141,6 +149,7 @@ export const Hero: React.FC<HeroProps> = ({ onNavigateMembership }) => {
             muted
             playsInline
             preload="auto"
+            poster={POSTER_SRC}
             style={{
               position: 'absolute',
               top: 0, left: 0,
