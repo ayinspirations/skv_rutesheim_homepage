@@ -14,20 +14,27 @@ import { Handball } from './components/Handball';
 import { Turnen } from './components/Turnen';
 import { Rad } from './components/Rad';
 import { Saenger } from './components/Saenger';
+import { Sportabzeichen } from './components/Sportabzeichen';
 import { ContactModal } from './components/ContactModal';
 
-type Page = 'home' | 'membership' | 'clubhouse' | 'leitbild' | 'handball' | 'turnen' | 'rad' | 'saenger';
+type Page = 'home' | 'membership' | 'clubhouse' | 'leitbild' | 'handball' | 'turnen' | 'rad' | 'saenger' | 'sportabzeichen';
 
-// /handball, /turnen, /rad and /saenger are standalone pages reachable by direct URL
-// (deep link), unlike the other pages here which are pure in-app state. All are
-// intentionally kept out of Header/Footer nav for now.
+// /handball, /turnen, /rad, /saenger and /sportabzeichen are standalone pages reachable
+// by direct URL (deep link), unlike the other pages here which are pure in-app state.
+// All are intentionally kept out of Header/Footer nav for now.
 //
 // OPEN QUESTION for /turnen specifically (unlike the others): Turnen replaces an
 // established public department subsite that WAS linked from the old site's main nav,
-// whereas Handball's, Rad's and Sänger's pages are new. TODO: confirm with the client
-// whether /turnen should be promoted into the main nav, or stay tile-only like the
-// others (current default).
-const pathToPage: Record<string, Page> = { '/handball': 'handball', '/turnen': 'turnen', '/rad': 'rad', '/saenger': 'saenger' };
+// whereas Handball's, Rad's, Sänger's and Sportabzeichen's pages are new. TODO: confirm
+// with the client whether /turnen should be promoted into the main nav, or stay
+// tile-only like the others (current default).
+const pathToPage: Record<string, Page> = {
+  '/handball': 'handball',
+  '/turnen': 'turnen',
+  '/rad': 'rad',
+  '/saenger': 'saenger',
+  '/sportabzeichen': 'sportabzeichen',
+};
 const pageFromPath = (): Page => pathToPage[window.location.pathname] ?? 'home';
 
 function App() {
@@ -48,6 +55,7 @@ function App() {
       currentPage === 'turnen' ? '/turnen' :
       currentPage === 'rad' ? '/rad' :
       currentPage === 'saenger' ? '/saenger' :
+      currentPage === 'sportabzeichen' ? '/sportabzeichen' :
       '/';
     if (window.location.pathname !== path) {
       window.history.pushState({}, '', path);
@@ -78,6 +86,7 @@ function App() {
               onNavigateTurnen={() => setCurrentPage('turnen')}
               onNavigateRad={() => setCurrentPage('rad')}
               onNavigateSaenger={() => setCurrentPage('saenger')}
+              onNavigateSportabzeichen={() => setCurrentPage('sportabzeichen')}
             />
             <CallToAction onNavigate={() => setCurrentPage('membership')} />
           </>
@@ -109,6 +118,10 @@ function App() {
 
         {currentPage === 'saenger' && (
           <Saenger onBack={() => setCurrentPage('home')} />
+        )}
+
+        {currentPage === 'sportabzeichen' && (
+          <Sportabzeichen onBack={() => setCurrentPage('home')} />
         )}
       </main>
       <Footer onNavigate={setCurrentPage} />

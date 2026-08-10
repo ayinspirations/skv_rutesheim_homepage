@@ -23,20 +23,6 @@ const quickLinks = [
   { id: "verband", label: "Verband" },
 ];
 
-// TODO: SKVFreizeitsaenger.jpg (Gruppenbild) wurde vom Kunden angekündigt, liegt aber
-// noch nicht unter /public — Platzhalter bis das Bild vorliegt.
-const GroupPhotoPlaceholder: React.FC = () => (
-  <div
-    className="relative w-full aspect-video rounded-2xl overflow-hidden flex items-center justify-center border border-black/5"
-    style={{
-      backgroundImage: 'repeating-linear-gradient(135deg, #eff6ff 0px, #eff6ff 14px, #dbeafe 14px, #dbeafe 28px)',
-    }}
-  >
-    <span className="px-3 py-1.5 bg-white/80 backdrop-blur-sm rounded-full text-[10px] font-black uppercase tracking-widest text-black/40">
-      Gruppenbild folgt
-    </span>
-  </div>
-);
 
 export const Saenger: React.FC<SaengerProps> = ({
   onBack,
@@ -137,7 +123,11 @@ export const Saenger: React.FC<SaengerProps> = ({
 
             <div className="pt-10 border-t border-black/5">
               <h3 className="text-xs font-black uppercase tracking-[0.3em] text-black/30 mb-4">Gruppenbild</h3>
-              <GroupPhotoPlaceholder />
+              <img
+                src="/SKVFreizeitsaenger.jpg"
+                alt="Die SKV-Freizeitsänger*innen"
+                className="w-full max-w-sm mx-auto rounded-2xl border border-black/5"
+              />
             </div>
           </div>
         </div>
