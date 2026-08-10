@@ -157,10 +157,10 @@ export const Hero: React.FC<HeroProps> = ({ onNavigateMembership }) => {
 
         {/* Content Container */}
         {/* Mobile: flex-col-reverse puts Section 2 (Headline) above Section 1 (Notif). justify-start anchors it at top. */}
-        <div className="relative z-10 flex flex-col-reverse md:flex-col flex-1 p-6 md:p-10 lg:p-14 justify-start md:justify-between gap-8 md:gap-0 overflow-y-auto md:overflow-hidden no-scrollbar">
+        <div className="relative z-10 flex flex-col-reverse md:flex-col flex-1 p-6 md:p-10 lg:p-14 justify-start md:justify-between overflow-y-auto md:overflow-hidden no-scrollbar">
           
           {/* Section 1: Notifications & Map */}
-          <div className="relative w-full flex flex-col md:flex-row justify-between items-start gap-6 md:gap-4 mb-8 md:mb-0">
+          <div className="relative w-full flex flex-col md:flex-row justify-between items-start gap-6 md:gap-4">
             
             {/* Left: Notifications (Apple Style) */}
             {upcomingEvents.length > 0 && (
@@ -240,13 +240,15 @@ export const Hero: React.FC<HeroProps> = ({ onNavigateMembership }) => {
           </div>
 
           {/* Section 2: Headline Area
-              Mobile: grid with rows [1fr, auto] — the badge/headline group (row 1) sits
-              at the bottom of the flexible row (self-end) so both it and the CTA row
-              below (row 2, auto height) land low in the card, close to each other,
-              while staying left-aligned text; CTA buttons center horizontally via
-              items-center. */}
-          <div className="pointer-events-none relative z-20 mb-4 md:mb-0 md:mt-auto flex-1 grid grid-rows-[1fr_auto] md:flex-none md:block">
-            <div className="self-end">
+              Mobile: flex-col with a larger spacer above the badge/headline than
+              below it, so the block lands at roughly 55-60% down the section —
+              a slight downward bias off dead-center, not touching the exact
+              middle. The lower spacer also creates the breathing room between
+              the headline and the CTA row, which docks to the bottom via its
+              own small pb (on top of the section's own padding). */}
+          <div className="pointer-events-none relative z-20 flex-1 flex flex-col md:mt-auto md:flex-none md:block">
+            <div className="flex-[3] md:hidden" aria-hidden="true"></div>
+            <div>
               <motion.div
                 initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
@@ -266,11 +268,13 @@ export const Hero: React.FC<HeroProps> = ({ onNavigateMembership }) => {
               </motion.h1>
             </div>
 
+            <div className="flex-[1] min-h-10 md:hidden" aria-hidden="true"></div>
+
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.6 }}
-              className="pointer-events-auto flex flex-col sm:flex-row items-center gap-4 sm:gap-10"
+              className="pointer-events-auto flex flex-col sm:flex-row items-center gap-4 sm:gap-10 pb-2 sm:pb-4 md:pb-0"
             >
               <button
                 onClick={onNavigateMembership}
