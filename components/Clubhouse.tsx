@@ -62,11 +62,11 @@ export const Clubhouse: React.FC<ClubhouseProps> = ({ onBack }) => {
                   <span className="w-8 h-8 bg-black text-white rounded-full flex items-center justify-center text-xs">📞</span>
                   07152 / 3560808
                 </a>
-                <a href="#" className="flex items-center gap-3 text-sm font-bold hover:text-[#D4FF6B] transition-colors">
+                <a href="mailto:Erhardt.ellen@t-online.de" className="flex items-center gap-3 text-sm font-bold hover:text-[#D4FF6B] transition-colors">
                   <span className="w-8 h-8 bg-black text-white rounded-full flex items-center justify-center text-xs">✉️</span>
                   E-Mail senden
                 </a>
-                <a href="#" target="_blank" className="flex items-center gap-3 text-sm font-bold hover:text-[#D4FF6B] transition-colors">
+                <a href="https://www.ristorante-pizzeria-buehl.de/start/" target="_blank" rel="noopener noreferrer" className="flex items-center gap-3 text-sm font-bold hover:text-[#D4FF6B] transition-colors">
                   <span className="w-8 h-8 bg-black text-white rounded-full flex items-center justify-center text-xs">🌐</span>
                   Zur Homepage ↗
                 </a>

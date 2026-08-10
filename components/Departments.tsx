@@ -5,7 +5,8 @@ const departments = [
   {
     title: "Fußball",
     image: "https://images.unsplash.com/photo-1574629810360-7efbbe195018?auto=format&fit=crop&q=80&w=1000",
-    tag: "Aktiv"
+    tag: "Aktiv",
+    link: "https://skv-rutesheim.de/fussball/"
   },
   {
     title: "Turnen & Schwimmen",
@@ -30,7 +31,8 @@ const departments = [
   {
     title: "Tischtennis",
     image: "https://images.unsplash.com/photo-1609710228159-0fa9bd7c0827?auto=format&fit=crop&q=80&w=1000",
-    tag: "Präzision"
+    tag: "Präzision",
+    link: "https://www.ttrutesheim.de/"
   },
   {
     title: "Sänger",
@@ -67,8 +69,8 @@ export const Departments: React.FC = () => {
   );
 };
 
-const DepartmentCard: React.FC<{ title: string; image: string; tag: string; index: number }> = ({ title, image, tag, index }) => {
-  const ref = useRef<HTMLDivElement>(null);
+const DepartmentCard: React.FC<{ title: string; image: string; tag: string; index: number; link?: string }> = ({ title, image, tag, index, link }) => {
+  const ref = useRef<HTMLElement>(null);
   const prefersReducedMotion = typeof window !== 'undefined' && window.matchMedia?.('(prefers-reduced-motion: reduce)').matches;
   const hasIO = typeof IntersectionObserver !== 'undefined';
   const [isVisible, setIsVisible] = useState(!hasIO || prefersReducedMotion);
@@ -92,9 +94,13 @@ const DepartmentCard: React.FC<{ title: string; image: string; tag: string; inde
     return () => observer.unobserve(el);
   }, []);
 
+  const Tag = (link ? 'a' : 'div') as any;
+  const linkProps = link ? { href: link, target: '_blank', rel: 'noopener noreferrer' } : {};
+
   return (
-    <div
+    <Tag
       ref={ref}
+      {...linkProps}
       style={{
         opacity: isVisible ? 1 : 0,
         transform: isVisible ? 'translateY(0)' : 'translateY(24px)',
@@ -126,6 +132,6 @@ const DepartmentCard: React.FC<{ title: string; image: string; tag: string; inde
           <span className="text-[#D4FF6B] text-xl">→</span>
         </div>
       </div>
-    </div>
+    </Tag>
   );
 };
