@@ -46,7 +46,10 @@ const departments = [
   {
     title: "Sänger",
     image: "/saenger.jpg",
-    tag: "Kultur"
+    tag: "Kultur",
+    link: "/saenger",
+    internal: true,
+    route: "saenger"
   },
   {
     title: "Sportabzeichen",
@@ -59,13 +62,15 @@ interface DepartmentsProps {
   onNavigateHandball?: () => void;
   onNavigateTurnen?: () => void;
   onNavigateRad?: () => void;
+  onNavigateSaenger?: () => void;
 }
 
-export const Departments: React.FC<DepartmentsProps> = ({ onNavigateHandball, onNavigateTurnen, onNavigateRad }) => {
+export const Departments: React.FC<DepartmentsProps> = ({ onNavigateHandball, onNavigateTurnen, onNavigateRad, onNavigateSaenger }) => {
   const internalRoutes: Record<string, (() => void) | undefined> = {
     handball: onNavigateHandball,
     turnen: onNavigateTurnen,
     rad: onNavigateRad,
+    saenger: onNavigateSaenger,
   };
 
   return (

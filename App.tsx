@@ -13,20 +13,21 @@ import { Leitbild } from './components/Leitbild';
 import { Handball } from './components/Handball';
 import { Turnen } from './components/Turnen';
 import { Rad } from './components/Rad';
+import { Saenger } from './components/Saenger';
 import { ContactModal } from './components/ContactModal';
 
-type Page = 'home' | 'membership' | 'clubhouse' | 'leitbild' | 'handball' | 'turnen' | 'rad';
+type Page = 'home' | 'membership' | 'clubhouse' | 'leitbild' | 'handball' | 'turnen' | 'rad' | 'saenger';
 
-// /handball, /turnen and /rad are standalone pages reachable by direct URL (deep link),
-// unlike the other pages here which are pure in-app state. All three are intentionally
-// kept out of Header/Footer nav for now.
+// /handball, /turnen, /rad and /saenger are standalone pages reachable by direct URL
+// (deep link), unlike the other pages here which are pure in-app state. All are
+// intentionally kept out of Header/Footer nav for now.
 //
-// OPEN QUESTION for /turnen specifically (unlike /handball and /rad): Turnen replaces an
+// OPEN QUESTION for /turnen specifically (unlike the others): Turnen replaces an
 // established public department subsite that WAS linked from the old site's main nav,
-// whereas Handball's and Rad's pages are new. TODO: confirm with the client whether
-// /turnen should be promoted into the main nav, or stay tile-only like the others
-// (current default).
-const pathToPage: Record<string, Page> = { '/handball': 'handball', '/turnen': 'turnen', '/rad': 'rad' };
+// whereas Handball's, Rad's and Sänger's pages are new. TODO: confirm with the client
+// whether /turnen should be promoted into the main nav, or stay tile-only like the
+// others (current default).
+const pathToPage: Record<string, Page> = { '/handball': 'handball', '/turnen': 'turnen', '/rad': 'rad', '/saenger': 'saenger' };
 const pageFromPath = (): Page => pathToPage[window.location.pathname] ?? 'home';
 
 function App() {
@@ -42,7 +43,12 @@ function App() {
   // linkable/bookmarkable, without introducing a full router for the rest of the
   // (state-only) pages.
   useEffect(() => {
-    const path = currentPage === 'handball' ? '/handball' : currentPage === 'turnen' ? '/turnen' : currentPage === 'rad' ? '/rad' : '/';
+    const path =
+      currentPage === 'handball' ? '/handball' :
+      currentPage === 'turnen' ? '/turnen' :
+      currentPage === 'rad' ? '/rad' :
+      currentPage === 'saenger' ? '/saenger' :
+      '/';
     if (window.location.pathname !== path) {
       window.history.pushState({}, '', path);
     }
@@ -71,6 +77,7 @@ function App() {
               onNavigateHandball={() => setCurrentPage('handball')}
               onNavigateTurnen={() => setCurrentPage('turnen')}
               onNavigateRad={() => setCurrentPage('rad')}
+              onNavigateSaenger={() => setCurrentPage('saenger')}
             />
             <CallToAction onNavigate={() => setCurrentPage('membership')} />
           </>
@@ -98,6 +105,10 @@ function App() {
 
         {currentPage === 'rad' && (
           <Rad onBack={() => setCurrentPage('home')} />
+        )}
+
+        {currentPage === 'saenger' && (
+          <Saenger onBack={() => setCurrentPage('home')} />
         )}
       </main>
       <Footer onNavigate={setCurrentPage} />
