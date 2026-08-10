@@ -11,14 +11,18 @@ const departments = [
   {
     title: "Turnen & Schwimmen",
     image: "https://images.unsplash.com/photo-1519315901367-f34ff9154487?auto=format&fit=crop&q=80&w=1000",
-    tag: "Vielseitig"
+    tag: "Vielseitig",
+    link: "/turnen",
+    internal: true,
+    route: "turnen"
   },
   {
     title: "Handball",
     image: "/handball.jpg",
     tag: "Dynamik",
     link: "/handball",
-    internal: true
+    internal: true,
+    route: "handball"
   },
   {
     title: "Volleyball",
@@ -50,9 +54,15 @@ const departments = [
 
 interface DepartmentsProps {
   onNavigateHandball?: () => void;
+  onNavigateTurnen?: () => void;
 }
 
-export const Departments: React.FC<DepartmentsProps> = ({ onNavigateHandball }) => {
+export const Departments: React.FC<DepartmentsProps> = ({ onNavigateHandball, onNavigateTurnen }) => {
+  const internalRoutes: Record<string, (() => void) | undefined> = {
+    handball: onNavigateHandball,
+    turnen: onNavigateTurnen,
+  };
+
   return (
     <section id="abteilungen" className="py-20 md:py-32 px-4 md:px-6 bg-white overflow-hidden scroll-mt-20 md:scroll-mt-24">
       <div className="max-w-7xl mx-auto">
@@ -71,7 +81,7 @@ export const Departments: React.FC<DepartmentsProps> = ({ onNavigateHandball }) 
               key={idx}
               index={idx}
               {...dept}
-              onClick={dept.internal ? onNavigateHandball : undefined}
+              onClick={dept.internal ? internalRoutes[dept.route as string] : undefined}
             />
           ))}
         </div>

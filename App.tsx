@@ -11,13 +11,21 @@ import { Membership } from './components/Membership';
 import { Clubhouse } from './components/Clubhouse';
 import { Leitbild } from './components/Leitbild';
 import { Handball } from './components/Handball';
+import { Turnen } from './components/Turnen';
 import { ContactModal } from './components/ContactModal';
 
-type Page = 'home' | 'membership' | 'clubhouse' | 'leitbild' | 'handball';
+type Page = 'home' | 'membership' | 'clubhouse' | 'leitbild' | 'handball' | 'turnen';
 
-// /handball is a standalone page reachable by direct URL (deep link), unlike the other
-// pages here which are pure in-app state. It is intentionally kept out of Header/Footer nav.
-const pageFromPath = (): Page => (window.location.pathname === '/handball' ? 'handball' : 'home');
+// /handball and /turnen are standalone pages reachable by direct URL (deep link), unlike
+// the other pages here which are pure in-app state. Both are intentionally kept out of
+// Header/Footer nav for now.
+//
+// OPEN QUESTION for /turnen specifically (unlike /handball): Turnen replaces an
+// established public department subsite that WAS linked from the old site's main nav,
+// whereas Handball's page is new. TODO: confirm with the client whether /turnen should
+// be promoted into the main nav, or stay tile-only like /handball (current default).
+const pathToPage: Record<string, Page> = { '/handball': 'handball', '/turnen': 'turnen' };
+const pageFromPath = (): Page => pathToPage[window.location.pathname] ?? 'home';
 
 function App() {
   const [currentPage, setCurrentPage] = useState<Page>(() => pageFromPath());
@@ -28,10 +36,11 @@ function App() {
     window.scrollTo(0, 0);
   }, [currentPage]);
 
-  // Keep the URL bar in sync with /handball so the page is linkable/bookmarkable,
-  // without introducing a full router for the rest of the (state-only) pages.
+  // Keep the URL bar in sync with /handball and /turnen so those pages are
+  // linkable/bookmarkable, without introducing a full router for the rest of the
+  // (state-only) pages.
   useEffect(() => {
-    const path = currentPage === 'handball' ? '/handball' : '/';
+    const path = currentPage === 'handball' ? '/handball' : currentPage === 'turnen' ? '/turnen' : '/';
     if (window.location.pathname !== path) {
       window.history.pushState({}, '', path);
     }
@@ -56,7 +65,10 @@ function App() {
             <Hero onNavigateMembership={() => setCurrentPage('membership')} />
             <Stats />
             <Organization onNavigateLeitbild={() => setCurrentPage('leitbild')} />
-            <Departments onNavigateHandball={() => setCurrentPage('handball')} />
+            <Departments
+              onNavigateHandball={() => setCurrentPage('handball')}
+              onNavigateTurnen={() => setCurrentPage('turnen')}
+            />
             <CallToAction onNavigate={() => setCurrentPage('membership')} />
           </>
         )}
@@ -75,6 +87,10 @@ function App() {
 
         {currentPage === 'handball' && (
           <Handball onBack={() => setCurrentPage('home')} />
+        )}
+
+        {currentPage === 'turnen' && (
+          <Turnen onBack={() => setCurrentPage('home')} onOpenContact={() => setIsContactOpen(true)} />
         )}
       </main>
       <Footer onNavigate={setCurrentPage} />

@@ -154,15 +154,16 @@ const trainingsgruppen: TrainingGroup[] = [
   },
 ];
 
-interface Halle {
+export interface Halle {
   name: string;
   subtitle: string;
   address: string;
   notes?: string[];
 }
 
+// Exported so /turnen (FacilityMap) can reuse the same address data instead of re-deriving it.
 // TODO: Foto vorhanden lt. Kunde für Theodor-Heuss-Turnhalle — beim Kunden anfordern, alle übrigen Fotos TODO.
-const hallen: Halle[] = [
+export const hallen: Halle[] = [
   {
     name: "Sporthalle Bühl 1",
     subtitle: "Spiel- und Trainingsbetrieb",
