@@ -12,19 +12,21 @@ import { Clubhouse } from './components/Clubhouse';
 import { Leitbild } from './components/Leitbild';
 import { Handball } from './components/Handball';
 import { Turnen } from './components/Turnen';
+import { Rad } from './components/Rad';
 import { ContactModal } from './components/ContactModal';
 
-type Page = 'home' | 'membership' | 'clubhouse' | 'leitbild' | 'handball' | 'turnen';
+type Page = 'home' | 'membership' | 'clubhouse' | 'leitbild' | 'handball' | 'turnen' | 'rad';
 
-// /handball and /turnen are standalone pages reachable by direct URL (deep link), unlike
-// the other pages here which are pure in-app state. Both are intentionally kept out of
-// Header/Footer nav for now.
+// /handball, /turnen and /rad are standalone pages reachable by direct URL (deep link),
+// unlike the other pages here which are pure in-app state. All three are intentionally
+// kept out of Header/Footer nav for now.
 //
-// OPEN QUESTION for /turnen specifically (unlike /handball): Turnen replaces an
+// OPEN QUESTION for /turnen specifically (unlike /handball and /rad): Turnen replaces an
 // established public department subsite that WAS linked from the old site's main nav,
-// whereas Handball's page is new. TODO: confirm with the client whether /turnen should
-// be promoted into the main nav, or stay tile-only like /handball (current default).
-const pathToPage: Record<string, Page> = { '/handball': 'handball', '/turnen': 'turnen' };
+// whereas Handball's and Rad's pages are new. TODO: confirm with the client whether
+// /turnen should be promoted into the main nav, or stay tile-only like the others
+// (current default).
+const pathToPage: Record<string, Page> = { '/handball': 'handball', '/turnen': 'turnen', '/rad': 'rad' };
 const pageFromPath = (): Page => pathToPage[window.location.pathname] ?? 'home';
 
 function App() {
@@ -40,7 +42,7 @@ function App() {
   // linkable/bookmarkable, without introducing a full router for the rest of the
   // (state-only) pages.
   useEffect(() => {
-    const path = currentPage === 'handball' ? '/handball' : currentPage === 'turnen' ? '/turnen' : '/';
+    const path = currentPage === 'handball' ? '/handball' : currentPage === 'turnen' ? '/turnen' : currentPage === 'rad' ? '/rad' : '/';
     if (window.location.pathname !== path) {
       window.history.pushState({}, '', path);
     }
@@ -68,6 +70,7 @@ function App() {
             <Departments
               onNavigateHandball={() => setCurrentPage('handball')}
               onNavigateTurnen={() => setCurrentPage('turnen')}
+              onNavigateRad={() => setCurrentPage('rad')}
             />
             <CallToAction onNavigate={() => setCurrentPage('membership')} />
           </>
@@ -91,6 +94,10 @@ function App() {
 
         {currentPage === 'turnen' && (
           <Turnen onBack={() => setCurrentPage('home')} onOpenContact={() => setIsContactOpen(true)} />
+        )}
+
+        {currentPage === 'rad' && (
+          <Rad onBack={() => setCurrentPage('home')} />
         )}
       </main>
       <Footer onNavigate={setCurrentPage} />
