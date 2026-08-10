@@ -278,107 +278,28 @@ interface TrainingGroup {
 
 const trainingsgruppen: TrainingGroup[] = [
   {
-    name: "Spielgruppe (ab 3 Jahren)",
-    note: "Wir können zur Zeit leider keine Spielgruppe anbieten.",
-    email: "spielgruppe@handball-rutesheim.de",
-  },
-  // TODO: Mannschaftsfoto noch vom Kunden anzufordern.
-  {
-    name: "Minis (ab 4 Jahren)",
+    name: "Minis",
     scheduleLines: ["Freitag, 16:00–17:00 Uhr"],
     sporthalle: "Bühl 1",
-    trainer: "Philipp Kamping, Lars Neuffer",
+    trainer: "Daniel Wielsch, Leonard Schindewolf",
     email: "minis@handball-rutesheim.de",
     needsFoto: true,
   },
-  // TODO: Mannschaftsfoto noch vom Kunden anzufordern.
   {
-    name: "Gemischte F-Jugend",
+    name: "F-Jugend",
     scheduleLines: ["Freitag, 16:00–17:30 Uhr"],
     sporthalle: "Bühl 2",
-    trainer: "Andreas Flöck, Sarina Gaß, Maja Kulis",
+    trainer: "Markus Gehrke, Philipp Kamping",
     email: "f-jugend@handball-rutesheim.de",
     needsFoto: true,
   },
-  // TODO: Mannschaftsfoto noch vom Kunden anzufordern.
   {
-    name: "Gemischte E-Jugend",
-    scheduleLines: ["Freitag, 17:00–18:30 Uhr"],
+    name: "E-Jugend",
+    scheduleLines: ["Montag, 17:00–18:00 Uhr", "Freitag, 17:00–18:30 Uhr"],
     sporthalle: "Bühl 1",
-    trainer: "Jessica Drodofsky, Markus Spindler, Cornelius Bührle",
+    trainer: "Lars Neuffer, Sascha Glaisner",
     email: "e-jugend@handball-rutesheim.de",
     needsFoto: true,
-  },
-  // Hinweis: D/C/B/A-Jugend-Zeiten stammen aus dem "Handball Team Heckengäu"-Gesamtplan
-  // und laufen gemeinsam mit den Partnervereinen über Renningen/Magstadt/Rutesheim.
-  // TODO: kein separater Trainer pro Team angegeben — beim Kunden nachfragen, ob ergänzt werden soll.
-  {
-    name: "D-Jugend weiblich",
-    scheduleLines: [
-      "Dienstag, 17:15–19:00 Uhr (Magstadt)",
-      "Mittwoch, 18:00–19:30 Uhr (Rutesheim)",
-      "Freitag, 15:20–17:00 Uhr (Renningen)",
-      "Samstag, 9:30–11:00 Uhr Zusatzangebot (Magstadt)",
-    ],
-  },
-  {
-    name: "D-Jugend männlich",
-    scheduleLines: ["Montag, 17:15–19:00 Uhr (ReRuMa rollierend)", "Mittwoch, 17:00–18:30 Uhr (ReRuMa rollierend)"],
-  },
-  {
-    name: "C-Jugend weiblich",
-    scheduleLines: ["Montag, 17:15–19:00 Uhr (ReRuMa rollierend)", "Mittwoch, 17:00–18:30 Uhr (ReRuMa rollierend)"],
-  },
-  {
-    name: "C-Jugend männlich",
-    scheduleLines: [
-      "Dienstag, 17:15–19:00 Uhr (Magstadt)",
-      "Mittwoch, 18:00–19:30 Uhr (Rutesheim)",
-      "Freitag, 17:00–18:15 Uhr (Renningen)",
-      "Samstag, 9:30–11:00 Uhr Zusatzangebot (Magstadt)",
-      "Donnerstag, 18:30–20:00 Uhr (Renningen)",
-    ],
-  },
-  {
-    name: "B-Jugend weiblich",
-    scheduleLines: ["Montag, 19:00–20:30 Uhr (Magstadt)", "Mittwoch, 19:30–20:30 Uhr (Renningen)"],
-  },
-  {
-    name: "B-Jugend männlich",
-    scheduleLines: ["Montag, 17:15–19:00 Uhr (ReRuMa rollierend)", "Mittwoch, 17:00–18:30 Uhr (ReRuMa rollierend)"],
-  },
-  {
-    name: "A-Jugend weiblich",
-    scheduleLines: ["Montag, 19:00–20:30 Uhr (Magstadt)", "Mittwoch, 19:30–20:30 Uhr (Renningen)"],
-  },
-  {
-    name: "A-Jugend männlich",
-    scheduleLines: [
-      "Montag, 19:15–20:30 Uhr (Renningen)",
-      "Mittwoch, 19:30–22:00 Uhr (Magstadt)",
-      "Mittwoch, 18:30–20:00 Uhr (Magstadt)",
-    ],
-  },
-  {
-    name: "Damen 2",
-    scheduleLines: ["Mittwoch, 19:30–21:00 Uhr", "Freitag, 18:30–20:15 Uhr"],
-    sporthalle: "Bühl 1",
-    trainer: "Friedemann Aust",
-    email: "frauen2@handball-rutesheim.de",
-  },
-  {
-    name: "Damen 1",
-    scheduleLines: ["Mittwoch, 20:15–21:45 Uhr", "Freitag, 20:15–21:45 Uhr"],
-    sporthalle: "Bühl 1",
-    trainer: "Christoph Hönig",
-    email: "frauen1@handball-rutesheim.de",
-  },
-  {
-    name: "Herren",
-    scheduleLines: ["Donnerstag, 20:00–21:45 Uhr"],
-    sporthalle: "Bühl 1",
-    trainer: "Fabian Weber",
-    email: "herren@handball-rutesheim.de",
   },
 ];
 
@@ -686,6 +607,7 @@ export const Handball: React.FC<HandballProps> = ({
 
             <div className="pt-10 border-t border-black/5">
               <AccordionSection title="Trainingszeiten und Trainer">
+                <h4 className="text-xs font-black uppercase tracking-widest text-black/30 mb-4">Kinderhandball</h4>
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
                   {trainingsgruppen.map((group, idx) => (
                     <div key={idx} className="bg-white p-6 rounded-[2rem] border border-black/5 flex flex-col gap-4">
