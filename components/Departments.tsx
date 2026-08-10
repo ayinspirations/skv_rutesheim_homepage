@@ -16,7 +16,9 @@ const departments = [
   {
     title: "Handball",
     image: "/handball.jpg",
-    tag: "Dynamik"
+    tag: "Dynamik",
+    link: "/handball",
+    internal: true
   },
   {
     title: "Volleyball",
@@ -46,7 +48,11 @@ const departments = [
   }
 ];
 
-export const Departments: React.FC = () => {
+interface DepartmentsProps {
+  onNavigateHandball?: () => void;
+}
+
+export const Departments: React.FC<DepartmentsProps> = ({ onNavigateHandball }) => {
   return (
     <section id="abteilungen" className="py-20 md:py-32 px-4 md:px-6 bg-white overflow-hidden scroll-mt-20 md:scroll-mt-24">
       <div className="max-w-7xl mx-auto">
@@ -61,7 +67,12 @@ export const Departments: React.FC = () => {
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-10">
           {departments.map((dept, idx) => (
-            <DepartmentCard key={idx} index={idx} {...dept} />
+            <DepartmentCard
+              key={idx}
+              index={idx}
+              {...dept}
+              onClick={dept.internal ? onNavigateHandball : undefined}
+            />
           ))}
         </div>
       </div>
@@ -69,7 +80,7 @@ export const Departments: React.FC = () => {
   );
 };
 
-const DepartmentCard: React.FC<{ title: string; image: string; tag: string; index: number; link?: string }> = ({ title, image, tag, index, link }) => {
+const DepartmentCard: React.FC<{ title: string; image: string; tag: string; index: number; link?: string; onClick?: () => void }> = ({ title, image, tag, index, link, onClick }) => {
   const ref = useRef<HTMLElement>(null);
   const prefersReducedMotion = typeof window !== 'undefined' && window.matchMedia?.('(prefers-reduced-motion: reduce)').matches;
   const hasIO = typeof IntersectionObserver !== 'undefined';
@@ -95,7 +106,13 @@ const DepartmentCard: React.FC<{ title: string; image: string; tag: string; inde
   }, []);
 
   const Tag = (link ? 'a' : 'div') as any;
-  const linkProps = link ? { href: link, target: '_blank', rel: 'noopener noreferrer' } : {};
+  const linkProps = link
+    ? onClick
+      // Internal route (e.g. /handball): real href for accessibility/right-click,
+      // but intercepted on primary click to navigate within the SPA (no full reload).
+      ? { href: link, onClick: (e: React.MouseEvent) => { e.preventDefault(); onClick(); } }
+      : { href: link, target: '_blank', rel: 'noopener noreferrer' }
+    : {};
 
   return (
     <Tag
