@@ -240,12 +240,13 @@ export const Hero: React.FC<HeroProps> = ({ onNavigateMembership }) => {
           </div>
 
           {/* Section 2: Headline Area
-              Mobile: grid with rows [1fr, auto] — the badge/headline group (row 1) is
-              vertically centered (self-center) within the flexible row while staying
-              left-aligned text; the CTA row (row 2, auto height) naturally lands at the
-              bottom, with its buttons centered horizontally via items-center. */}
+              Mobile: grid with rows [1fr, auto] — the badge/headline group (row 1) sits
+              at the bottom of the flexible row (self-end) so both it and the CTA row
+              below (row 2, auto height) land low in the card, close to each other,
+              while staying left-aligned text; CTA buttons center horizontally via
+              items-center. */}
           <div className="pointer-events-none relative z-20 mb-4 md:mb-0 md:mt-auto flex-1 grid grid-rows-[1fr_auto] md:flex-none md:block">
-            <div className="self-center">
+            <div className="self-end">
               <motion.div
                 initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
