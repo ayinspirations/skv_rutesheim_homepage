@@ -507,7 +507,7 @@ export const Handball: React.FC<HandballProps> = ({
             <motion.h1
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              className="shrink-0 max-w-[10.5rem] sm:max-w-xs md:max-w-sm lg:max-w-xl text-3xl sm:text-4xl md:text-6xl lg:text-7xl xl:text-8xl font-black tracking-tighter leading-[0.9]"
+              className="shrink-0 max-w-[10.5rem] sm:max-w-xs md:max-w-sm lg:max-w-xl text-4xl sm:text-4xl md:text-6xl lg:text-7xl xl:text-8xl font-black tracking-tighter leading-[0.9]"
             >
               SKV Rutesheim <span className="text-black/20">Handball.</span>
             </motion.h1>
@@ -520,7 +520,7 @@ export const Handball: React.FC<HandballProps> = ({
               <img
                 src="/Handball_Rutesheim.png"
                 alt="Logo Handball Rutesheim"
-                className="w-16 sm:w-24 md:w-32 lg:w-48 xl:w-56 h-auto object-contain"
+                className="w-20 sm:w-24 md:w-32 lg:w-48 xl:w-56 h-auto object-contain"
               />
             </motion.div>
           </div>
@@ -538,7 +538,7 @@ export const Handball: React.FC<HandballProps> = ({
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.2 }}
-              className="text-xl md:text-2xl font-medium text-black/60 leading-relaxed max-w-3xl mb-12"
+              className="text-lg md:text-2xl font-medium text-black/60 leading-relaxed max-w-3xl mb-12"
             >
               {MISSION_TEXT}
             </motion.p>
