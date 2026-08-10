@@ -201,6 +201,11 @@ const berichte = [
   "Bericht der Jahreshauptversammlung 2024 der SKV Rutesheim – Abteilung Handball",
 ];
 
+const wichtigeLinks = [
+  { title: "Spielgemeinschaft", href: "https://www.ht-heckengaeu.de" },
+  { title: "Shop Spielgemeinschaft", href: "https://ht-heckengaeu.teamservice24.shop/" },
+];
+
 const ansprechpartnerAbteilung = [
   { role: "Abteilungsleiter", name: "Stefan Kugel", email: "abteilungsleitung@handball-rutesheim.de" },
   { role: "stellv. Abteilungsleiter", name: "Maximilian Hoffart", email: "stellv.abteilungsleitung@handball-rutesheim.de" },
@@ -385,6 +390,7 @@ const foerdervereinAnsprechpartner = [
 const quickLinks = [
   { id: "neuigkeiten", label: "Neuigkeiten" },
   { id: "berichte", label: "Berichte" },
+  { id: "links", label: "Links" },
   { id: "abteilungen", label: "Abteilungen" },
   { id: "staetten", label: "Spiel- & Trainingsstätten" },
   { id: "schiedsrichter", label: "Schiedsrichterteam" },
@@ -417,7 +423,11 @@ const AccordionSection: React.FC<{ title: string; id?: string; children: React.R
   <details id={id} className="group scroll-mt-32">
     <summary className="cursor-pointer list-none flex items-center justify-between gap-4">
       <span className="text-lg md:text-2xl font-black tracking-tight">{title}</span>
-      <span className="shrink-0 w-8 h-8 md:w-9 md:h-9 rounded-full bg-black text-white flex items-center justify-center text-sm transition-transform group-open:rotate-45">+</span>
+      <span className="shrink-0 w-8 h-8 md:w-9 md:h-9 rounded-full bg-black text-white flex items-center justify-center transition-transform duration-300 group-open:rotate-180">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
+          <polyline points="6 9 12 15 18 9"></polyline>
+        </svg>
+      </span>
     </summary>
     <div className="mt-8">{children}</div>
   </details>
@@ -557,9 +567,9 @@ export const Handball: React.FC<HandballProps> = ({
         </div>
       </section>
 
-      {/* Neuigkeiten + Berichte */}
+      {/* Neuigkeiten + Berichte + Links */}
       <section className="px-6 mb-20 md:mb-32">
-        <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-10">
+        <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-10">
           <div id="neuigkeiten" className={`${cardClass} scroll-mt-32`}>
             <h2 className="text-2xl md:text-3xl font-black tracking-tight mb-8">Neuigkeiten</h2>
             <ul className="space-y-4">
@@ -595,6 +605,25 @@ export const Handball: React.FC<HandballProps> = ({
                   <a href="#" className="flex items-center justify-between gap-4 text-sm md:text-base font-bold text-black hover:text-black/50 transition-colors">
                     <span>{title}</span>
                     <span className="shrink-0 text-black/20">→</span>
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          <div id="links" className={`${cardClass} scroll-mt-32`}>
+            <h2 className="text-2xl md:text-3xl font-black tracking-tight mb-8">Links</h2>
+            <ul className="space-y-4">
+              {wichtigeLinks.map((link, idx) => (
+                <li key={idx} className="border-b border-black/5 pb-4 last:border-b-0 last:pb-0">
+                  <a
+                    href={link.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-center justify-between gap-4 text-sm md:text-base font-bold text-black hover:text-black/50 transition-colors"
+                  >
+                    <span>{link.title}</span>
+                    <span className="shrink-0 text-black/20">↗</span>
                   </a>
                 </li>
               ))}
@@ -641,10 +670,10 @@ export const Handball: React.FC<HandballProps> = ({
             <AccordionSection title="Ansprechpartner der Abteilung" id="ansprechpartner">
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-12 gap-y-10">
                 {ansprechpartnerAbteilung.map((person, idx) => (
-                  <div key={idx} className="group">
+                  <div key={idx}>
                     <span className="text-[10px] font-black uppercase tracking-widest text-black/30 mb-1 block">{person.role}</span>
                     <h4 className="text-xl md:text-2xl font-black mb-3 tracking-tighter">{person.name}</h4>
-                    <a href={mailHref(person.email)} className="inline-flex items-center gap-2 text-sm font-black group-hover:text-[#D4FF6B] transition-colors">
+                    <a href={mailHref(person.email)} className="inline-flex items-center gap-2 text-sm font-black text-black hover:text-black/50 transition-colors">
                       <span className="text-lg">✉️</span> {person.email}
                     </a>
                   </div>
