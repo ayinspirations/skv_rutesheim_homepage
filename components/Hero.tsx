@@ -177,7 +177,7 @@ export const Hero: React.FC<HeroProps> = ({ onNavigateMembership }) => {
                 <motion.span
                   initial={{ opacity: 0, x: -20 }}
                   animate={{ opacity: 1, x: 0 }}
-                  transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1], delay: 1.8 }}
+                  transition={{ duration: 1.3, ease: [0.16, 1, 0.3, 1], delay: 1.8 }}
                   className="text-[8px] md:text-[10px] font-black uppercase tracking-[0.3em] text-white/40 mb-1 ml-4"
                 >
                   Nächste Termine
@@ -282,7 +282,7 @@ export const Hero: React.FC<HeroProps> = ({ onNavigateMembership }) => {
             <motion.div
               initial={{ opacity: 0, y: 40 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1], delay: 0.6 }}
+              transition={{ duration: 1.3, ease: [0.16, 1, 0.3, 1], delay: 0.6 }}
               className="pointer-events-auto flex flex-col sm:flex-row items-center gap-4 sm:gap-10 pb-2 sm:pb-4 md:pb-0"
             >
               <button

@@ -472,7 +472,7 @@ export const Handball: React.FC<HandballProps> = ({
             <motion.div
               initial={{ opacity: 0, scale: 0.95 }}
               animate={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1], delay: 0.15 }}
+              transition={{ duration: 1.3, ease: [0.16, 1, 0.3, 1], delay: 0.15 }}
               className="flex-1 flex justify-center items-center min-w-0"
             >
               <img
@@ -487,7 +487,7 @@ export const Handball: React.FC<HandballProps> = ({
             <motion.p
               initial={{ opacity: 0, y: 40 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1], delay: 0.1 }}
+              transition={{ duration: 1.3, ease: [0.16, 1, 0.3, 1], delay: 0.1 }}
               className="text-2xl md:text-4xl font-black tracking-tight text-black mb-8"
             >
               Haut's rein!
@@ -495,7 +495,7 @@ export const Handball: React.FC<HandballProps> = ({
             <motion.p
               initial={{ opacity: 0, y: 40 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1], delay: 0.2 }}
+              transition={{ duration: 1.3, ease: [0.16, 1, 0.3, 1], delay: 0.2 }}
               className="text-lg md:text-2xl font-medium text-black/60 leading-relaxed max-w-3xl mb-12"
             >
               {MISSION_TEXT}
@@ -504,7 +504,7 @@ export const Handball: React.FC<HandballProps> = ({
             <motion.div
               initial={{ opacity: 0, y: 40 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1], delay: 0.3 }}
+              transition={{ duration: 1.3, ease: [0.16, 1, 0.3, 1], delay: 0.3 }}
               className="flex flex-col sm:flex-row gap-4"
             >
               <a

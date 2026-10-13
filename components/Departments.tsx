@@ -146,7 +146,7 @@ const DepartmentCard: React.FC<{ title: string; image: string; tag: string; inde
       style={{
         opacity: isVisible ? 1 : 0,
         transform: isVisible ? 'translateY(0)' : 'translateY(48px)',
-        transition: prefersReducedMotion ? 'none' : `opacity 1s cubic-bezier(0.16, 1, 0.3, 1) ${index * 0.08}s, transform 1s cubic-bezier(0.16, 1, 0.3, 1) ${index * 0.08}s`,
+        transition: prefersReducedMotion ? 'none' : `opacity 1.3s cubic-bezier(0.16, 1, 0.3, 1) ${index * 0.08}s, transform 1.5s cubic-bezier(0.16, 1, 0.3, 1) ${index * 0.08}s`,
       }}
       className="group relative aspect-square overflow-hidden rounded-[2rem] md:rounded-[3rem] bg-zinc-100 cursor-pointer shadow-[0_20px_50px_rgba(0,0,0,0.1)] md:hover:-translate-y-2.5 md:hover:scale-[1.02] transition-transform duration-500"
     >

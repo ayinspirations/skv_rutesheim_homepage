@@ -8,7 +8,7 @@ interface ClubhouseProps {
 
 const openingHours = [
   { day: "Montag", hours: "Ruhetag", highlight: false },
-  { day: "Dienstag - Samstag", hours: "11:30 - 14:00 Uhr & 17:30 - 22:30 Uhr", highlight: true },
+  { day: "Dienstag - Samstag", hours: "17:30 - 21:30 Uhr", highlight: true },
   { day: "Sonn- & Feiertage", hours: "11:30 - 14:00 Uhr & 14:30 - 21:00 Uhr", highlight: true }
 ];
 
@@ -40,7 +40,7 @@ export const Clubhouse: React.FC<ClubhouseProps> = ({ onBack }) => {
               <motion.p 
                 initial={{ opacity: 0, y: 40 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1], delay: 0.1 }}
+                transition={{ duration: 1.3, ease: [0.16, 1, 0.3, 1], delay: 0.1 }}
                 className="text-xl md:text-3xl font-medium text-black/50 leading-relaxed max-w-2xl"
               >
                 Genießen Sie exzellente Küche in gemütlicher Atmosphäre – direkt am Stadion der SKV Rutesheim.
@@ -50,7 +50,7 @@ export const Clubhouse: React.FC<ClubhouseProps> = ({ onBack }) => {
             <motion.div 
               initial={{ opacity: 0, scale: 0.9 }}
               animate={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1], delay: 0.2 }}
+              transition={{ duration: 1.3, ease: [0.16, 1, 0.3, 1], delay: 0.2 }}
               className="lg:w-80 shrink-0 bg-zinc-50 border border-black/5 p-8 rounded-[2.5rem]"
             >
               <span className="text-[10px] font-black uppercase tracking-widest text-black/30 mb-6 block">Pächterin</span>

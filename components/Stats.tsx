@@ -40,11 +40,10 @@ export const Stats: React.FC = () => {
   return (
     <section className="py-16 md:py-32 px-4 md:px-6 bg-[#fbfbfd]">
       <div className="max-w-7xl mx-auto">
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 md:gap-6">
-          <StatCard label="Abteilungen" value={14} />
-          <StatCard label="Mitglieder" value={1250} suffix="+" />
-          <StatCard label="Teams" value={42} />
-          <StatCard label="Sporttage" value={7} />
+        <div className="grid grid-cols-3 gap-3 md:gap-6">
+          <StatCard label="Abteilungen" value={8} />
+          <StatCard label="Mitglieder" value={1950} suffix="+" />
+          <StatCard label="Teams" value={26} />
         </div>
       </div>
     </section>
