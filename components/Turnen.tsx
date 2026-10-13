@@ -38,11 +38,9 @@ const AccordionSection: React.FC<{ title: string; id?: string; defaultOpen?: boo
   </details>
 );
 
-// TODO: MailTo=N Kontaktformular-System (alte Seite) muss durch echte Ansprechpartner-Kontaktwege
-// ersetzt werden. Bis dahin Platzhalter-Buttons.
-const ContactFormPlaceholder: React.FC<{ name: string }> = () => (
-  <a href="#" className="inline-flex items-center justify-center bg-black text-white px-4 py-1.5 rounded-full shadow-lg hover:scale-105 active:scale-95 transition-all text-[10px] md:text-[11px] font-bold tracking-wide h-8">
-    Kontaktformular
+const ContactRequestButton: React.FC<{ email: string }> = ({ email }) => (
+  <a href={mailHref(email)} className="inline-flex items-center justify-center bg-black text-white px-4 py-1.5 rounded-full shadow-lg hover:scale-105 active:scale-95 transition-all text-[10px] md:text-[11px] font-bold tracking-wide h-8">
+    Kontaktanfrage
   </a>
 );
 
@@ -640,6 +638,9 @@ export const Turnen: React.FC<TurnenProps> = ({
                 <a href={telHref('0151 15721516')} className="inline-flex items-center gap-2 text-sm font-black hover:text-black/50 transition-colors">
                   <span>📞</span> 0151 15721516
                 </a>
+                <div className="mt-4">
+                  <ContactRequestButton email="turnen@skv-Rutesheim.de" />
+                </div>
                 {onOpenContact && (
                   <button onClick={onOpenContact} className="block mt-4 text-sm font-black text-black hover:text-black/50 transition-colors">
                     Allgemeines Kontaktformular →
@@ -735,7 +736,7 @@ export const Turnen: React.FC<TurnenProps> = ({
             <div id="kinder-jugendsport" className="scroll-mt-32">
               <AccordionSection title="Kinder-/Jugendsport" defaultOpen>
                 <div className="flex flex-wrap items-center gap-4 mb-8">
-                  <ContactFormPlaceholder name="Michaela Schaust" />
+                  <ContactRequestButton email="kinderturnen@skv-Rutesheim.de" />
                   <a href="https://forms.skv-rutesheim.de/SportstundenAnmeldung.php" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 px-5 py-2.5 bg-white border border-black/10 rounded-xl font-bold text-xs hover:bg-zinc-100 transition-colors">
                     Anmeldung ↗
                   </a>
@@ -747,7 +748,7 @@ export const Turnen: React.FC<TurnenProps> = ({
             <div id="wettkampfturnen" className="pt-10 border-t border-black/5 scroll-mt-32">
               <AccordionSection title="Wettkampfturnen">
                 <div className="flex flex-wrap items-center gap-4 mb-6">
-                  <ContactFormPlaceholder name="Melanie Raisch" />
+                  <ContactRequestButton email="wettkampfturnen@skv-Rutesheim.de" />
                 </div>
                 <p className={`${bodyText} text-sm mb-8`}>Wettkampfturnen zwei mal pro Woche.</p>
                 <OfferingTable groups={wettkampfturnenGroups} />
@@ -757,7 +758,7 @@ export const Turnen: React.FC<TurnenProps> = ({
             <div id="erwachsenensport" className="pt-10 border-t border-black/5 scroll-mt-32">
               <AccordionSection title="Erwachsenesport">
                 <div className="flex flex-wrap items-center gap-4 mb-8">
-                  <ContactFormPlaceholder name="Matthias Götz" />
+                  <ContactRequestButton email="erwachsenesport@skv-Rutesheim.de" />
                 </div>
                 <OfferingTable groups={erwachsenensportGroups} />
               </AccordionSection>
@@ -766,7 +767,7 @@ export const Turnen: React.FC<TurnenProps> = ({
             <div id="gesundheitssport" className="pt-10 border-t border-black/5 scroll-mt-32">
               <AccordionSection title="Gesundheitssport">
                 <div className="flex flex-wrap items-center gap-4 mb-2">
-                  <ContactFormPlaceholder name="Conny Schneider" />
+                  <ContactRequestButton email="gesundheitssport@skv-Rutesheim.de" />
                 </div>
                 <p className={`${bodyText} text-sm mb-8`}>Ansprechpartnerin Wassergymnastik: Fabienne Gottschlich</p>
                 <OfferingTable groups={gesundheitssportGroups} />
@@ -776,7 +777,7 @@ export const Turnen: React.FC<TurnenProps> = ({
             <div id="fitnesskurse" className="pt-10 border-t border-black/5 scroll-mt-32">
               <AccordionSection title="Fitnesskurse">
                 <div className="flex flex-wrap items-center gap-4 mb-6">
-                  <ContactFormPlaceholder name="Matthias Götz" />
+                  <ContactRequestButton email="fitnesskurse@skv-Rutesheim.de" />
                 </div>
                 <p className={`${bodyText} text-sm mb-6`}>
                   Anmeldung entweder per Anmeldeformular oder online über die Kursanmeldung.
@@ -798,6 +799,9 @@ export const Turnen: React.FC<TurnenProps> = ({
 
             <div id="schwimmkurse" className="pt-10 border-t border-black/5 scroll-mt-32">
               <AccordionSection title="Schwimmkurse">
+                <div className="flex flex-wrap items-center gap-4 mb-8">
+                  <ContactRequestButton email="schwimmen@skv-Rutesheim.de" />
+                </div>
                 <h4 className="text-xs font-black uppercase tracking-widest text-black/30 mb-4">Kurstermine</h4>
                 <ul className="space-y-2 mb-8">
                   {schwimmkursTermine.map((termin, idx) => (
