@@ -69,7 +69,7 @@ interface NewsItem {
   contactEmail?: string;
 }
 
-// TODO: Platzhalter-Links ("#") — die konkreten Ergebnis-/Zielseiten wurden nicht mitgeliefert.
+// Links mit href "#" (Ziel noch nicht mitgeliefert) werden ausgeblendet.
 const news: NewsItem[] = [
   {
     date: "6.8.2026",
@@ -87,7 +87,7 @@ const news: NewsItem[] = [
     date: "12.7.2026",
     title: "Mehrkampfcup Landesfinale",
     body: "Am 4.7. und 5.7.2026 fand in Heidenheim das Landesfinale im Mehrkampf statt.",
-    links: [{ label: "Ergebnisse der SKV...", href: "#" }],
+    links: [{ label: "Ergebnisse der SKV...", href: "https://ww2.wotus.de/STB/2026/07/04/LF-MK/e/2026-07-05-17-13/" }],
   },
   {
     date: "30.03.2026",
@@ -100,13 +100,20 @@ const news: NewsItem[] = [
     date: "18.5.2026",
     title: "Start in die Freiluftsaison",
     body: "Start in die Freiluftsaison 2026 der Leichtathleten.",
-    links: [{ label: "Ergebnisse der Wettkämpfe zum Saisonstart...", href: "#" }],
+    links: [
+      { label: "Ergebnisse Landesoffene Bahneröffnung Ludwigsburg", href: "https://ladv.de/ergebnisse/98093/Landesoffene-Bahneröffnung-U14-bis-Aktive-Ergebnisliste-Ludwigsburg-2026.htm" },
+      { label: "Ergebnisse Landesoffene Bahneröffnung Stuttgart", href: "https://ladv.de/ergebnisse/98569/Landesoffene-Bahneröffnung-Ergebnisliste-Stuttgart-2026.htm" },
+      { label: "Ergebnisse Landesoffenes Sportfest Renningen", href: "https://ladv.de/ergebnisse/98740/31.-landesoffenes-Sportfest-für-Schüler-Jugend-und-Aktive-Ergebnisliste-Renningen-2026.htm" },
+    ],
   },
   {
     date: "21.4.2026",
     title: "Gaumeisterschaften",
     body: "Gaumeisterschaften Gerätturnen. Am Samstag, 18. April 2026 fanden die Gaumeisterschaften im Gerätturnen in Gültstein bzw. Magstadt statt.",
-    links: [{ label: "Ergebnisse der SKV...", href: "#" }],
+    links: [
+      { label: "Ergebnisse weiblich...", href: "https://www.turngau-stuttgart.de/fileadmin/Microsites/Turngau-Stuttgart/Sportarten/2026/Ergebnislisten/GFw_Siegerliste_Disziplinen.pdf" },
+      { label: "Ergebnisse männlich...", href: "https://www.turngau-stuttgart.de/fileadmin/Microsites/Turngau-Stuttgart/Sportarten/2026/Ergebnislisten/2026_GF_GTm_Siegerliste_mit_Disz.pdf" },
+    ],
   },
   {
     date: "16.3.2026",
@@ -114,8 +121,8 @@ const news: NewsItem[] = [
     body: "Bezirksmeisterschaft Gerätturnen. Am Samstag, 14. März 2026 wurde die Bezirksmeisterschaft im Turnen und das Hallenbezirksturnfest Gerätturnen in Rutesheim durchgeführt.",
     links: [
       { label: "Ergebnisse der SKV...", href: "#" },
-      { label: "Alle Ergebnisse weiblich...", href: "#" },
-      { label: "Alle Ergebnisse männlich...", href: "#" },
+      { label: "Alle Ergebnisse weiblich...", href: "https://skv-rutesheim.de/turnen/Wettk2026/GeTuBezirkErg/weiblich/v-1047891411.htm" },
+      { label: "Alle Ergebnisse männlich...", href: "https://skv-rutesheim.de/turnen/Wettk2026/GeTuBezirkErg/maennlich/v-1047891411.htm" },
     ],
   },
 ];
@@ -382,9 +389,8 @@ const WettkampfList: React.FC<{ items: Wettkampf[] }> = ({ items }) => (
           <span className="font-black text-sm">{w.title}</span>
           <span className="text-black/40 text-xs font-bold block sm:inline sm:ml-2">{w.ort}{w.datum ? ` — ${w.datum}` : ''}</span>
         </div>
-        {/* TODO: Platzhalter-Link "#" wo noch keine Ergebnis-Seite mitgeliefert wurde. */}
-        {w.hasResult && (
-          <a href={w.resultHref ?? "#"} target="_blank" rel="noopener noreferrer" className="text-xs font-black text-black hover:text-black/50 transition-colors shrink-0">
+        {w.resultHref && (
+          <a href={w.resultHref} target="_blank" rel="noopener noreferrer" className="text-xs font-black text-black hover:text-black/50 transition-colors shrink-0">
             Ergebnis ↗
           </a>
         )}
@@ -559,9 +565,9 @@ export const Turnen: React.FC<TurnenProps> = ({
                     </a>
                   )}
 
-                  {item.links && (
+                  {item.links?.some((l) => l.href !== "#") && (
                     <div className="flex flex-wrap gap-4">
-                      {item.links.map((l, lIdx) => (
+                      {item.links.filter((l) => l.href !== "#").map((l, lIdx) => (
                         <a key={lIdx} href={l.href} target="_blank" rel="noopener noreferrer" className="text-xs font-black text-black hover:text-black/50 transition-colors">
                           {l.label} ↗
                         </a>
