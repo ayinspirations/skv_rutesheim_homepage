@@ -176,7 +176,7 @@ export const Leitbild: React.FC<LeitbildProps> = ({ onBack }) => {
             <motion.p
               initial={{ opacity: 0, y: 40 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1], delay: 0.1 }}
+              transition={{ duration: 1.3, ease: [0.16, 1, 0.3, 1], delay: 0.1 }}
               className="text-2xl md:text-4xl font-bold tracking-tight leading-tight text-black mb-8"
             >
               Leitbild Kinder- und Jugendschutz der SKV Rutesheim 1945 e.V.
@@ -184,7 +184,7 @@ export const Leitbild: React.FC<LeitbildProps> = ({ onBack }) => {
             <motion.p
               initial={{ opacity: 0, y: 40 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1], delay: 0.2 }}
+              transition={{ duration: 1.3, ease: [0.16, 1, 0.3, 1], delay: 0.2 }}
               className="text-xl md:text-2xl font-medium text-black/60 leading-relaxed mb-12"
             >
               Kinder und Jugendliche für den Sport in einer gelebten Gemeinschaft zu gewinnen und zu begeistern ist ein besonderes Anliegen der SKV Rutesheim.

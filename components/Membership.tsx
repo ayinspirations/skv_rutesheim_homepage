@@ -43,7 +43,7 @@ export const Membership: React.FC<MembershipProps> = ({ onBack }) => {
             <motion.p 
               initial={{ opacity: 0, y: 40 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1], delay: 0.1 }}
+              transition={{ duration: 1.3, ease: [0.16, 1, 0.3, 1], delay: 0.1 }}
               className="text-xl md:text-3xl font-medium text-black/50 leading-relaxed"
             >
               Egal, ob du ein erfahrener Sportler oder ein Neuling bist – wir freuen uns, dich in unserer Sport- und Kulturvereinigung willkommen zu heißen.

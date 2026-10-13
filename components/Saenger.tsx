@@ -56,7 +56,7 @@ export const Saenger: React.FC<SaengerProps> = ({
             <motion.p
               initial={{ opacity: 0, y: 40 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1], delay: 0.1 }}
+              transition={{ duration: 1.3, ease: [0.16, 1, 0.3, 1], delay: 0.1 }}
               className="text-2xl md:text-4xl font-black tracking-tight text-black mb-12 max-w-3xl"
             >
               {HERO_SUBLINE}
@@ -65,7 +65,7 @@ export const Saenger: React.FC<SaengerProps> = ({
             <motion.div
               initial={{ opacity: 0, y: 40 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1], delay: 0.2 }}
+              transition={{ duration: 1.3, ease: [0.16, 1, 0.3, 1], delay: 0.2 }}
               className="flex flex-col sm:flex-row gap-4"
             >
               <a
