@@ -338,7 +338,7 @@ const wettkaempfe2026: Wettkampf[] = [
   { title: "Geräteturnen Gaumeisterschaft männlich", ort: "Magstadt", datum: "18.04.2026", hasResult: true, resultHref: "https://www.turngau-stuttgart.de/fileadmin/Microsites/Turngau-Stuttgart/Sportarten/2026/Ergebnislisten/2026_GF_GTm_Siegerliste_mit_Disz.pdf" },
   { title: "Mehrkampfcup", ort: "Renningen", datum: "25.04.2026", hasResult: true },
   { title: "Kindercup", ort: "Kuppingen", datum: "27.06.2026" },
-  { title: "Mehrkampfcup Landesfinale", ort: "Heidenheim", datum: "4./5.07.2026", hasResult: true },
+  { title: "Mehrkampfcup Landesfinale", ort: "Heidenheim", datum: "4./5.07.2026", hasResult: true, resultHref: "https://ww2.wotus.de/STB/2026/07/04/LF-MK/e/2026-07-05-17-13/" },
   { title: "Gaukinderturnfest", ort: "Renningen", datum: "12.07.2026", hasResult: true },
 ];
 
