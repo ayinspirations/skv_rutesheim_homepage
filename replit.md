@@ -23,3 +23,8 @@ A modern, single-page website for the SKV Rutesheim 1945 e.V. sports club built 
 
 ## Deployment
 - Static deployment, build with `npm run build`, serve from `dist/`
+
+## URLs & SEO
+- Jede Seite hat eine eigene URL (`seo.ts`): `/`, `/mitgliedschaft`, `/vereinsheim`, `/leitbild`, `/handball`, `/turnen`, `/rad`, `/saenger`, `/sportabzeichen`.
+- `npm run build` erzeugt pro Seite eine statische HTML-Datei (eigener Titel, Beschreibung, Canonical) sowie `dist/sitemap.xml`, damit Direktaufrufe auf jedem statischen Hosting funktionieren.
+- `public/robots.txt` + Meta-Tags erlauben Crawling/Indexierung nur durch Google.

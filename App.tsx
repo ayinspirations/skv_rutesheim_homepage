@@ -3,6 +3,7 @@ import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence, MotionConfig } from 'framer-motion';
 import { Header } from './components/Header';
 import { useScrollReveal } from './components/useScrollReveal';
+import { Page, pageSeo, pageFromPathname, SITE_URL } from './seo';
 import { Hero } from './components/Hero';
 import { Stats } from './components/Stats';
 import { Departments } from './components/Departments';
@@ -19,43 +20,29 @@ import { Saenger } from './components/Saenger';
 import { Sportabzeichen } from './components/Sportabzeichen';
 import { ContactModal } from './components/ContactModal';
 
-type Page = 'home' | 'membership' | 'clubhouse' | 'leitbild' | 'handball' | 'turnen' | 'rad' | 'saenger' | 'sportabzeichen';
+// Jede Seite ist per eigener URL direkt aufrufbar (siehe seo.ts; beim Build entsteht pro
+// Seite eine statische HTML-Datei, damit der Server /turnen usw. direkt ausliefert).
+const pageFromPath = (): Page => pageFromPathname(window.location.pathname);
 
-// /handball, /turnen, /rad, /saenger and /sportabzeichen are standalone pages reachable
-// by direct URL (deep link), unlike the other pages here which are pure in-app state.
-// All are intentionally kept out of Header/Footer nav for now.
-//
-// OPEN QUESTION for /turnen specifically (unlike the others): Turnen replaces an
-// established public department subsite that WAS linked from the old site's main nav,
-// whereas Handball's, Rad's, Sänger's and Sportabzeichen's pages are new. TODO: confirm
-// with the client whether /turnen should be promoted into the main nav, or stay
-// tile-only like the others (current default).
-const pathToPage: Record<string, Page> = {
-  '/handball': 'handball',
-  '/turnen': 'turnen',
-  '/rad': 'rad',
-  '/saenger': 'saenger',
-  '/sportabzeichen': 'sportabzeichen',
+const setMeta = (selector: string, attr: string, value: string) => {
+  document.querySelector(selector)?.setAttribute(attr, value);
 };
-const pageFromPath = (): Page => pathToPage[window.location.pathname] ?? 'home';
 
 function App() {
   const [currentPage, setCurrentPage] = useState<Page>(() => pageFromPath());
   const [isContactOpen, setIsContactOpen] = useState(false);
   useScrollReveal(currentPage);
 
-  // Keep the URL bar in sync with /handball and /turnen so those pages are
-  // linkable/bookmarkable, without introducing a full router for the rest of the
-  // (state-only) pages.
+  // URL, Titel und Meta-Angaben mit der aktuellen Seite synchron halten.
   useEffect(() => {
-    const path =
-      currentPage === 'handball' ? '/handball' :
-      currentPage === 'turnen' ? '/turnen' :
-      currentPage === 'rad' ? '/rad' :
-      currentPage === 'saenger' ? '/saenger' :
-      currentPage === 'sportabzeichen' ? '/sportabzeichen' :
-      '/';
-    if (window.location.pathname !== path) {
+    const { path, title, description } = pageSeo[currentPage];
+    document.title = title;
+    setMeta('meta[name="description"]', 'content', description);
+    setMeta('meta[property="og:title"]', 'content', title);
+    setMeta('meta[property="og:description"]', 'content', description);
+    setMeta('meta[property="og:url"]', 'content', SITE_URL + path);
+    setMeta('link[rel="canonical"]', 'href', SITE_URL + path);
+    if (pageFromPath() !== currentPage) {
       window.history.pushState({}, '', path);
     }
   }, [currentPage]);
