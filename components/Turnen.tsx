@@ -419,10 +419,9 @@ const TurnabteilungList: React.FC<{ items: Turnabteilungtermin[] }> = ({ items }
 // --- Formulare -------------------------------------------------------------
 
 // TODO: Bis auf den Aufnahmeantrag (bereits vorhandenes Asset) liegen die übrigen PDFs noch nicht vor.
-// TODO: PDFs "Anmeldung Kurse" und "Elterninformation" nicht mitgeliefert — werden ausgeblendet, solange href "#".
 const schwimmFormulare = [
-  { label: "Anmeldung Kurse (PDF)", href: "#" },
-  { label: "Elterninformation (PDF)", href: "#" },
+  { label: "Anmeldung Kurse (PDF)", href: "/AnmeldungG_09_2025.pdf" },
+  { label: "Elterninformation (PDF)", href: "/Elterninfoblatt_09_2025.pdf" },
 ];
 
 const formulare = [
@@ -795,15 +794,14 @@ export const Turnen: React.FC<TurnenProps> = ({
                 <p className={`${bodyText} text-sm mb-6`}>
                   Anmeldung entweder per Anmeldeformular oder online über die Kursanmeldung.
                 </p>
-                {/* TODO: FitWaLa-PDF nicht mitgeliefert */}
                 <div className="flex flex-wrap gap-4">
                   <a href="https://forms.skv-rutesheim.de/SportstundenAnmeldung.php" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 px-5 py-2.5 bg-white border border-black/10 rounded-xl font-bold text-xs hover:bg-zinc-100 transition-colors">
                     Online-Kursanmeldung ↗
                   </a>
-                  <a href="#" className="inline-flex items-center gap-2 px-5 py-2.5 bg-white border border-black/10 rounded-xl font-bold text-xs hover:bg-zinc-100 transition-colors">
+                  <a href="/AnmeldungFitWaLa_09_2026.pdf" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 px-5 py-2.5 bg-white border border-black/10 rounded-xl font-bold text-xs hover:bg-zinc-100 transition-colors">
                     📄 Anmeldeformular FitWaLa ab September 2026 (PDF)
                   </a>
-                  <a href="#" className="inline-flex items-center gap-2 px-5 py-2.5 bg-white border border-black/10 rounded-xl font-bold text-xs hover:bg-zinc-100 transition-colors">
+                  <a href="/AusschreibungFitWaLa_09_2026.pdf" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 px-5 py-2.5 bg-white border border-black/10 rounded-xl font-bold text-xs hover:bg-zinc-100 transition-colors">
                     📄 Ausschreibung FitWaLa ab September 2026 (PDF)
                   </a>
                 </div>
@@ -831,7 +829,7 @@ export const Turnen: React.FC<TurnenProps> = ({
                 </ul>
 
                 <p className={`${bodyText} text-sm mb-10`}>
-                  Der Schwimmschule des SKV Rutesheim e.V. wurde erneut am 2. Juni 2023 die Auszeichnung <span className="font-black text-black">SchwimmGut</span> überreicht.
+                  Der Schwimmschule des SKV Rutesheim e.V. wurde erneut am 2. Juni 2023 die Auszeichnung <a href="https://svw-online.de/verbandsentwicklung/zertifizierte-schwimmgut-schwimmschule/" target="_blank" rel="noopener noreferrer" className="font-black text-black underline decoration-[#D4FF6B] decoration-2 underline-offset-4 hover:text-black/50 transition-colors">SchwimmGut ↗</a> überreicht.
                 </p>
 
                 <h4 className="text-xs font-black uppercase tracking-widest text-black/30 mb-4">Schwimmen lernen</h4>
@@ -900,7 +898,7 @@ export const Turnen: React.FC<TurnenProps> = ({
                     Die Schwimmschule des SKV Rutesheim e.V. wurde erneut auf „Herz und Nieren“ geprüft!
                   </p>
                   <div className={`${bodyText} text-sm space-y-4`}>
-                    <p>Bereits 2017 wurde die Schwimmschule des SKV Rutesheim mit dem Qualitätssiegel SchwimmGut ausgezeichnet. In 2023 haben wir nun die Rezertifizierung erhalten, die wieder für 2 Jahre gültig ist.</p>
+                    <p>Bereits 2017 wurde die Schwimmschule des SKV Rutesheim mit dem Qualitätssiegel <a href="https://svw-online.de/verbandsentwicklung/zertifizierte-schwimmgut-schwimmschule/" target="_blank" rel="noopener noreferrer" className="font-black text-black hover:text-black/50 transition-colors">SchwimmGut ↗</a> ausgezeichnet. In 2023 haben wir nun die Rezertifizierung erhalten, die wieder für 2 Jahre gültig ist.</p>
                     <p>Die Leiterin der SKV-Schwimmschule, Fabienne Gottschlich, und ihre Übungsleiter/innen freuten sich über die erneute Auszeichnung.</p>
                     <p>Die Vergabe des Zertifikats belegt, dass der SKV Rutesheim die von SchwimmGut geforderten Kriterien, u.a. hinsichtlich der Übungsleiterqualifikationen als auch des angewandten Kurskonzepts, vollumfänglich erfüllt.</p>
                     <p className="font-black text-black">Das Team der Schwimmschule erhält somit das 6. Mal in Folge eine Auszeichnung durch den Schwimmverband Württemberg!</p>
