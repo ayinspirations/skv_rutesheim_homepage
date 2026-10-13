@@ -50,19 +50,19 @@ export const Header: React.FC<HeaderProps> = ({ onNavigate, currentPage, onOpenC
 
   return (
     <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${isScrolled || currentPage !== 'home' ? 'py-1.5 bg-white/95 backdrop-blur-xl border-b border-black/5' : 'py-2.5 md:py-3'}`}>
-      <div className="relative w-full px-3 md:max-w-[96%] md:mx-auto flex items-center gap-4">
+      <div className="relative w-full px-3 md:max-w-[96%] md:mx-auto flex items-center gap-4 lg:grid lg:grid-cols-[1fr_auto_1fr]">
         <div
-          className="flex items-center gap-2 md:gap-3 flex-none h-8 md:h-10 cursor-pointer group pl-1 md:pl-0"
+          className="flex items-center gap-2 md:gap-3 flex-none h-8 md:h-10 cursor-pointer group pl-1 md:pl-0 justify-self-start"
           onClick={handleHomeClick}
         >
-          <ClubLogo className="h-full w-8 md:w-auto transition-transform group-hover:scale-105" variant="dark" />
+          <ClubLogo className="h-full aspect-square flex-none transition-transform group-hover:scale-105" variant="dark" />
           <div className="hidden md:flex flex-col justify-center">
             <span className="font-black tracking-tighter text-sm md:text-lg leading-none">SKV RUTESHEIM</span>
             <span className="text-[6px] md:text-[8px] font-bold text-black/40 uppercase tracking-widest mt-0.5 leading-none">1945 e. V.</span>
           </div>
         </div>
 
-        <div className="hidden lg:flex absolute left-1/2 -translate-x-1/2 items-center gap-0.5 bg-white/60 backdrop-blur-xl border border-white/40 p-0.5 rounded-full shadow-sm">
+        <div className="hidden lg:flex items-center gap-0.5 bg-white/60 backdrop-blur-xl border border-white/40 p-0.5 rounded-full shadow-sm">
           <button 
             onClick={handleHomeClick}
             className={`px-4 py-1.5 rounded-full text-[10px] font-bold transition-all ${currentPage === 'home' ? 'bg-black text-white' : 'text-black/60 hover:bg-black/5'}`}
@@ -96,7 +96,7 @@ export const Header: React.FC<HeaderProps> = ({ onNavigate, currentPage, onOpenC
           </button>
         </div>
 
-        <div className="flex items-center gap-2 flex-none ml-auto">
+        <div className="flex items-center gap-2 flex-none ml-auto lg:ml-0 lg:justify-self-end">
           <button 
             onClick={() => onNavigate('membership')}
             className="hidden md:flex bg-black text-white px-4 py-1.5 md:px-5 md:py-2 rounded-full shadow-lg hover:scale-105 active:scale-95 transition-all text-[10px] md:text-xs font-bold text-center tracking-wide h-8 md:h-10 items-center justify-center min-w-[100px] md:min-w-[130px]"

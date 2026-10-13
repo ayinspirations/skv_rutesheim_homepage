@@ -38,11 +38,9 @@ const AccordionSection: React.FC<{ title: string; id?: string; defaultOpen?: boo
   </details>
 );
 
-// TODO: MailTo=N Kontaktformular-System (alte Seite) muss durch echte Ansprechpartner-Kontaktwege
-// ersetzt werden. Bis dahin Platzhalter-Buttons.
-const ContactFormPlaceholder: React.FC<{ name: string }> = ({ name }) => (
-  <a href="#" className="inline-flex items-center gap-2 text-sm font-black text-black hover:text-black/50 transition-colors">
-    <span>✉️</span> {name} — Kontaktformular
+const ContactRequestButton: React.FC<{ email: string }> = ({ email }) => (
+  <a href={mailHref(email)} className="inline-flex items-center justify-center bg-black text-white px-4 py-1.5 rounded-full shadow-lg hover:scale-105 active:scale-95 transition-all text-[10px] md:text-[11px] font-bold tracking-wide h-8">
+    Kontaktanfrage
   </a>
 );
 
@@ -69,13 +67,13 @@ interface NewsItem {
   contactEmail?: string;
 }
 
-// TODO: Platzhalter-Links ("#") — die konkreten Ergebnis-/Zielseiten wurden nicht mitgeliefert.
+// Links mit href "#" (Ziel noch nicht mitgeliefert) werden ausgeblendet.
 const news: NewsItem[] = [
   {
     date: "6.8.2026",
     title: "Kursangebote",
     body: "Der Kurs FitWaLa startet wieder am 15.09.2026. Weitere Infos und das Anmeldeformular unter: Kursangebote",
-    jumpHref: "#fitnesskurse",
+    jumpHref: "#sportangebot",
   },
   {
     date: "14.7.2026",
@@ -87,7 +85,7 @@ const news: NewsItem[] = [
     date: "12.7.2026",
     title: "Mehrkampfcup Landesfinale",
     body: "Am 4.7. und 5.7.2026 fand in Heidenheim das Landesfinale im Mehrkampf statt.",
-    links: [{ label: "Ergebnisse der SKV...", href: "#" }],
+    links: [{ label: "Ergebnisse der SKV...", href: "https://ww2.wotus.de/STB/2026/07/04/LF-MK/e/2026-07-05-17-13/" }],
   },
   {
     date: "30.03.2026",
@@ -100,13 +98,20 @@ const news: NewsItem[] = [
     date: "18.5.2026",
     title: "Start in die Freiluftsaison",
     body: "Start in die Freiluftsaison 2026 der Leichtathleten.",
-    links: [{ label: "Ergebnisse der Wettkämpfe zum Saisonstart...", href: "#" }],
+    links: [
+      { label: "Ergebnisse Landesoffene Bahneröffnung Ludwigsburg", href: "https://ladv.de/ergebnisse/98093/Landesoffene-Bahneröffnung-U14-bis-Aktive-Ergebnisliste-Ludwigsburg-2026.htm" },
+      { label: "Ergebnisse Landesoffene Bahneröffnung Stuttgart", href: "https://ladv.de/ergebnisse/98569/Landesoffene-Bahneröffnung-Ergebnisliste-Stuttgart-2026.htm" },
+      { label: "Ergebnisse Landesoffenes Sportfest Renningen", href: "https://ladv.de/ergebnisse/98740/31.-landesoffenes-Sportfest-für-Schüler-Jugend-und-Aktive-Ergebnisliste-Renningen-2026.htm" },
+    ],
   },
   {
     date: "21.4.2026",
     title: "Gaumeisterschaften",
     body: "Gaumeisterschaften Gerätturnen. Am Samstag, 18. April 2026 fanden die Gaumeisterschaften im Gerätturnen in Gültstein bzw. Magstadt statt.",
-    links: [{ label: "Ergebnisse der SKV...", href: "#" }],
+    links: [
+      { label: "Ergebnisse weiblich...", href: "https://www.turngau-stuttgart.de/fileadmin/Microsites/Turngau-Stuttgart/Sportarten/2026/Ergebnislisten/GFw_Siegerliste_Disziplinen.pdf" },
+      { label: "Ergebnisse männlich...", href: "https://www.turngau-stuttgart.de/fileadmin/Microsites/Turngau-Stuttgart/Sportarten/2026/Ergebnislisten/2026_GF_GTm_Siegerliste_mit_Disz.pdf" },
+    ],
   },
   {
     date: "16.3.2026",
@@ -114,8 +119,8 @@ const news: NewsItem[] = [
     body: "Bezirksmeisterschaft Gerätturnen. Am Samstag, 14. März 2026 wurde die Bezirksmeisterschaft im Turnen und das Hallenbezirksturnfest Gerätturnen in Rutesheim durchgeführt.",
     links: [
       { label: "Ergebnisse der SKV...", href: "#" },
-      { label: "Alle Ergebnisse weiblich...", href: "#" },
-      { label: "Alle Ergebnisse männlich...", href: "#" },
+      { label: "Alle Ergebnisse weiblich...", href: "https://skv-rutesheim.de/turnen/Wettk2026/GeTuBezirkErg/weiblich/v-1047891411.htm" },
+      { label: "Alle Ergebnisse männlich...", href: "https://skv-rutesheim.de/turnen/Wettk2026/GeTuBezirkErg/maennlich/v-1047891411.htm" },
     ],
   },
 ];
@@ -254,6 +259,19 @@ const wettkampfturnenGroups: OfferingGroup[] = [
 
 const erwachsenensportGroups: OfferingGroup[] = [
   {
+    title: "Männer Sport & Spiel",
+    trainerLabel: "Ansprechpartner",
+    rows: [
+      { age: "ab 40 Jahren", time: "Mo 19:45–21:45 Uhr", hall: "Theodor-Heuss-Halle", trainer: "Frank Geyer" },
+      { age: "ab 45 Jahren", time: "Fr 19:00–20:30 Uhr", hall: "Theodor-Heuss-Halle", trainer: "Erich Wimmer" },
+    ],
+  },
+  {
+    title: "Erwachsenen Turnen",
+    trainerLabel: "Ansprechpartner",
+    rows: [{ age: "ab 14 Jahren", time: "Do Sommer 19:30–21:45 Uhr / Winter 20:00–21:45 Uhr", hall: "Bühl 2 Halle 1", trainer: "Matthias Götz" }],
+  },
+  {
     title: "Bubis Sportgruppe",
     trainerLabel: "Ansprechpartner",
     rows: [{ age: "ab 14 Jahren", time: "Mi 20:00–21:45 Uhr", hall: "Bühl 2 Halle 3", trainer: "Helmut Budil jun." }],
@@ -316,17 +334,24 @@ const schwimmkursTermine = [
 
 // --- Termine -------------------------------------------------------------
 
-interface Wettkampf { title: string; ort: string; datum: string; hasResult?: boolean }
+interface Wettkampf { title: string; ort: string; datum: string; hasResult?: boolean; resultHref?: string }
 interface Turnabteilungtermin { title: string; ort: string; datum: string }
 
 const wettkaempfe2026: Wettkampf[] = [
   { title: "Bezirks-Hallenturnfest m/w", ort: "Rutesheim", datum: "14.03.2026", hasResult: true },
-  { title: "Geräteturnen Gaumeisterschaft weiblich", ort: "Gültstein", datum: "18.04.2026", hasResult: true },
-  { title: "Geräteturnen Gaumeisterschaft männlich", ort: "Magstadt", datum: "18.04.2026", hasResult: true },
+  { title: "Geräteturnen Gaumeisterschaft weiblich", ort: "Gültstein", datum: "18.04.2026", hasResult: true, resultHref: "https://www.turngau-stuttgart.de/fileadmin/Microsites/Turngau-Stuttgart/Sportarten/2026/Ergebnislisten/GFw_Siegerliste_Disziplinen.pdf" },
+  { title: "Geräteturnen Gaumeisterschaft männlich", ort: "Magstadt", datum: "18.04.2026", hasResult: true, resultHref: "https://www.turngau-stuttgart.de/fileadmin/Microsites/Turngau-Stuttgart/Sportarten/2026/Ergebnislisten/2026_GF_GTm_Siegerliste_mit_Disz.pdf" },
   { title: "Mehrkampfcup", ort: "Renningen", datum: "25.04.2026", hasResult: true },
   { title: "Kindercup", ort: "Kuppingen", datum: "27.06.2026" },
-  { title: "Mehrkampfcup Landesfinale", ort: "Heidenheim", datum: "4./5.07.2026", hasResult: true },
+  { title: "Mehrkampfcup Landesfinale", ort: "Heidenheim", datum: "4./5.07.2026", hasResult: true, resultHref: "https://ww2.wotus.de/STB/2026/07/04/LF-MK/e/2026-07-05-17-13/" },
   { title: "Gaukinderturnfest", ort: "Renningen", datum: "12.07.2026", hasResult: true },
+];
+
+// Leichtathletik — nur Ergebnislinks, keine Termine
+const leichtathletikErgebnisse2026: Wettkampf[] = [
+  { title: "Landesoffene Bahneröffnung", ort: "Ludwigsburg", datum: "", hasResult: true, resultHref: "https://ladv.de/ergebnisse/98093/Landesoffene-Bahneröffnung-U14-bis-Aktive-Ergebnisliste-Ludwigsburg-2026.htm" },
+  { title: "Landesoffene Bahneröffnung", ort: "Stuttgart", datum: "", hasResult: true, resultHref: "https://ladv.de/ergebnisse/98569/Landesoffene-Bahneröffnung-Ergebnisliste-Stuttgart-2026.htm" },
+  { title: "Landesoffenes Sportfest", ort: "Renningen", datum: "", hasResult: true, resultHref: "https://ladv.de/ergebnisse/98740/31.-landesoffenes-Sportfest-für-Schüler-Jugend-und-Aktive-Ergebnisliste-Renningen-2026.htm" },
 ];
 
 const turnabteilung2026: Turnabteilungtermin[] = [
@@ -360,11 +385,10 @@ const WettkampfList: React.FC<{ items: Wettkampf[] }> = ({ items }) => (
       <div key={idx} className="bg-white p-4 rounded-xl border border-black/5 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
         <div>
           <span className="font-black text-sm">{w.title}</span>
-          <span className="text-black/40 text-xs font-bold block sm:inline sm:ml-2">{w.ort} — {w.datum}</span>
+          <span className="text-black/40 text-xs font-bold block sm:inline sm:ml-2">{w.ort}{w.datum ? ` — ${w.datum}` : ''}</span>
         </div>
-        {/* TODO: Platzhalter-Link — echte Ergebnis-Seite wurde nicht mitgeliefert. */}
-        {w.hasResult && (
-          <a href="#" target="_blank" rel="noopener noreferrer" className="text-xs font-black text-black hover:text-black/50 transition-colors shrink-0">
+        {w.resultHref && (
+          <a href={w.resultHref} target="_blank" rel="noopener noreferrer" className="text-xs font-black text-black hover:text-black/50 transition-colors shrink-0">
             Ergebnis ↗
           </a>
         )}
@@ -528,14 +552,20 @@ export const Turnen: React.FC<TurnenProps> = ({
                   <p className={`text-sm leading-relaxed mb-4 ${item.highlighted ? 'text-white/60' : 'text-black/60'} font-medium`}>{item.body}</p>
 
                   {item.jumpHref && (
-                    <a href={item.jumpHref} className="text-xs font-black text-black hover:text-black/50 transition-colors">
+                    <a
+                      href={item.jumpHref}
+                      onClick={(e) => {
+                        e.preventDefault();
+                        document.getElementById(item.jumpHref!.slice(1))?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                      }}
+                      className="text-xs font-black text-black hover:text-black/50 transition-colors">
                       Kursangebote →
                     </a>
                   )}
 
-                  {item.links && (
+                  {item.links?.some((l) => l.href !== "#") && (
                     <div className="flex flex-wrap gap-4">
-                      {item.links.map((l, lIdx) => (
+                      {item.links.filter((l) => l.href !== "#").map((l, lIdx) => (
                         <a key={lIdx} href={l.href} target="_blank" rel="noopener noreferrer" className="text-xs font-black text-black hover:text-black/50 transition-colors">
                           {l.label} ↗
                         </a>
@@ -608,6 +638,9 @@ export const Turnen: React.FC<TurnenProps> = ({
                 <a href={telHref('0151 15721516')} className="inline-flex items-center gap-2 text-sm font-black hover:text-black/50 transition-colors">
                   <span>📞</span> 0151 15721516
                 </a>
+                <div className="mt-4">
+                  <ContactRequestButton email="turnen@skv-Rutesheim.de" />
+                </div>
                 {onOpenContact && (
                   <button onClick={onOpenContact} className="block mt-4 text-sm font-black text-black hover:text-black/50 transition-colors">
                     Allgemeines Kontaktformular →
@@ -703,9 +736,8 @@ export const Turnen: React.FC<TurnenProps> = ({
             <div id="kinder-jugendsport" className="scroll-mt-32">
               <AccordionSection title="Kinder-/Jugendsport" defaultOpen>
                 <div className="flex flex-wrap items-center gap-4 mb-8">
-                  <ContactFormPlaceholder name="Michaela Schaust" />
-                  {/* TODO: "Anmeldung"-Link (Ziel-Seite) nicht mitgeliefert */}
-                  <a href="#" className="inline-flex items-center gap-2 px-5 py-2.5 bg-white border border-black/10 rounded-xl font-bold text-xs hover:bg-zinc-100 transition-colors">
+                  <ContactRequestButton email="kinderturnen@skv-Rutesheim.de" />
+                  <a href="https://forms.skv-rutesheim.de/SportstundenAnmeldung.php" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 px-5 py-2.5 bg-white border border-black/10 rounded-xl font-bold text-xs hover:bg-zinc-100 transition-colors">
                     Anmeldung ↗
                   </a>
                 </div>
@@ -716,7 +748,7 @@ export const Turnen: React.FC<TurnenProps> = ({
             <div id="wettkampfturnen" className="pt-10 border-t border-black/5 scroll-mt-32">
               <AccordionSection title="Wettkampfturnen">
                 <div className="flex flex-wrap items-center gap-4 mb-6">
-                  <ContactFormPlaceholder name="Melanie Raisch" />
+                  <ContactRequestButton email="wettkampfturnen@skv-Rutesheim.de" />
                 </div>
                 <p className={`${bodyText} text-sm mb-8`}>Wettkampfturnen zwei mal pro Woche.</p>
                 <OfferingTable groups={wettkampfturnenGroups} />
@@ -726,7 +758,7 @@ export const Turnen: React.FC<TurnenProps> = ({
             <div id="erwachsenensport" className="pt-10 border-t border-black/5 scroll-mt-32">
               <AccordionSection title="Erwachsenesport">
                 <div className="flex flex-wrap items-center gap-4 mb-8">
-                  <ContactFormPlaceholder name="Matthias Götz" />
+                  <ContactRequestButton email="erwachsenesport@skv-Rutesheim.de" />
                 </div>
                 <OfferingTable groups={erwachsenensportGroups} />
               </AccordionSection>
@@ -735,7 +767,7 @@ export const Turnen: React.FC<TurnenProps> = ({
             <div id="gesundheitssport" className="pt-10 border-t border-black/5 scroll-mt-32">
               <AccordionSection title="Gesundheitssport">
                 <div className="flex flex-wrap items-center gap-4 mb-2">
-                  <ContactFormPlaceholder name="Conny Schneider" />
+                  <ContactRequestButton email="gesundheitssport@skv-Rutesheim.de" />
                 </div>
                 <p className={`${bodyText} text-sm mb-8`}>Ansprechpartnerin Wassergymnastik: Fabienne Gottschlich</p>
                 <OfferingTable groups={gesundheitssportGroups} />
@@ -745,14 +777,14 @@ export const Turnen: React.FC<TurnenProps> = ({
             <div id="fitnesskurse" className="pt-10 border-t border-black/5 scroll-mt-32">
               <AccordionSection title="Fitnesskurse">
                 <div className="flex flex-wrap items-center gap-4 mb-6">
-                  <ContactFormPlaceholder name="Matthias Götz" />
+                  <ContactRequestButton email="fitnesskurse@skv-Rutesheim.de" />
                 </div>
                 <p className={`${bodyText} text-sm mb-6`}>
                   Anmeldung entweder per Anmeldeformular oder online über die Kursanmeldung.
                 </p>
-                {/* TODO: Online-Kursanmeldung-Link und beide PDFs nicht mitgeliefert */}
+                {/* TODO: FitWaLa-PDF nicht mitgeliefert */}
                 <div className="flex flex-wrap gap-4">
-                  <a href="#" className="inline-flex items-center gap-2 px-5 py-2.5 bg-white border border-black/10 rounded-xl font-bold text-xs hover:bg-zinc-100 transition-colors">
+                  <a href="https://forms.skv-rutesheim.de/SportstundenAnmeldung.php" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 px-5 py-2.5 bg-white border border-black/10 rounded-xl font-bold text-xs hover:bg-zinc-100 transition-colors">
                     Online-Kursanmeldung ↗
                   </a>
                   <a href="#" className="inline-flex items-center gap-2 px-5 py-2.5 bg-white border border-black/10 rounded-xl font-bold text-xs hover:bg-zinc-100 transition-colors">
@@ -767,6 +799,9 @@ export const Turnen: React.FC<TurnenProps> = ({
 
             <div id="schwimmkurse" className="pt-10 border-t border-black/5 scroll-mt-32">
               <AccordionSection title="Schwimmkurse">
+                <div className="flex flex-wrap items-center gap-4 mb-8">
+                  <ContactRequestButton email="schwimmen@skv-Rutesheim.de" />
+                </div>
                 <h4 className="text-xs font-black uppercase tracking-widest text-black/30 mb-4">Kurstermine</h4>
                 <ul className="space-y-2 mb-8">
                   {schwimmkursTermine.map((termin, idx) => (
@@ -850,7 +885,7 @@ export const Turnen: React.FC<TurnenProps> = ({
               <div className="space-y-10">
                 <div>
                   <h4 className="text-xs font-black uppercase tracking-widest text-black/30 mb-4">2026</h4>
-                  <WettkampfList items={wettkaempfe2026.filter((w) => w.hasResult)} />
+                  <WettkampfList items={[...wettkaempfe2026, ...leichtathletikErgebnisse2026].filter((w) => w.hasResult)} />
                 </div>
                 <div>
                   <h4 className="text-xs font-black uppercase tracking-widest text-black/30 mb-4">2025</h4>

@@ -73,8 +73,28 @@ export const Membership: React.FC<MembershipProps> = ({ onBack }) => {
               rel="noopener noreferrer"
               className="w-full py-5 bg-[#D4FF6B] text-black rounded-2xl font-black text-sm uppercase tracking-widest hover:scale-[1.02] transition-transform text-center"
             >
-              Zum Online-Portal ↗
+              Mitglied werden ↗
             </a>
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 mt-4">
+              {[
+                { label: "Anmelden", href: "https://skvrutesheim.pw-ng.de/Frontend/Login" },
+                { label: "Registrieren", href: "https://skvrutesheim.pw-ng.de/Frontend/Home/Register" },
+                { label: "Kündigen", href: "https://skvrutesheim.pw-ng.de/Frontend/Home/Kuendigung" },
+              ].map((l) => (
+                <a
+                  key={l.label}
+                  href={l.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="py-3 border border-white/20 text-white rounded-2xl font-black text-[11px] uppercase tracking-widest hover:bg-white/10 transition-colors text-center"
+                >
+                  {l.label} ↗
+                </a>
+              ))}
+            </div>
+            <p className="text-white/40 text-xs leading-relaxed mt-4">
+              Anmelden: Daten wie Adresse, Telefonnummer oder Bankverbindung ändern. Registrieren: für Mitglieder ohne Zugangsdaten.
+            </p>
           </motion.div>
 
           {/* Classic Path */}
