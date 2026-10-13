@@ -58,7 +58,7 @@ export const Organization: React.FC<OrganizationProps> = ({ onNavigateLeitbild }
             {activeTab === 'verein' && (
               <motion.div
                 key="verein"
-                initial={{ opacity: 0, y: 20 }}
+                initial={{ opacity: 0, y: 40 }}
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -20 }}
                 transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
@@ -97,7 +97,7 @@ export const Organization: React.FC<OrganizationProps> = ({ onNavigateLeitbild }
             {activeTab === 'leitbild' && (
               <motion.div
                 key="leitbild"
-                initial={{ opacity: 0, y: 20 }}
+                initial={{ opacity: 0, y: 40 }}
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -20 }}
                 transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
@@ -165,7 +165,7 @@ export const Organization: React.FC<OrganizationProps> = ({ onNavigateLeitbild }
             {activeTab === 'vorstand' && (
               <motion.div
                 key="vorstand"
-                initial={{ opacity: 0, y: 20 }}
+                initial={{ opacity: 0, y: 40 }}
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -20 }}
                 transition={{ duration: 0.6 }}
@@ -208,7 +208,7 @@ export const Organization: React.FC<OrganizationProps> = ({ onNavigateLeitbild }
             {activeTab === 'geschaeftsstelle' && (
               <motion.div
                 key="geschaeftsstelle"
-                initial={{ opacity: 0, y: 20 }}
+                initial={{ opacity: 0, y: 40 }}
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -20 }}
                 transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}

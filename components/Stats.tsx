@@ -53,7 +53,7 @@ export const Stats: React.FC = () => {
 
 const StatCard: React.FC<{ label: string; value: number; suffix?: string }> = ({ label, value, suffix }) => (
   <motion.div 
-    initial={{ opacity: 0, y: 20 }}
+    initial={{ opacity: 0, y: 40 }}
     whileInView={{ opacity: 1, y: 0 }}
     transition={{ duration: 0.8, ease: "easeOut" }}
     viewport={{ once: true }}

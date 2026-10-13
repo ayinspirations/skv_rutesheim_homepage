@@ -173,6 +173,7 @@ interface OfferingRow {
 }
 interface OfferingGroup {
   title: string;
+  note?: string;
   trainerLabel?: string;
   rows: OfferingRow[];
 }
@@ -182,6 +183,7 @@ const OfferingTable: React.FC<{ groups: OfferingGroup[] }> = ({ groups }) => (
     {groups.map((g, i) => (
       <div key={i}>
         <h4 className="text-xs font-black uppercase tracking-widest text-black/30 mb-4">{g.title}</h4>
+        {g.note && <p className="text-sm text-black/60 font-medium -mt-2 mb-4">{g.note}</p>}
         <div className="space-y-3">
           {g.rows.map((r, ri) => (
             <div key={ri} className="bg-white p-4 rounded-xl border border-black/5 grid grid-cols-1 sm:grid-cols-[1fr_2fr_1fr] gap-1 sm:gap-4 text-sm">
@@ -320,16 +322,22 @@ const gesundheitssportGroups: OfferingGroup[] = [
 ];
 
 const schwimmkursTermine = [
-  "24.09.2025 (kein Kurs am 01.10.2025)",
-  "08.10.2025–22.10.2025 (Herbstferien)",
-  "05.11.2025–17.12.2025",
+  "23.09.2026–21.10.2026",
+  "Herbstferien",
+  "04.11.2026–16.12.2026",
   "Weihnachtsferien",
-  "07.01.2026–04.02.2026",
-  "Kurstermine 1/2026: 25.02.26–25.03.26",
-  "Osterferien 15.04.26–22.04.26 (kein Kurs 29.04)",
-  "06.05.26 (kein Kurs 13.05)",
-  "20.05.26",
-  "Pfingstferien 10.06.26–22.07.26",
+  "13.01.2027–03.02.2027",
+];
+
+const SG = "Theodor-Heuss-Schwimmbad";
+const FG = "Fabienne Gottschlich";
+const schwimmGroups: OfferingGroup[] = [
+  { title: "Gruppe Seelöwen (Wasserbewältigung/erste Grobform)", note: "Dieser Kurs kann zur Zeit leider nicht angeboten werden!", trainerLabel: "Ansprechpartner", rows: [{ age: "ab 4,5 Jahren", time: "–", hall: SG, trainer: FG }] },
+  { title: "Gruppe Seesterne (Anfänger)", trainerLabel: "Ansprechpartner", rows: [{ age: "ab 5 Jahren", time: "Mi", hall: SG, trainer: FG }] },
+  { title: "Gruppe Eisbären (Anfänger mit Vorkenntnissen)", note: "Die Grobform der Brust- und Kraulbeine sowie der Brustarme sind Voraussetzung.", trainerLabel: "Ansprechpartner", rows: [{ age: "ab 5 Jahren", time: "Mi", hall: SG, trainer: FG }] },
+  { title: "Gruppe Pinguine (Fortgeschrittene)", note: "Die Grobformen des Brust- u. Kraulstils in Koordination sind Voraussetzung.", trainerLabel: "Ansprechpartner", rows: [{ age: "ab 5,5 Jahren", time: "Mi", hall: SG, trainer: FG }] },
+  { title: "Gruppe Seepferdchen (Fortgeschrittene)", note: "Der Brust- u. Kraulstil in Koordination sind Voraussetzung.", trainerLabel: "Ansprechpartner", rows: [{ age: "ab 6 Jahren", time: "Mi", hall: SG, trainer: FG }] },
+  { title: "Gruppe Delphine (Schwimmer)", note: "Die Kinder müssen mindestens 50 Meter am Stück schwimmen können.", trainerLabel: "Ansprechpartner", rows: [{ age: "ab 6,5 Jahren", time: "Mi", hall: SG, trainer: FG }] },
 ];
 
 // --- Termine -------------------------------------------------------------
@@ -411,6 +419,11 @@ const TurnabteilungList: React.FC<{ items: Turnabteilungtermin[] }> = ({ items }
 // --- Formulare -------------------------------------------------------------
 
 // TODO: Bis auf den Aufnahmeantrag (bereits vorhandenes Asset) liegen die übrigen PDFs noch nicht vor.
+const schwimmFormulare = [
+  { label: "Anmeldung Kurse (PDF)", href: "/AnmeldungG_09_2025.pdf" },
+  { label: "Elterninformation (PDF)", href: "/Elterninfoblatt_09_2025.pdf" },
+];
+
 const formulare = [
   {
     group: "Allgemein",
@@ -429,8 +442,7 @@ const formulare = [
   {
     group: "Schwimmkurse",
     items: [
-      { label: "Anmeldung zu den Kursen (PDF)", href: "#" },
-      { label: "Elterninformation (PDF)", href: "#" },
+      ...schwimmFormulare,
     ],
   },
 ];
@@ -475,25 +487,25 @@ export const Turnen: React.FC<TurnenProps> = ({
 
           <div className="max-w-4xl">
             <motion.h1
-              initial={{ opacity: 0, y: 20 }}
+              initial={{ opacity: 0, y: 40 }}
               animate={{ opacity: 1, y: 0 }}
               className="text-5xl md:text-8xl font-black tracking-tighter leading-[0.9] mb-6"
             >
               SKV Rutesheim <span className="text-black/20">Turnen.</span>
             </motion.h1>
             <motion.p
-              initial={{ opacity: 0, y: 20 }}
+              initial={{ opacity: 0, y: 40 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.1 }}
+              transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1], delay: 0.1 }}
               className="text-2xl md:text-4xl font-black tracking-tight text-black mb-12 max-w-3xl"
             >
               {HERO_SUBLINE}
             </motion.p>
 
             <motion.div
-              initial={{ opacity: 0, y: 20 }}
+              initial={{ opacity: 0, y: 40 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.2 }}
+              transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1], delay: 0.2 }}
               className="flex flex-col sm:flex-row gap-4"
             >
               <a
@@ -782,15 +794,14 @@ export const Turnen: React.FC<TurnenProps> = ({
                 <p className={`${bodyText} text-sm mb-6`}>
                   Anmeldung entweder per Anmeldeformular oder online über die Kursanmeldung.
                 </p>
-                {/* TODO: FitWaLa-PDF nicht mitgeliefert */}
                 <div className="flex flex-wrap gap-4">
                   <a href="https://forms.skv-rutesheim.de/SportstundenAnmeldung.php" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 px-5 py-2.5 bg-white border border-black/10 rounded-xl font-bold text-xs hover:bg-zinc-100 transition-colors">
                     Online-Kursanmeldung ↗
                   </a>
-                  <a href="#" className="inline-flex items-center gap-2 px-5 py-2.5 bg-white border border-black/10 rounded-xl font-bold text-xs hover:bg-zinc-100 transition-colors">
+                  <a href="/AnmeldungFitWaLa_09_2026.pdf" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 px-5 py-2.5 bg-white border border-black/10 rounded-xl font-bold text-xs hover:bg-zinc-100 transition-colors">
                     📄 Anmeldeformular FitWaLa ab September 2026 (PDF)
                   </a>
-                  <a href="#" className="inline-flex items-center gap-2 px-5 py-2.5 bg-white border border-black/10 rounded-xl font-bold text-xs hover:bg-zinc-100 transition-colors">
+                  <a href="/AusschreibungFitWaLa_09_2026.pdf" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 px-5 py-2.5 bg-white border border-black/10 rounded-xl font-bold text-xs hover:bg-zinc-100 transition-colors">
                     📄 Ausschreibung FitWaLa ab September 2026 (PDF)
                   </a>
                 </div>
@@ -802,7 +813,12 @@ export const Turnen: React.FC<TurnenProps> = ({
                 <div className="flex flex-wrap items-center gap-4 mb-8">
                   <ContactRequestButton email="schwimmen@skv-Rutesheim.de" />
                 </div>
-                <h4 className="text-xs font-black uppercase tracking-widest text-black/30 mb-4">Kurstermine</h4>
+                <h4 className="text-xs font-black uppercase tracking-widest text-black/30 mb-4">Zur Anmeldung</h4>
+                <p className={`${bodyText} text-sm mb-8`}>
+                  Alle Anmeldungen kommen automatisch auf die Warteliste für den nächsten freien Kurs.
+                </p>
+
+                <h4 className="text-xs font-black uppercase tracking-widest text-black/30 mb-4">Termine</h4>
                 <ul className="space-y-2 mb-8">
                   {schwimmkursTermine.map((termin, idx) => (
                     <li key={idx} className="text-sm text-black/60 font-medium flex gap-3">
@@ -811,14 +827,83 @@ export const Turnen: React.FC<TurnenProps> = ({
                     </li>
                   ))}
                 </ul>
-                <p className={`${bodyText} text-sm mb-4`}>
-                  Alle Anmeldungen kommen automatisch auf die Warteliste für den nächsten freien Kurs.
+
+                <p className={`${bodyText} text-sm mb-10`}>
+                  Der Schwimmschule des SKV Rutesheim e.V. wurde erneut am 2. Juni 2023 die Auszeichnung <a href="https://svw-online.de/verbandsentwicklung/zertifizierte-schwimmgut-schwimmschule/" target="_blank" rel="noopener noreferrer" className="font-black text-black underline decoration-[#D4FF6B] decoration-2 underline-offset-4 hover:text-black/50 transition-colors">SchwimmGut ↗</a> überreicht.
                 </p>
-                <p className={`${bodyText} text-sm`}>
-                  Der Schwimmschule des SKV Rutesheim e.V. wurde erneut am 2. Juni 2023 die Auszeichnung "SchwimmGut" überreicht. Wir haben für unsere Gruppen passende Urkunden entwickelt, die den Seesternen entsprechen.{' '}
-                  {/* TODO: Ziel-URL zu SchwimmGut nicht mitgeliefert */}
-                  <a href="#" target="_blank" rel="noopener noreferrer" className="font-black text-black hover:text-black/50 transition-colors">Mehr zu SchwimmGut ↗</a>
+
+                <h4 className="text-xs font-black uppercase tracking-widest text-black/30 mb-4">Schwimmen lernen</h4>
+                <p className={`${bodyText} text-sm mb-2`}>
+                  Wir haben für unsere Gruppen passende Urkunden entwickelt, die den Seesternen entsprechen.
                 </p>
+                <p className="text-sm font-black mb-8">Ansprechpartnerin: Fabienne Gottschlich</p>
+
+                <OfferingTable groups={schwimmGroups} />
+
+                <p className={`${bodyText} text-sm mt-8 mb-10`}>
+                  Wir können nicht alle Gruppen zu allen Zeiten anbieten. Bitte kreuzen Sie daher alle für Sie möglichen Kurszeiten an. Unsere Kurszeiten: 15:15 Uhr, 16:00 Uhr und 16:45 Uhr.
+                </p>
+
+                <div className="pt-10 border-t border-black/5 mb-10">
+                  <h4 className="text-xs font-black uppercase tracking-widest text-black/30 mb-4">Anmeldung</h4>
+                  <p className="text-sm font-black text-black mb-4">
+                    Die Wartezeit auf einen Platz in unseren Anfänger-Schwimmkursen beträgt bis zu 2,5 Jahren!
+                  </p>
+                  <p className={`${bodyText} text-sm mb-4`}>
+                    Die Anmeldung für den Schwimmkurs erfolgt durch das vollständige Ausfüllen des Anmeldeformulars mit Einzugsermächtigung. Bei der ersten Kursteilnahme bzw. bei -änderungen muss auch der Gesundheitsfragebogen ausgefüllt werden. Die ausgefüllten Formulare schicken Sie bitte an unsere Geschäftsstelle.
+                  </p>
+                  <p className="text-sm font-bold text-black/80 mb-6">
+                    SKV Rutesheim 1945 e.V.<br />Robert-Bosch-Str. 55<br />71277 Rutesheim
+                  </p>
+                  {schwimmFormulare.some((f) => f.href !== "#") && (
+                    <div className="flex flex-wrap gap-4 mb-6">
+                      {schwimmFormulare.filter((f) => f.href !== "#").map((f) => (
+                        <a key={f.label} href={f.href} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 px-5 py-2.5 bg-white border border-black/10 rounded-xl font-bold text-xs hover:bg-zinc-100 transition-colors">
+                          📄 {f.label}
+                        </a>
+                      ))}
+                    </div>
+                  )}
+                  <p className={`${bodyText} text-sm mb-4`}>
+                    Die Kurszusage erhalten Sie bis spätestens 2 Wochen vor Kursbeginn per E-Mail (wenn Sie keine E-Mail-Adresse haben, telefonisch). Im Falle, dass der Kurs bereits belegt ist, kommen Sie automatisch auf die Warteliste für den nächsten Kurs.
+                  </p>
+                  <p className="text-sm font-black text-black">
+                    Bitte beachten Sie: Eine Information erhalten Sie erst, wenn Ihr Kind einen Platz bekommt.
+                  </p>
+                </div>
+
+                <div className="pt-10 border-t border-black/5 mb-10">
+                  <h4 className="text-xs font-black uppercase tracking-widest text-black/30 mb-4">Folgekurse</h4>
+                  <p className="text-sm font-black text-black mb-4">Anmeldung für den Folgekurs!</p>
+                  <p className={`${bodyText} text-sm mb-4`}>
+                    Bitte geben Sie die Anmeldung für den Folgekurs spätestens bis zum letzten Kurstermin des laufenden Kurses beim Übungsleiter ab. Ansonsten können wir den Platz nicht garantieren. Wenn Sie die Anmeldung abgegeben haben, erhält Ihr Kind automatisch einen Platz im Folgekurs.
+                  </p>
+                  <p className="text-sm font-black text-black mb-6">
+                    Bitte beachten Sie, dass wir Anmeldungen nur entgegennehmen, wenn das Anmeldeformular sowie der Gesundheitsfragebogen komplett ausgefüllt sind! Ansonsten können wir die Anmeldung nicht berücksichtigen.
+                  </p>
+                  <p className={`${bodyText} text-sm mb-4`}>
+                    Für Fragen steht Ihnen Fabienne Gottschlich gerne zur Verfügung – entweder per E-Mail oder telefonisch.
+                  </p>
+                  <div className="flex flex-wrap items-center gap-4">
+                    <ContactRequestButton email="schwimmen@skv-Rutesheim.de" />
+                    <a href={telHref('07152 619973')} className="inline-flex items-center gap-2 text-sm font-black hover:text-black/50 transition-colors">
+                      <span>📞</span> 07152 / 619973
+                    </a>
+                  </div>
+                </div>
+
+                <div className="bg-white p-6 md:p-8 rounded-2xl border border-black/5">
+                  <h4 className="text-xs font-black uppercase tracking-widest text-black/30 mb-4">Zertifizierung durch den Schwimmverband Württemberg</h4>
+                  <p className="text-lg md:text-xl font-black tracking-tight mb-4">
+                    Die Schwimmschule des SKV Rutesheim e.V. wurde erneut auf „Herz und Nieren“ geprüft!
+                  </p>
+                  <div className={`${bodyText} text-sm space-y-4`}>
+                    <p>Bereits 2017 wurde die Schwimmschule des SKV Rutesheim mit dem Qualitätssiegel <a href="https://svw-online.de/verbandsentwicklung/zertifizierte-schwimmgut-schwimmschule/" target="_blank" rel="noopener noreferrer" className="font-black text-black hover:text-black/50 transition-colors">SchwimmGut ↗</a> ausgezeichnet. In 2023 haben wir nun die Rezertifizierung erhalten, die wieder für 2 Jahre gültig ist.</p>
+                    <p>Die Leiterin der SKV-Schwimmschule, Fabienne Gottschlich, und ihre Übungsleiter/innen freuten sich über die erneute Auszeichnung.</p>
+                    <p>Die Vergabe des Zertifikats belegt, dass der SKV Rutesheim die von SchwimmGut geforderten Kriterien, u.a. hinsichtlich der Übungsleiterqualifikationen als auch des angewandten Kurskonzepts, vollumfänglich erfüllt.</p>
+                    <p className="font-black text-black">Das Team der Schwimmschule erhält somit das 6. Mal in Folge eine Auszeichnung durch den Schwimmverband Württemberg!</p>
+                  </div>
+                </div>
               </AccordionSection>
             </div>
           </div>

@@ -145,8 +145,8 @@ const DepartmentCard: React.FC<{ title: string; image: string; tag: string; inde
       {...linkProps}
       style={{
         opacity: isVisible ? 1 : 0,
-        transform: isVisible ? 'translateY(0)' : 'translateY(24px)',
-        transition: prefersReducedMotion ? 'none' : `opacity 0.7s cubic-bezier(0.25, 0.46, 0.45, 0.94) ${index * 0.08}s, transform 0.7s cubic-bezier(0.25, 0.46, 0.45, 0.94) ${index * 0.08}s`,
+        transform: isVisible ? 'translateY(0)' : 'translateY(48px)',
+        transition: prefersReducedMotion ? 'none' : `opacity 1s cubic-bezier(0.16, 1, 0.3, 1) ${index * 0.08}s, transform 1s cubic-bezier(0.16, 1, 0.3, 1) ${index * 0.08}s`,
       }}
       className="group relative aspect-square overflow-hidden rounded-[2rem] md:rounded-[3rem] bg-zinc-100 cursor-pointer shadow-[0_20px_50px_rgba(0,0,0,0.1)] md:hover:-translate-y-2.5 md:hover:scale-[1.02] transition-transform duration-500"
     >

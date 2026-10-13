@@ -177,7 +177,7 @@ export const Hero: React.FC<HeroProps> = ({ onNavigateMembership }) => {
                 <motion.span
                   initial={{ opacity: 0, x: -20 }}
                   animate={{ opacity: 1, x: 0 }}
-                  transition={{ delay: 1.8 }}
+                  transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1], delay: 1.8 }}
                   className="text-[8px] md:text-[10px] font-black uppercase tracking-[0.3em] text-white/40 mb-1 ml-4"
                 >
                   Nächste Termine
@@ -268,7 +268,7 @@ export const Hero: React.FC<HeroProps> = ({ onNavigateMembership }) => {
               </motion.div>
 
               <motion.h1
-                initial={{ opacity: 0, y: 20 }}
+                initial={{ opacity: 0, y: 40 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.8, delay: 0.4 }}
                 className="text-white tracking-tighter leading-[0.9] mb-8 md:mb-10 font-black max-w-5xl text-[1.75rem] sm:text-[2.5rem] md:text-[4rem] lg:text-[5.5rem] xl:text-[6.8rem]"
@@ -280,9 +280,9 @@ export const Hero: React.FC<HeroProps> = ({ onNavigateMembership }) => {
             <div className="flex-[1] min-h-10 md:hidden" aria-hidden="true"></div>
 
             <motion.div
-              initial={{ opacity: 0, y: 20 }}
+              initial={{ opacity: 0, y: 40 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.6 }}
+              transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1], delay: 0.6 }}
               className="pointer-events-auto flex flex-col sm:flex-row items-center gap-4 sm:gap-10 pb-2 sm:pb-4 md:pb-0"
             >
               <button

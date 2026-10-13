@@ -1,5 +1,6 @@
 
 import React, { useState, useEffect } from 'react';
+import { motion, AnimatePresence, MotionConfig } from 'framer-motion';
 import { Header } from './components/Header';
 import { Hero } from './components/Hero';
 import { Stats } from './components/Stats';
@@ -41,11 +42,6 @@ function App() {
   const [currentPage, setCurrentPage] = useState<Page>(() => pageFromPath());
   const [isContactOpen, setIsContactOpen] = useState(false);
 
-  // Scroll to top when page changes
-  useEffect(() => {
-    window.scrollTo(0, 0);
-  }, [currentPage]);
-
   // Keep the URL bar in sync with /handball and /turnen so those pages are
   // linkable/bookmarkable, without introducing a full router for the rest of the
   // (state-only) pages.
@@ -69,13 +65,22 @@ function App() {
   }, []);
 
   return (
+    <MotionConfig reducedMotion="user" transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1] }}>
     <div className="min-h-screen selection:bg-black selection:text-white bg-white">
       <Header 
         onNavigate={setCurrentPage} 
         currentPage={currentPage} 
         onOpenContact={() => setIsContactOpen(true)}
       />
-      <main>
+      {/* Seitenwechsel: alte Seite blendet aus, danach nach oben scrollen und neue Seite sanft einfliegen */}
+      <AnimatePresence mode="wait" onExitComplete={() => window.scrollTo(0, 0)}>
+      <motion.main
+        key={currentPage}
+        initial={{ opacity: 0, y: 32 }}
+        animate={{ opacity: 1, y: 0 }}
+        exit={{ opacity: 0, y: -16, transition: { duration: 0.35, ease: [0.4, 0, 1, 1] } }}
+        transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
+      >
         {currentPage === 'home' && (
           <>
             <Hero onNavigateMembership={() => setCurrentPage('membership')} />
@@ -123,7 +128,8 @@ function App() {
         {currentPage === 'sportabzeichen' && (
           <Sportabzeichen onBack={() => setCurrentPage('home')} />
         )}
-      </main>
+      </motion.main>
+      </AnimatePresence>
       <Footer onNavigate={setCurrentPage} />
       
       <ContactModal 
@@ -131,6 +137,7 @@ function App() {
         onClose={() => setIsContactOpen(false)} 
       />
     </div>
+    </MotionConfig>
   );
 }
 
