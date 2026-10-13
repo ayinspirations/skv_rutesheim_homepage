@@ -157,22 +157,15 @@ const DepartmentCard: React.FC<{ title: string; image: string; tag: string; inde
       />
       <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/10 to-transparent opacity-80 group-hover:opacity-100 transition-opacity duration-500"></div>
       
-      <div className="absolute inset-0 p-8 md:p-12 flex flex-col justify-end">
-        <div className="mb-3 md:mb-5">
-          <span className="px-4 py-1.5 bg-white/20 backdrop-blur-xl border border-white/30 rounded-full text-[10px] md:text-[11px] uppercase tracking-[0.2em] text-white font-black">
-            {tag}
-          </span>
+      <div className="absolute inset-x-0 bottom-0 p-6 md:p-8">
+        <div className="mb-3 flex items-center gap-2 opacity-0 translate-y-2 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-500 delay-100">
+          <span className="text-white/60 text-[10px] font-black uppercase tracking-widest">Mehr erfahren</span>
+          <span className="text-[#D4FF6B] text-xl">→</span>
         </div>
         <h3 className="text-3xl md:text-4xl font-black text-white leading-[0.9] tracking-tighter transition-transform duration-500 group-hover:translate-x-1">
           {title}
         </h3>
-        
-        <div className="h-[1.5px] w-0 bg-[#D4FF6B] group-hover:w-16 transition-all duration-700 mt-4 rounded-full"></div>
-        
-        <div className="mt-4 flex items-center gap-2 opacity-0 -translate-y-2 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-500 delay-100">
-          <span className="text-white/60 text-[10px] font-black uppercase tracking-widest">Mehr erfahren</span>
-          <span className="text-[#D4FF6B] text-xl">→</span>
-        </div>
+        <div className="h-[1.5px] w-0 bg-[#D4FF6B] group-hover:w-16 transition-all duration-700 mt-3 rounded-full"></div>
       </div>
     </Tag>
   );
