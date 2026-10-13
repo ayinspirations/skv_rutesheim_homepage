@@ -1,0 +1,34 @@
+# Netlify: Build-Einstellungen (werden beim Verbinden mit GitHub automatisch übernommen)
+[build]
+  command = "npm run build"
+  publish = "dist"
+
+[build.environment]
+  NODE_VERSION = "20"
+
+# www -> ohne www (eine Hauptadresse für Google)
+[[redirects]]
+  from = "https://www.skv-rutesheim.de/*"
+  to = "https://skv-rutesheim.de/:splat"
+  status = 301
+  force = true
+
+# Alte Unterseiten der bisherigen Homepage (z. B. /turnen/Wettk2026/...htm) auf die neue
+# Turnen-Seite umleiten. Greift nur, wenn es die Datei nicht gibt (/turnen selbst bleibt).
+[[redirects]]
+  from = "/turnen/*"
+  to = "/turnen"
+  status = 301
+
+# Alle übrigen unbekannten alten Adressen auf die Startseite umleiten.
+[[redirects]]
+  from = "/*"
+  to = "/"
+  status = 301
+
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Content-Type-Options = "nosniff"
+    Referrer-Policy = "strict-origin-when-cross-origin"
+    X-Frame-Options = "SAMEORIGIN"
