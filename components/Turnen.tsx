@@ -334,8 +334,8 @@ interface Turnabteilungtermin { title: string; ort: string; datum: string }
 
 const wettkaempfe2026: Wettkampf[] = [
   { title: "Bezirks-Hallenturnfest m/w", ort: "Rutesheim", datum: "14.03.2026", hasResult: true },
-  { title: "Geräteturnen Gaumeisterschaft weiblich", ort: "Gültstein", datum: "18.04.2026", hasResult: true },
-  { title: "Geräteturnen Gaumeisterschaft männlich", ort: "Magstadt", datum: "18.04.2026", hasResult: true },
+  { title: "Geräteturnen Gaumeisterschaft weiblich", ort: "Gültstein", datum: "18.04.2026", hasResult: true, resultHref: "https://www.turngau-stuttgart.de/fileadmin/Microsites/Turngau-Stuttgart/Sportarten/2026/Ergebnislisten/GFw_Siegerliste_Disziplinen.pdf" },
+  { title: "Geräteturnen Gaumeisterschaft männlich", ort: "Magstadt", datum: "18.04.2026", hasResult: true, resultHref: "https://www.turngau-stuttgart.de/fileadmin/Microsites/Turngau-Stuttgart/Sportarten/2026/Ergebnislisten/2026_GF_GTm_Siegerliste_mit_Disz.pdf" },
   { title: "Mehrkampfcup", ort: "Renningen", datum: "25.04.2026", hasResult: true },
   { title: "Kindercup", ort: "Kuppingen", datum: "27.06.2026" },
   { title: "Mehrkampfcup Landesfinale", ort: "Heidenheim", datum: "4./5.07.2026", hasResult: true },
