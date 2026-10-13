@@ -88,12 +88,12 @@ export const Header: React.FC<HeaderProps> = ({ onNavigate, currentPage, onOpenC
           >
             Mitgliedschaft
           </button>
-          <button 
-            onClick={onOpenContact}
+          <a
+            href="mailto:post@skv-rutesheim.de"
             className="ml-1 px-4 py-1.5 rounded-full text-[10px] font-black bg-[#D4FF6B] text-black border border-black/5 flex items-center gap-1 shadow-sm hover:scale-105 transition-transform"
           >
             Kontakt <span>↗</span>
-          </button>
+          </a>
         </div>
 
         <div className="flex items-center gap-2 flex-none ml-auto lg:ml-0 lg:justify-self-end">
@@ -126,12 +126,13 @@ export const Header: React.FC<HeaderProps> = ({ onNavigate, currentPage, onOpenC
                 <a href="#abteilungen" className="text-base font-bold py-2 border-b border-black/5" onClick={(e) => scrollToSection(e, 'abteilungen')}>Abteilungen</a>
                 <button onClick={() => {onNavigate('clubhouse'); setIsMenuOpen(false)}} className="text-base font-bold py-2 border-b border-black/5">Vereinsheim</button>
                 <button onClick={() => {onNavigate('membership'); setIsMenuOpen(false)}} className="text-base font-bold py-2 border-b border-black/5">Mitgliedschaft</button>
-                <button 
-                  onClick={() => {onOpenContact(); setIsMenuOpen(false)}} 
+                <a
+                  href="mailto:post@skv-rutesheim.de"
+                  onClick={() => setIsMenuOpen(false)}
                   className="mt-2 w-full bg-[#D4FF6B] text-black font-black py-3 rounded-xl shadow-lg active:scale-95 transition-transform"
                 >
                   Kontakt ↗
-                </button>
+                </a>
               </div>
             </motion.div>
           </>
