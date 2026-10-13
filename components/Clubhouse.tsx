@@ -165,9 +165,9 @@ export const Clubhouse: React.FC<ClubhouseProps> = ({ onBack }) => {
               Unser großer Saal verfügt über moderne Lichteffekte und bietet durch seine Helligkeit das optimale Ambiente für Taufen, Beerdigungen oder geschäftliche Tagungen.
             </p>
             <div className="flex flex-col sm:flex-row gap-4">
-              <button className="px-8 py-5 bg-black text-white rounded-2xl font-black text-xs uppercase tracking-widest hover:bg-[#D4FF6B] hover:text-black transition-all shadow-xl flex items-center justify-center gap-3">
+              <a href="mailto:post@skv-rutesheim.de" className="px-8 py-5 bg-black text-white rounded-2xl font-black text-xs uppercase tracking-widest hover:bg-[#D4FF6B] hover:text-black transition-all shadow-xl flex items-center justify-center gap-3">
                 Termin anfragen ↗
-              </button>
+              </a>
             </div>
           </div>
           

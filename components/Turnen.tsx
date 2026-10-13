@@ -254,6 +254,19 @@ const wettkampfturnenGroups: OfferingGroup[] = [
 
 const erwachsenensportGroups: OfferingGroup[] = [
   {
+    title: "Männer Sport & Spiel",
+    trainerLabel: "Ansprechpartner",
+    rows: [
+      { age: "ab 40 Jahren", time: "Mo 19:45–21:45 Uhr", hall: "Theodor-Heuss-Halle", trainer: "Frank Geyer" },
+      { age: "ab 45 Jahren", time: "Fr 19:00–20:30 Uhr", hall: "Theodor-Heuss-Halle", trainer: "Erich Wimmer" },
+    ],
+  },
+  {
+    title: "Erwachsenen Turnen",
+    trainerLabel: "Ansprechpartner",
+    rows: [{ age: "ab 14 Jahren", time: "Do Sommer 19:30–21:45 Uhr / Winter 20:00–21:45 Uhr", hall: "Bühl 2 Halle 1", trainer: "Matthias Götz" }],
+  },
+  {
     title: "Bubis Sportgruppe",
     trainerLabel: "Ansprechpartner",
     rows: [{ age: "ab 14 Jahren", time: "Mi 20:00–21:45 Uhr", hall: "Bühl 2 Halle 3", trainer: "Helmut Budil jun." }],
@@ -704,8 +717,7 @@ export const Turnen: React.FC<TurnenProps> = ({
               <AccordionSection title="Kinder-/Jugendsport" defaultOpen>
                 <div className="flex flex-wrap items-center gap-4 mb-8">
                   <ContactFormPlaceholder name="Michaela Schaust" />
-                  {/* TODO: "Anmeldung"-Link (Ziel-Seite) nicht mitgeliefert */}
-                  <a href="#" className="inline-flex items-center gap-2 px-5 py-2.5 bg-white border border-black/10 rounded-xl font-bold text-xs hover:bg-zinc-100 transition-colors">
+                  <a href="https://forms.skv-rutesheim.de/SportstundenAnmeldung.php" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 px-5 py-2.5 bg-white border border-black/10 rounded-xl font-bold text-xs hover:bg-zinc-100 transition-colors">
                     Anmeldung ↗
                   </a>
                 </div>
@@ -750,9 +762,9 @@ export const Turnen: React.FC<TurnenProps> = ({
                 <p className={`${bodyText} text-sm mb-6`}>
                   Anmeldung entweder per Anmeldeformular oder online über die Kursanmeldung.
                 </p>
-                {/* TODO: Online-Kursanmeldung-Link und beide PDFs nicht mitgeliefert */}
+                {/* TODO: FitWaLa-PDF nicht mitgeliefert */}
                 <div className="flex flex-wrap gap-4">
-                  <a href="#" className="inline-flex items-center gap-2 px-5 py-2.5 bg-white border border-black/10 rounded-xl font-bold text-xs hover:bg-zinc-100 transition-colors">
+                  <a href="https://forms.skv-rutesheim.de/SportstundenAnmeldung.php" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 px-5 py-2.5 bg-white border border-black/10 rounded-xl font-bold text-xs hover:bg-zinc-100 transition-colors">
                     Online-Kursanmeldung ↗
                   </a>
                   <a href="#" className="inline-flex items-center gap-2 px-5 py-2.5 bg-white border border-black/10 rounded-xl font-bold text-xs hover:bg-zinc-100 transition-colors">

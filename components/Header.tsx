@@ -62,7 +62,7 @@ export const Header: React.FC<HeaderProps> = ({ onNavigate, currentPage, onOpenC
           </div>
         </div>
 
-        <div className="hidden lg:flex absolute left-1/2 -translate-x-1/2 items-center gap-0.5 bg-white/60 backdrop-blur-xl border border-white/40 p-0.5 rounded-full shadow-sm">
+        <div className="hidden lg:flex mx-auto items-center gap-0.5 bg-white/60 backdrop-blur-xl border border-white/40 p-0.5 rounded-full shadow-sm">
           <button 
             onClick={handleHomeClick}
             className={`px-4 py-1.5 rounded-full text-[10px] font-bold transition-all ${currentPage === 'home' ? 'bg-black text-white' : 'text-black/60 hover:bg-black/5'}`}
@@ -96,7 +96,7 @@ export const Header: React.FC<HeaderProps> = ({ onNavigate, currentPage, onOpenC
           </button>
         </div>
 
-        <div className="flex items-center gap-2 flex-none ml-auto">
+        <div className="flex items-center gap-2 flex-none ml-auto lg:ml-0">
           <button 
             onClick={() => onNavigate('membership')}
             className="hidden md:flex bg-black text-white px-4 py-1.5 md:px-5 md:py-2 rounded-full shadow-lg hover:scale-105 active:scale-95 transition-all text-[10px] md:text-xs font-bold text-center tracking-wide h-8 md:h-10 items-center justify-center min-w-[100px] md:min-w-[130px]"

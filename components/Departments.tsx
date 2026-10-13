@@ -31,7 +31,7 @@ const departments = [
   },
   {
     title: "Rad",
-    image: "/rad.jpg",
+    image: "/Rad.jpg",
     tag: "Outdoor",
     link: "/rad",
     internal: true,
