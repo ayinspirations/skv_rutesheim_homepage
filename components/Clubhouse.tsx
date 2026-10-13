@@ -8,7 +8,7 @@ interface ClubhouseProps {
 
 const openingHours = [
   { day: "Montag", hours: "Ruhetag", highlight: false },
-  { day: "Dienstag - Samstag", hours: "11:30 - 14:00 Uhr & 17:30 - 22:30 Uhr", highlight: true },
+  { day: "Dienstag - Samstag", hours: "17:30 - 21:30 Uhr", highlight: true },
   { day: "Sonn- & Feiertage", hours: "11:30 - 14:00 Uhr & 14:30 - 21:00 Uhr", highlight: true }
 ];
 

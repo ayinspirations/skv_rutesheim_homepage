@@ -26,9 +26,10 @@ const committee = [
 
 interface OrganizationProps {
   onNavigateLeitbild?: () => void;
+  onNavigateMembership?: () => void;
 }
 
-export const Organization: React.FC<OrganizationProps> = ({ onNavigateLeitbild }) => {
+export const Organization: React.FC<OrganizationProps> = ({ onNavigateLeitbild, onNavigateMembership }) => {
   const [activeTab, setActiveTab] = useState('verein');
 
   return (
@@ -271,32 +272,11 @@ export const Organization: React.FC<OrganizationProps> = ({ onNavigateLeitbild }
                       <div className="mt-8 flex items-start gap-4 p-4 bg-white/5 rounded-2xl border border-white/5">
                         <span className="text-xl">ℹ️</span>
                         <p className="text-xs font-medium text-white/50 leading-relaxed">
-                          Einen Aufnahmeantrag finden Sie unter der Rubrik <span className="text-white underline decoration-[#D4FF6B]">Mitgliedschaft</span>.
+                          Einen Aufnahmeantrag finden Sie unter der Rubrik <button type="button" onClick={onNavigateMembership} className="text-white font-bold underline decoration-[#D4FF6B] underline-offset-2 hover:text-[#D4FF6B] transition-colors">Mitgliedschaft</button>.
                         </p>
                       </div>
                     </div>
 
-                    {/* Closing Dates */}
-                    <div className="p-8 bg-zinc-50 border border-black/5 rounded-[2.5rem]">
-                      <h4 className="text-[10px] font-black uppercase tracking-widest text-black/30 mb-6 flex items-center gap-2">
-                        <span className="w-1.5 h-1.5 bg-red-500 rounded-full"></span>
-                        Schließzeiten 2025
-                      </h4>
-                      <ul className="space-y-3">
-                        <li className="text-sm font-bold flex justify-between">
-                          <span>10. Juni 2025</span>
-                          <span className="text-black/20">Geschlossen</span>
-                        </li>
-                        <li className="text-sm font-bold flex justify-between">
-                          <span>15. Juli 2025</span>
-                          <span className="text-black/20">Geschlossen</span>
-                        </li>
-                        <li className="text-sm font-bold pt-2 border-t border-black/5">
-                          <span className="block mb-1">Sommerpause</span>
-                          <span className="text-lg font-black">30.08. – 14.09.2025</span>
-                        </li>
-                      </ul>
-                    </div>
                   </div>
                 </div>
               </motion.div>

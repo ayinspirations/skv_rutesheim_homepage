@@ -87,7 +87,7 @@ function App() {
           <>
             <Hero onNavigateMembership={() => setCurrentPage('membership')} />
             <Stats />
-            <Organization onNavigateLeitbild={() => setCurrentPage('leitbild')} />
+            <Organization onNavigateLeitbild={() => setCurrentPage('leitbild')} onNavigateMembership={() => setCurrentPage('membership')} />
             <Departments
               onNavigateHandball={() => setCurrentPage('handball')}
               onNavigateTurnen={() => setCurrentPage('turnen')}
