@@ -40,9 +40,9 @@ const AccordionSection: React.FC<{ title: string; id?: string; defaultOpen?: boo
 
 // TODO: MailTo=N Kontaktformular-System (alte Seite) muss durch echte Ansprechpartner-Kontaktwege
 // ersetzt werden. Bis dahin Platzhalter-Buttons.
-const ContactFormPlaceholder: React.FC<{ name: string }> = ({ name }) => (
-  <a href="#" className="inline-flex items-center gap-2 text-sm font-black text-black hover:text-black/50 transition-colors">
-    <span>✉️</span> {name} — Kontaktformular
+const ContactFormPlaceholder: React.FC<{ name: string }> = () => (
+  <a href="#" className="inline-flex items-center justify-center bg-black text-white px-4 py-1.5 rounded-full shadow-lg hover:scale-105 active:scale-95 transition-all text-[10px] md:text-[11px] font-bold tracking-wide h-8">
+    Kontaktformular
   </a>
 );
 
@@ -75,7 +75,7 @@ const news: NewsItem[] = [
     date: "6.8.2026",
     title: "Kursangebote",
     body: "Der Kurs FitWaLa startet wieder am 15.09.2026. Weitere Infos und das Anmeldeformular unter: Kursangebote",
-    jumpHref: "#fitnesskurse",
+    jumpHref: "#sportangebot",
   },
   {
     date: "14.7.2026",
@@ -329,7 +329,7 @@ const schwimmkursTermine = [
 
 // --- Termine -------------------------------------------------------------
 
-interface Wettkampf { title: string; ort: string; datum: string; hasResult?: boolean }
+interface Wettkampf { title: string; ort: string; datum: string; hasResult?: boolean; resultHref?: string }
 interface Turnabteilungtermin { title: string; ort: string; datum: string }
 
 const wettkaempfe2026: Wettkampf[] = [
@@ -340,6 +340,13 @@ const wettkaempfe2026: Wettkampf[] = [
   { title: "Kindercup", ort: "Kuppingen", datum: "27.06.2026" },
   { title: "Mehrkampfcup Landesfinale", ort: "Heidenheim", datum: "4./5.07.2026", hasResult: true },
   { title: "Gaukinderturnfest", ort: "Renningen", datum: "12.07.2026", hasResult: true },
+];
+
+// Leichtathletik — nur Ergebnislinks, keine Termine
+const leichtathletikErgebnisse2026: Wettkampf[] = [
+  { title: "Landesoffene Bahneröffnung", ort: "Ludwigsburg", datum: "", hasResult: true, resultHref: "https://ladv.de/ergebnisse/98093/Landesoffene-Bahneröffnung-U14-bis-Aktive-Ergebnisliste-Ludwigsburg-2026.htm" },
+  { title: "Landesoffene Bahneröffnung", ort: "Stuttgart", datum: "", hasResult: true, resultHref: "https://ladv.de/ergebnisse/98569/Landesoffene-Bahneröffnung-Ergebnisliste-Stuttgart-2026.htm" },
+  { title: "Landesoffenes Sportfest", ort: "Renningen", datum: "", hasResult: true, resultHref: "https://ladv.de/ergebnisse/98740/31.-landesoffenes-Sportfest-für-Schüler-Jugend-und-Aktive-Ergebnisliste-Renningen-2026.htm" },
 ];
 
 const turnabteilung2026: Turnabteilungtermin[] = [
@@ -373,11 +380,11 @@ const WettkampfList: React.FC<{ items: Wettkampf[] }> = ({ items }) => (
       <div key={idx} className="bg-white p-4 rounded-xl border border-black/5 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
         <div>
           <span className="font-black text-sm">{w.title}</span>
-          <span className="text-black/40 text-xs font-bold block sm:inline sm:ml-2">{w.ort} — {w.datum}</span>
+          <span className="text-black/40 text-xs font-bold block sm:inline sm:ml-2">{w.ort}{w.datum ? ` — ${w.datum}` : ''}</span>
         </div>
-        {/* TODO: Platzhalter-Link — echte Ergebnis-Seite wurde nicht mitgeliefert. */}
+        {/* TODO: Platzhalter-Link "#" wo noch keine Ergebnis-Seite mitgeliefert wurde. */}
         {w.hasResult && (
-          <a href="#" target="_blank" rel="noopener noreferrer" className="text-xs font-black text-black hover:text-black/50 transition-colors shrink-0">
+          <a href={w.resultHref ?? "#"} target="_blank" rel="noopener noreferrer" className="text-xs font-black text-black hover:text-black/50 transition-colors shrink-0">
             Ergebnis ↗
           </a>
         )}
@@ -541,7 +548,13 @@ export const Turnen: React.FC<TurnenProps> = ({
                   <p className={`text-sm leading-relaxed mb-4 ${item.highlighted ? 'text-white/60' : 'text-black/60'} font-medium`}>{item.body}</p>
 
                   {item.jumpHref && (
-                    <a href={item.jumpHref} className="text-xs font-black text-black hover:text-black/50 transition-colors">
+                    <a
+                      href={item.jumpHref}
+                      onClick={(e) => {
+                        e.preventDefault();
+                        document.getElementById(item.jumpHref!.slice(1))?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                      }}
+                      className="text-xs font-black text-black hover:text-black/50 transition-colors">
                       Kursangebote →
                     </a>
                   )}
@@ -862,7 +875,7 @@ export const Turnen: React.FC<TurnenProps> = ({
               <div className="space-y-10">
                 <div>
                   <h4 className="text-xs font-black uppercase tracking-widest text-black/30 mb-4">2026</h4>
-                  <WettkampfList items={wettkaempfe2026.filter((w) => w.hasResult)} />
+                  <WettkampfList items={[...wettkaempfe2026, ...leichtathletikErgebnisse2026].filter((w) => w.hasResult)} />
                 </div>
                 <div>
                   <h4 className="text-xs font-black uppercase tracking-widest text-black/30 mb-4">2025</h4>
