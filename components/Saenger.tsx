@@ -47,25 +47,25 @@ export const Saenger: React.FC<SaengerProps> = ({
 
           <div className="max-w-4xl">
             <motion.h1
-              initial={{ opacity: 0, y: 20 }}
+              initial={{ opacity: 0, y: 40 }}
               animate={{ opacity: 1, y: 0 }}
               className="text-5xl md:text-8xl font-black tracking-tighter leading-[0.9] mb-6"
             >
               SKV Rutesheim <span className="text-black/20">Sänger.</span>
             </motion.h1>
             <motion.p
-              initial={{ opacity: 0, y: 20 }}
+              initial={{ opacity: 0, y: 40 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.1 }}
+              transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1], delay: 0.1 }}
               className="text-2xl md:text-4xl font-black tracking-tight text-black mb-12 max-w-3xl"
             >
               {HERO_SUBLINE}
             </motion.p>
 
             <motion.div
-              initial={{ opacity: 0, y: 20 }}
+              initial={{ opacity: 0, y: 40 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.2 }}
+              transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1], delay: 0.2 }}
               className="flex flex-col sm:flex-row gap-4"
             >
               <a

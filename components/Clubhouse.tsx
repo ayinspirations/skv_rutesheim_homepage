@@ -30,7 +30,7 @@ export const Clubhouse: React.FC<ClubhouseProps> = ({ onBack }) => {
           <div className="flex flex-col lg:flex-row gap-12 lg:items-end">
             <div className="flex-1">
               <motion.h1 
-                initial={{ opacity: 0, y: 20 }}
+                initial={{ opacity: 0, y: 40 }}
                 animate={{ opacity: 1, y: 0 }}
                 className="text-5xl md:text-8xl font-black tracking-tighter leading-[0.9] mb-8"
               >
@@ -38,9 +38,9 @@ export const Clubhouse: React.FC<ClubhouseProps> = ({ onBack }) => {
                 <span className="text-black/20">Bühl.</span>
               </motion.h1>
               <motion.p 
-                initial={{ opacity: 0, y: 20 }}
+                initial={{ opacity: 0, y: 40 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.1 }}
+                transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1], delay: 0.1 }}
                 className="text-xl md:text-3xl font-medium text-black/50 leading-relaxed max-w-2xl"
               >
                 Genießen Sie exzellente Küche in gemütlicher Atmosphäre – direkt am Stadion der SKV Rutesheim.
@@ -50,7 +50,7 @@ export const Clubhouse: React.FC<ClubhouseProps> = ({ onBack }) => {
             <motion.div 
               initial={{ opacity: 0, scale: 0.9 }}
               animate={{ opacity: 1, scale: 1 }}
-              transition={{ delay: 0.2 }}
+              transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1], delay: 0.2 }}
               className="lg:w-80 shrink-0 bg-zinc-50 border border-black/5 p-8 rounded-[2.5rem]"
             >
               <span className="text-[10px] font-black uppercase tracking-widest text-black/30 mb-6 block">Pächterin</span>

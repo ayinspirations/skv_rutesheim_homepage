@@ -38,7 +38,7 @@ export const Header: React.FC<HeaderProps> = ({ onNavigate, currentPage, onOpenC
         if (element) {
           window.scrollTo({ top: element.offsetTop - 80, behavior: 'smooth' });
         }
-      }, 100);
+      }, 600); // nach dem Ausblenden der alten Seite (Seitenwechsel-Animation)
     } else {
       const element = document.getElementById(id);
       if (element) {
