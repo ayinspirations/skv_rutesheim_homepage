@@ -73,7 +73,7 @@ export const Membership: React.FC<MembershipProps> = ({ onBack }) => {
               rel="noopener noreferrer"
               className="w-full py-5 bg-[#D4FF6B] text-black rounded-2xl font-black text-sm uppercase tracking-widest hover:scale-[1.02] transition-transform text-center"
             >
-              Zum Online-Portal ↗
+              Mitglied werden ↗
             </a>
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 mt-4">
               {[
