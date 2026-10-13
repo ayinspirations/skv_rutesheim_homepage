@@ -7,6 +7,7 @@ export interface Starterin { rang: number; name: string; punkte: string; geraete
 export interface Wettkampfklasse { nr: string; titel: string; teilnehmer: number; stufe: string; starter: Starterin[] }
 
 const S = 'Sprung', R = 'Stufenbarren', BA = 'Balken', BO = 'Boden';
+const BR = 'Barren', RE = 'Reck', RI = 'Ringe', PP = 'P-Pferd';
 const g = (name: string, wert: string): Geraet => ({ name, wert });
 
 export const bezirk2026Weiblich: Wettkampfklasse[] = [
@@ -57,6 +58,46 @@ export const bezirk2026Weiblich: Wettkampfklasse[] = [
   },
 ];
 
+export const bezirk2026Maennlich: Wettkampfklasse[] = [
+  {
+    nr: '21711', titel: 'GT Pflicht-5-Kampf Einzel Jutu AK 11', teilnehmer: 15, stufe: 'bis P6',
+    starter: [
+      { rang: 13, name: 'Leon Böck', punkte: '63,05', geraete: [g(BO, '11,80'), g(S, '14,50'), g(BR, '12,10'), g(RE, '12,30'), g(RI, '12,35')] },
+    ],
+  },
+  {
+    nr: '21712', titel: 'GT Pflicht-6-Kampf Einzel Jutu AK 12', teilnehmer: 11, stufe: 'bis P7',
+    starter: [
+      { rang: 7, name: 'Oliver Butzer', punkte: '78,30', geraete: [g(BO, '11,70'), g(S, '13,70'), g(BR, '12,90'), g(RE, '14,20'), g(RI, '12,40'), g(PP, '13,40')] },
+      { rang: 8, name: 'Jakob Gann', punkte: '77,95', geraete: [g(BO, '14,20'), g(S, '14,10'), g(BR, '12,70'), g(RE, '12,00'), g(RI, '12,60'), g(PP, '12,35')] },
+      { rang: 9, name: 'Leonas Fischer', punkte: '77,55', geraete: [g(BO, '11,60'), g(S, '14,00'), g(BR, '12,80'), g(RE, '13,90'), g(RI, '12,15'), g(PP, '13,10')] },
+      { rang: 11, name: 'Finn Pitz', punkte: '75,65', geraete: [g(BO, '13,20'), g(S, '14,40'), g(BR, '11,50'), g(RE, '13,40'), g(RI, '11,65'), g(PP, '11,50')] },
+    ],
+  },
+  {
+    nr: '21714', titel: 'GT Pflicht-6-Kampf Einzel Jutu 14 Jahre und älter', teilnehmer: 16, stufe: 'bis P9',
+    starter: [
+      { rang: 14, name: 'Janus Voltmann', punkte: '78,25', geraete: [g(BO, '11,00'), g(S, '13,80'), g(BR, '12,50'), g(RE, '15,30'), g(RI, '13,15'), g(PP, '12,50')] },
+      { rang: 15, name: 'Nelson Klügel', punkte: '78,10', geraete: [g(BO, '13,80'), g(S, '14,00'), g(BR, '12,80'), g(RE, '13,30'), g(RI, '12,20'), g(PP, '12,00')] },
+    ],
+  },
+  {
+    nr: '21752', titel: 'Wahl-3-Kampf aus 4 Geräten Jutu AK 9 Einzel', teilnehmer: 4, stufe: 'bis P5',
+    starter: [
+      { rang: 1, name: 'Jeremia Gann', punkte: '38,10', hervorgehoben: true, geraete: [g(S, '13,60'), g(BR, '12,90'), g(RE, '11,60')] },
+      { rang: 3, name: 'Ruben Klügel', punkte: '37,10', hervorgehoben: true, geraete: [g(BO, '11,70'), g(S, '13,10'), g(RE, '12,30')] },
+    ],
+  },
+  {
+    nr: '21760', titel: 'Wahl-3-Kampf aus 4 Geräten Jutu AK 10 Einzel', teilnehmer: 6, stufe: 'bis P6',
+    starter: [
+      { rang: 3, name: 'Pepe Emilian Schradi', punkte: '37,70', hervorgehoben: true, geraete: [g(BO, '13,00'), g(S, '12,90'), g(RE, '11,80')] },
+      { rang: 5, name: 'Noah Ebi', punkte: '34,90', geraete: [g(BO, '11,00'), g(S, '12,90'), g(BR, '11,00')] },
+      { rang: 6, name: 'Luca Böck', punkte: '34,50', geraete: [g(BO, '10,80'), g(S, '13,00'), g(BR, '10,70')] },
+    ],
+  },
+];
+
 const rangClass = (r: Starterin) =>
   r.rang <= 3
     ? 'bg-black text-[#D4FF6B]'
@@ -71,7 +112,7 @@ export const ErgebnisTabelle: React.FC<{ klassen: Wettkampfklasse[] }> = ({ klas
         <div className="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1 mb-4">
           <h4 className="text-base md:text-lg font-black tracking-tight">{k.titel}</h4>
           <span className="text-[10px] font-black uppercase tracking-widest text-black/30">
-            Wettkampf {k.nr} · {k.teilnehmer} Teilnehmerinnen · {k.stufe}
+            Wettkampf {k.nr} · {k.teilnehmer} Teilnehmende · {k.stufe}
           </span>
         </div>
         <div className="space-y-3">
@@ -88,7 +129,7 @@ export const ErgebnisTabelle: React.FC<{ klassen: Wettkampfklasse[] }> = ({ klas
                 <span className="text-lg md:text-xl font-black tracking-tight">{r.punkte}</span>
                 <span className="block text-[9px] font-black uppercase tracking-widest text-black/30">Punkte</span>
               </span>
-              <div className="col-span-3 md:col-span-1 grid grid-cols-3 gap-2 md:w-[22rem]">
+              <div className={`col-span-3 md:col-span-1 grid gap-2 ${r.geraete.length > 3 ? (r.geraete.length > 5 ? 'grid-cols-3 md:grid-cols-6 md:w-[38rem]' : 'grid-cols-3 md:grid-cols-5 md:w-[32rem]') : 'grid-cols-3 md:w-[22rem]'}`}>
                 {r.geraete.map((ge) => (
                   <div key={ge.name} className="bg-zinc-50 rounded-xl px-3 py-2 text-center">
                     <span className="block text-[9px] font-black uppercase tracking-wider text-black/40 leading-tight break-words">{ge.name}</span>
