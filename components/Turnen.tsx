@@ -2,6 +2,7 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { FacilityMap } from './FacilityMap';
+import { ErgebnisTabelle, bezirk2026Weiblich, bezirk2026Maennlich } from './WettkampfErgebnis';
 
 interface TurnenProps {
   onBack: () => void;
@@ -22,6 +23,18 @@ const bodyText = "text-black/60 font-medium leading-relaxed";
 const pillLinkClass = "px-5 py-3 rounded-full text-[10px] md:text-xs font-black uppercase tracking-widest transition-all whitespace-nowrap border border-transparent bg-zinc-50/50 text-black/40 hover:bg-zinc-100 hover:text-black/60";
 
 const mailHref = (email: string) => `mailto:${email}`;
+// Interne Anker (#…) weich ansteuern und ggf. aufklappen, externe Links in neuem Tab.
+const linkProps = (href: string) =>
+  href.startsWith('#') && href.length > 1
+    ? {
+        onClick: (e: React.MouseEvent) => {
+          e.preventDefault();
+          const el = document.getElementById(href.slice(1));
+          if (el instanceof HTMLDetailsElement) el.open = true;
+          el?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        },
+      }
+    : { target: '_blank', rel: 'noopener noreferrer' };
 const telHref = (phone: string) => `tel:${phone.replace(/\s+/g, '')}`;
 
 const AccordionSection: React.FC<{ title: string; id?: string; defaultOpen?: boolean; children: React.ReactNode }> = ({ title, id, defaultOpen, children }) => (
@@ -118,7 +131,8 @@ const news: NewsItem[] = [
     title: "Bezirksmeisterschaft",
     body: "Bezirksmeisterschaft Gerätturnen. Am Samstag, 14. März 2026 wurde die Bezirksmeisterschaft im Turnen und das Hallenbezirksturnfest Gerätturnen in Rutesheim durchgeführt.",
     links: [
-      { label: "Ergebnisse der SKV...", href: "#" },
+      { label: "Ergebnisse der SKV weiblich...", href: "#bezirk-2026-weiblich" },
+      { label: "Ergebnisse der SKV männlich...", href: "#bezirk-2026-maennlich" },
       { label: "Alle Ergebnisse weiblich...", href: "https://skv-rutesheim.de/turnen/Wettk2026/GeTuBezirkErg/weiblich/v-1047891411.htm" },
       { label: "Alle Ergebnisse männlich...", href: "https://skv-rutesheim.de/turnen/Wettk2026/GeTuBezirkErg/maennlich/v-1047891411.htm" },
     ],
@@ -342,11 +356,11 @@ const schwimmGroups: OfferingGroup[] = [
 
 // --- Termine -------------------------------------------------------------
 
-interface Wettkampf { title: string; ort: string; datum: string; hasResult?: boolean; resultHref?: string }
+interface Wettkampf { title: string; ort: string; datum: string; hasResult?: boolean; resultHref?: string; resultLinks?: { label: string; href: string }[] }
 interface Turnabteilungtermin { title: string; ort: string; datum: string }
 
 const wettkaempfe2026: Wettkampf[] = [
-  { title: "Bezirks-Hallenturnfest m/w", ort: "Rutesheim", datum: "14.03.2026", hasResult: true },
+  { title: "Bezirks-Hallenturnfest m/w", ort: "Rutesheim", datum: "14.03.2026", hasResult: true, resultLinks: [{ label: "Ergebnis weiblich", href: "#bezirk-2026-weiblich" }, { label: "Ergebnis männlich", href: "#bezirk-2026-maennlich" }] },
   { title: "Geräteturnen Gaumeisterschaft weiblich", ort: "Gültstein", datum: "18.04.2026", hasResult: true, resultHref: "https://www.turngau-stuttgart.de/fileadmin/Microsites/Turngau-Stuttgart/Sportarten/2026/Ergebnislisten/GFw_Siegerliste_Disziplinen.pdf" },
   { title: "Geräteturnen Gaumeisterschaft männlich", ort: "Magstadt", datum: "18.04.2026", hasResult: true, resultHref: "https://www.turngau-stuttgart.de/fileadmin/Microsites/Turngau-Stuttgart/Sportarten/2026/Ergebnislisten/2026_GF_GTm_Siegerliste_mit_Disz.pdf" },
   { title: "Mehrkampfcup", ort: "Renningen", datum: "25.04.2026", hasResult: true },
@@ -396,9 +410,18 @@ const WettkampfList: React.FC<{ items: Wettkampf[] }> = ({ items }) => (
           <span className="text-black/40 text-xs font-bold block sm:inline sm:ml-2">{w.ort}{w.datum ? ` — ${w.datum}` : ''}</span>
         </div>
         {w.resultHref && (
-          <a href={w.resultHref} target="_blank" rel="noopener noreferrer" className="text-xs font-black text-black hover:text-black/50 transition-colors shrink-0">
+          <a href={w.resultHref} {...linkProps(w.resultHref)} className="text-xs font-black text-black hover:text-black/50 transition-colors shrink-0">
             Ergebnis ↗
           </a>
+        )}
+        {w.resultLinks && (
+          <div className="flex flex-wrap gap-4 shrink-0">
+            {w.resultLinks.map((l) => (
+              <a key={l.href} href={l.href} {...linkProps(l.href)} className="text-xs font-black text-black hover:text-black/50 transition-colors">
+                {l.label} ↗
+              </a>
+            ))}
+          </div>
         )}
       </div>
     ))}
@@ -578,7 +601,7 @@ export const Turnen: React.FC<TurnenProps> = ({
                   {item.links?.some((l) => l.href !== "#") && (
                     <div className="flex flex-wrap gap-4">
                       {item.links.filter((l) => l.href !== "#").map((l, lIdx) => (
-                        <a key={lIdx} href={l.href} target="_blank" rel="noopener noreferrer" className="text-xs font-black text-black hover:text-black/50 transition-colors">
+                        <a key={lIdx} href={l.href} {...linkProps(l.href)} className="text-xs font-black text-black hover:text-black/50 transition-colors">
                           {l.label} ↗
                         </a>
                       ))}
@@ -746,7 +769,7 @@ export const Turnen: React.FC<TurnenProps> = ({
 
           <div className={`${cardClass} space-y-10`}>
             <div id="kinder-jugendsport" className="scroll-mt-32">
-              <AccordionSection title="Kinder-/Jugendsport" defaultOpen>
+              <AccordionSection title="Kinder-/Jugendsport">
                 <div className="flex flex-wrap items-center gap-4 mb-8">
                   <ContactRequestButton email="kinderturnen@skv-Rutesheim.de" />
                   <a href="https://forms.skv-rutesheim.de/SportstundenAnmeldung.php" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 px-5 py-2.5 bg-white border border-black/10 rounded-xl font-bold text-xs hover:bg-zinc-100 transition-colors">
@@ -970,14 +993,30 @@ export const Turnen: React.FC<TurnenProps> = ({
               <div className="space-y-10">
                 <div>
                   <h4 className="text-xs font-black uppercase tracking-widest text-black/30 mb-4">2026</h4>
-                  <WettkampfList items={[...wettkaempfe2026, ...leichtathletikErgebnisse2026].filter((w) => w.hasResult)} />
+                  <WettkampfList items={[...wettkaempfe2026, ...leichtathletikErgebnisse2026].filter((w) => w.resultHref || w.resultLinks)} />
                 </div>
                 <div>
                   <h4 className="text-xs font-black uppercase tracking-widest text-black/30 mb-4">2025</h4>
-                  <WettkampfList items={wettkaempfe2025.filter((w) => w.hasResult)} />
+                  <WettkampfList items={wettkaempfe2025.filter((w) => w.resultHref || w.resultLinks)} />
                 </div>
               </div>
             </AccordionSection>
+            <div className="pt-10 mt-10 border-t border-black/5">
+              <AccordionSection id="bezirk-2026-weiblich" title="Hallenturnfest Gerätturnen 2026 – weiblich">
+                <p className={`${bodyText} text-sm mb-8`}>
+                  Turngau Stuttgart, Gäu-Schönbuch · 14.03.2026 in Rutesheim (Ausrichter: SKV Rutesheim) · Ergebnisse der SKV Rutesheim
+                </p>
+                <ErgebnisTabelle klassen={bezirk2026Weiblich} />
+              </AccordionSection>
+            </div>
+            <div className="pt-10 mt-10 border-t border-black/5">
+              <AccordionSection id="bezirk-2026-maennlich" title="Hallenturnfest Gerätturnen 2026 – männlich">
+                <p className={`${bodyText} text-sm mb-8`}>
+                  Turngau Stuttgart, Gäu-Schönbuch · 14.03.2026 in Rutesheim (Ausrichter: SKV Rutesheim) · Ergebnisse der SKV Rutesheim
+                </p>
+                <ErgebnisTabelle klassen={bezirk2026Maennlich} />
+              </AccordionSection>
+            </div>
           </div>
         </div>
       </section>

@@ -1,0 +1,16 @@
+# Crawling ist nur für die Google-Suche erlaubt.
+User-agent: Googlebot
+User-agent: Googlebot-Image
+User-agent: Googlebot-Video
+User-agent: Googlebot-News
+Allow: /
+
+# Googles KI-Training (kein Suchindex) ausgeschlossen
+User-agent: Google-Extended
+Disallow: /
+
+# Alle anderen Bots (andere Suchmaschinen, KI-Crawler, Scraper)
+User-agent: *
+Disallow: /
+
+Sitemap: https://skv-rutesheim.de/sitemap.xml
