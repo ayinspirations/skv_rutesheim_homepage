@@ -132,8 +132,6 @@ const news: NewsItem[] = [
     links: [
       { label: "Ergebnisse der SKV weiblich...", href: "#bezirk-2026-weiblich" },
       { label: "Ergebnisse der SKV männlich...", href: "#bezirk-2026-maennlich" },
-      { label: "Alle Ergebnisse weiblich...", href: "https://skv-rutesheim.de/turnen/Wettk2026/GeTuBezirkErg/weiblich/v-1047891411.htm" },
-      { label: "Alle Ergebnisse männlich...", href: "https://skv-rutesheim.de/turnen/Wettk2026/GeTuBezirkErg/maennlich/v-1047891411.htm" },
     ],
   },
 ];
