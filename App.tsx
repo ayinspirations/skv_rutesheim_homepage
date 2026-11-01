@@ -18,7 +18,6 @@ import { Turnen } from './components/Turnen';
 import { Rad } from './components/Rad';
 import { Saenger } from './components/Saenger';
 import { Sportabzeichen } from './components/Sportabzeichen';
-import { ContactModal } from './components/ContactModal';
 import { Impressum, Datenschutz } from './components/Legal';
 
 // Jede Seite ist per eigener URL direkt aufrufbar (siehe seo.ts; beim Build entsteht pro
@@ -31,7 +30,6 @@ const setMeta = (selector: string, attr: string, value: string) => {
 
 function App() {
   const [currentPage, setCurrentPage] = useState<Page>(() => pageFromPath());
-  const [isContactOpen, setIsContactOpen] = useState(false);
   useScrollReveal(currentPage);
 
   // URL, Titel und Meta-Angaben mit der aktuellen Seite synchron halten.
@@ -60,7 +58,6 @@ function App() {
       <Header 
         onNavigate={setCurrentPage} 
         currentPage={currentPage} 
-        onOpenContact={() => setIsContactOpen(true)}
       />
       {/* Seitenwechsel: alte Seite blendet aus, danach nach oben scrollen und neue Seite sanft einfliegen */}
       <AnimatePresence mode="wait" onExitComplete={() => window.scrollTo({ top: 0, behavior: 'instant' })}>
@@ -104,7 +101,7 @@ function App() {
         )}
 
         {currentPage === 'turnen' && (
-          <Turnen onBack={() => setCurrentPage('home')} onOpenContact={() => setIsContactOpen(true)} />
+          <Turnen onBack={() => setCurrentPage('home')} />
         )}
 
         {currentPage === 'rad' && (
@@ -128,11 +125,6 @@ function App() {
       </motion.main>
       </AnimatePresence>
       <Footer onNavigate={setCurrentPage} />
-      
-      <ContactModal 
-        isOpen={isContactOpen} 
-        onClose={() => setIsContactOpen(false)} 
-      />
     </div>
     </MotionConfig>
   );

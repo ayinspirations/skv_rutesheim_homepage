@@ -26,6 +26,20 @@
   to = "/volleyball/:splat"
   status = 301
 
+# Umami-Statistik über die eigene Domain ausliefern (Proxy): Besucher verbinden sich nicht direkt
+# mit Umami, die Sicherheitsregeln (CSP) bleiben bei 'self'. Siehe analytics.ts.
+[[redirects]]
+  from = "/stats/script.js"
+  to = "https://cloud.umami.is/script.js"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/stats/api/send"
+  to = "https://cloud.umami.is/api/send"
+  status = 200
+  force = true
+
 # Alle übrigen unbekannten alten Adressen auf die Startseite umleiten.
 [[redirects]]
   from = "/*"

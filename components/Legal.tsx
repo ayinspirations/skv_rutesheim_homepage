@@ -1,5 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
+import { umamiEnabled } from '../analytics';
 
 // Impressum und Datenschutzerklärung der SKV Rutesheim 1945 e. V.
 // Hinweis: Rechtstexte bei Änderungen am Angebot (z. B. neue Einbindungen, Formulare, Tracking)
@@ -138,6 +139,70 @@ export const Impressum: React.FC<{ onBack: () => void; onNavigateDatenschutz: ()
   </LegalLayout>
 );
 
+// Opt-out: Das Umami-Skript prüft den Eintrag "umami.disabled" im Local Storage und sendet dann nichts.
+const UmamiOptOut: React.FC = () => {
+  const read = () => { try { return localStorage.getItem('umami.disabled') === '1'; } catch { return false; } };
+  const [disabled, setDisabled] = React.useState(read);
+  const toggle = () => {
+    try {
+      if (disabled) localStorage.removeItem('umami.disabled'); else localStorage.setItem('umami.disabled', '1');
+    } catch { /* Speicher nicht verfügbar */ }
+    setDisabled(read());
+  };
+  return (
+    <div className="mt-4 p-5 rounded-2xl bg-zinc-100 flex flex-col sm:flex-row sm:items-center gap-4">
+      <p className="!mb-0 text-sm flex-1" aria-live="polite">
+        Status in diesem Browser: <strong className="text-black">{disabled ? 'Besucherstatistik ist abgeschaltet' : 'Besucherstatistik ist aktiv'}</strong>
+      </p>
+      <button
+        type="button"
+        onClick={toggle}
+        className="px-5 py-2.5 rounded-full bg-black text-white text-xs font-black uppercase tracking-widest hover:bg-black/80 transition-colors"
+      >
+        {disabled ? 'Statistik wieder zulassen' : 'Statistik abschalten'}
+      </button>
+    </div>
+  );
+};
+
+const UmamiSection: React.FC = () => (
+  <section id="statistik" className="scroll-mt-28">
+    <h2>6. Besucherstatistik mit Umami</h2>
+    <p>
+      Um zu verstehen, welche Inhalte genutzt werden, und unser Angebot zu verbessern, verwenden wir den
+      Statistikdienst <strong className="text-black">Umami Cloud</strong> der Umami Software, Inc., USA („Umami“).
+      Umami arbeitet ohne Cookies, ohne geräteübergreifendes Tracking und ohne Speicherung von IP-Adressen.
+      Erfasst werden ausschließlich zusammengefasste Nutzungsdaten:
+    </p>
+    <ul>
+      <li>aufgerufene Seite, Zeitpunkt und verweisende Website (Referrer)</li>
+      <li>Browser, Betriebssystem, Gerätetyp, Bildschirmgröße und Spracheinstellung</li>
+      <li>Land bzw. Region, grob aus der IP-Adresse abgeleitet; die IP-Adresse selbst wird nicht gespeichert</li>
+    </ul>
+    <p>
+      Wiederholte Aufrufe werden nur über einen anonymen, täglich wechselnden Kennwert zusammengefasst, sodass
+      kein Rückschluss auf Ihre Person und keine Wiedererkennung über mehrere Tage möglich ist. Das Statistik-Skript
+      und die Messdaten werden über unsere eigene Domain übertragen; Ihr Browser baut dafür keine direkte Verbindung
+      zu Umami auf. Wenn Ihr Browser das Signal „Do Not Track“ sendet, wird keine Statistik erfasst.
+    </p>
+    <p>
+      Rechtsgrundlage ist Art. 6 Abs. 1 lit. f DSGVO. Unser berechtigtes Interesse liegt in der anonymen
+      Reichweitenmessung und der bedarfsgerechten Gestaltung unserer Website. Umami verarbeitet die Daten in unserem
+      Auftrag auf Grundlage eines Vertrags zur Auftragsverarbeitung (Art. 28 DSGVO). Soweit dabei Daten in die USA
+      übermittelt werden, erfolgt dies auf Grundlage von Standardvertragsklauseln der EU-Kommission
+      (Art. 46 Abs. 2 lit. c DSGVO). Weitere Informationen:{' '}
+      <Ext href="https://umami.is/privacy">Datenschutzerklärung von Umami</Ext>.
+    </p>
+    <h3>Widerspruch / Statistik abschalten</h3>
+    <p>
+      Sie können der Erfassung jederzeit widersprechen. Mit dem folgenden Schalter wird in diesem Browser ein Vermerk
+      gespeichert, durch den keine Statistikdaten mehr gesendet werden. Löschen Sie Ihre Browserdaten, müssen Sie die
+      Einstellung erneut vornehmen.
+    </p>
+    <UmamiOptOut />
+  </section>
+);
+
 export const Datenschutz: React.FC<{ onBack: () => void }> = ({ onBack }) => (
   <LegalLayout onBack={onBack} eyebrow="Rechtliches" title={'Datenschutz\u00ADerklärung'}>
     <section>
@@ -156,7 +221,10 @@ export const Datenschutz: React.FC<{ onBack: () => void }> = ({ onBack }) => (
     <section>
       <h2>2. Das Wichtigste in Kürze</h2>
       <ul>
-        <li>Wir setzen <strong className="text-black">keine Cookies</strong>, keine Analyse- oder Tracking-Werkzeuge und keine Werbedienste ein.</li>
+        <li>Wir setzen <strong className="text-black">keine Cookies</strong>, keine Werbedienste und kein seitenübergreifendes Tracking ein.</li>
+        {umamiEnabled && (
+          <li>Für eine anonyme Besucherstatistik nutzen wir <strong className="text-black">Umami</strong> – ohne Cookies und ohne Speicherung Ihrer IP-Adresse (siehe Abschnitt 6). Sie können dies jederzeit abschalten.</li>
+        )}
         <li>Schriftarten, Skripte und Bilder werden <strong className="text-black">von unserem eigenen Webserver</strong> ausgeliefert; beim Aufruf der Seiten wird keine Verbindung zu Google Fonts oder anderen Drittanbietern aufgebaut.</li>
         <li>Eine Google-Maps-Karte wird <strong className="text-black">erst nach Ihrem Klick</strong> geladen.</li>
         <li>Beim Aufruf der Website verarbeitet unser Hosting-Anbieter technisch notwendige Zugriffsdaten (siehe Abschnitt 3).</li>
@@ -205,13 +273,15 @@ export const Datenschutz: React.FC<{ onBack: () => void }> = ({ onBack }) => (
       <h2>5. Cookies und lokale Speicherung</h2>
       <p>
         Unsere Website verwendet keine Cookies und speichert keine Informationen in Ihrem Browser (z. B. Local Storage).
-        Eine Einwilligung nach § 25 TDDDG ist daher für den Besuch der Website nicht erforderlich. Erst wenn Sie eine
-        Google-Maps-Karte aktiv laden, kann Google eigene Cookies setzen (siehe Abschnitt 7).
+        Eine Einwilligung nach § 25 TDDDG ist daher für den Besuch der Website nicht erforderlich.{umamiEnabled && ' Nur wenn Sie die Besucherstatistik ausdrücklich abschalten, wird in Ihrem Browser ein Vermerk „umami.disabled“ gespeichert, damit Ihr Wunsch beachtet wird (§ 25 Abs. 2 Nr. 2 TDDDG).'} Erst wenn Sie eine
+        Google-Maps-Karte aktiv laden, kann Google eigene Cookies setzen (siehe Abschnitt „Google Maps“).
       </p>
     </section>
 
+    {umamiEnabled && <UmamiSection />}
+
     <section>
-      <h2>6. Kontakt per E-Mail oder Telefon</h2>
+      <h2>{umamiEnabled ? 7 : 6}. Kontakt per E-Mail oder Telefon</h2>
       <p>
         Wenn Sie uns per E-Mail oder Telefon kontaktieren, verarbeiten wir Ihre Angaben (z. B. Name, E-Mail-Adresse,
         Telefonnummer, Inhalt der Anfrage) zur Bearbeitung Ihres Anliegens. Rechtsgrundlage ist Art. 6 Abs. 1 lit. b DSGVO,
@@ -223,7 +293,7 @@ export const Datenschutz: React.FC<{ onBack: () => void }> = ({ onBack }) => (
     </section>
 
     <section id="google-maps" className="scroll-mt-28">
-      <h2>7. Google Maps</h2>
+      <h2>{umamiEnabled ? 8 : 7}. Google Maps</h2>
       <p>
         Auf der Seite „Vereinsheim“ können Sie eine Karte des Kartendienstes Google Maps anzeigen lassen. Anbieter ist
         die Google Ireland Limited, Gordon House, Barrow Street, Dublin 4, Irland („Google“). Die Karte wird nicht
@@ -243,7 +313,7 @@ export const Datenschutz: React.FC<{ onBack: () => void }> = ({ onBack }) => (
     </section>
 
     <section>
-      <h2>8. Links zu anderen Websites und Portalen</h2>
+      <h2>{umamiEnabled ? 9 : 8}. Links zu anderen Websites und Portalen</h2>
       <p>
         Unsere Website enthält Links zu Angeboten anderer Anbieter, z. B. zum Online-Mitgliederportal (Mitgliedsantrag,
         Login, Registrierung, Kündigung), zu Online-Anmeldeformularen, zu Verbänden, Abteilungs- und Partnerseiten
@@ -256,7 +326,7 @@ export const Datenschutz: React.FC<{ onBack: () => void }> = ({ onBack }) => (
     </section>
 
     <section>
-      <h2>9. Ihre Rechte</h2>
+      <h2>{umamiEnabled ? 10 : 9}. Ihre Rechte</h2>
       <p>Sie haben gegenüber uns folgende Rechte hinsichtlich der Sie betreffenden personenbezogenen Daten:</p>
       <ul>
         <li>Recht auf Auskunft (Art. 15 DSGVO)</li>
@@ -284,7 +354,7 @@ export const Datenschutz: React.FC<{ onBack: () => void }> = ({ onBack }) => (
     </section>
 
     <section>
-      <h2>10. Keine automatisierte Entscheidungsfindung</h2>
+      <h2>{umamiEnabled ? 11 : 10}. Keine automatisierte Entscheidungsfindung</h2>
       <p>
         Eine automatisierte Entscheidungsfindung einschließlich Profiling (Art. 22 DSGVO) findet nicht statt. Sie sind
         nicht verpflichtet, uns personenbezogene Daten bereitzustellen; ohne die oben genannten technischen Zugriffsdaten
@@ -293,7 +363,7 @@ export const Datenschutz: React.FC<{ onBack: () => void }> = ({ onBack }) => (
     </section>
 
     <section>
-      <h2>11. Geltungsbereich und Aktualität</h2>
+      <h2>{umamiEnabled ? 12 : 11}. Geltungsbereich und Aktualität</h2>
       <p>
         Diese Datenschutzerklärung gilt für die Website skv-rutesheim.de einschließlich der Unterseiten der Abteilungen
         (z. B. /volleyball). Wir passen sie an, wenn sich unser Angebot oder die Rechtslage ändert. Stand: {STAND}.

@@ -3,6 +3,7 @@ import fs from 'fs';
 import { defineConfig, loadEnv, Plugin } from 'vite';
 import react from '@vitejs/plugin-react';
 import { pageSeo, SITE_URL } from './seo';
+import { umamiScriptTag } from './analytics';
 
 // Eigenständige Volleyball-Seite: liegt als statische Mini-Website in public/skv-rutesheim-volleyball
 // und wird unter /volleyball/ ausgeliefert. Ein <base href="/volleyball/"> sorgt dafür, dass die
@@ -52,7 +53,16 @@ const localImages = (): Plugin => {
 const VOLLEYBALL_SRC = path.resolve(__dirname, 'public', 'skv-rutesheim-volleyball');
 const VOLLEYBALL_PATH = '/volleyball';
 const withVolleyballBase = (html: string) =>
-  html.replace(/<head([^>]*)>/i, `<head$1><base href="${VOLLEYBALL_PATH}/">`);
+  html
+    .replace(/<head([^>]*)>/i, `<head$1><base href="${VOLLEYBALL_PATH}/">`)
+    .replace(/<\/head>/i, `${umamiScriptTag()}</head>`);
+
+// Statistik-Skript (Umami) in die Hauptseite einfügen, sofern eine Website-ID hinterlegt ist.
+const umami = (): Plugin => ({
+  name: 'skv-umami',
+  apply: 'build',
+  transformIndexHtml: (html) => html.replace('</head>', `${umamiScriptTag()}</head>`),
+});
 
 const volleyballSite = (): Plugin => {
   let isBuild = false;
@@ -146,7 +156,7 @@ export default defineConfig(({ mode }) => {
         host: '0.0.0.0',
         allowedHosts: true,
       },
-      plugins: [react(), staticPages(), volleyballSite(), localImages()],
+      plugins: [react(), umami(), staticPages(), volleyballSite(), localImages()],
       define: {
         'process.env.API_KEY': JSON.stringify(env.GEMINI_API_KEY),
         'process.env.GEMINI_API_KEY': JSON.stringify(env.GEMINI_API_KEY)

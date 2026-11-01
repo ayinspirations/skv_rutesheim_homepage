@@ -6,10 +6,9 @@ import { motion } from 'framer-motion';
 interface HeaderProps {
   onNavigate: (page: 'home' | 'membership' | 'clubhouse') => void;
   currentPage: 'home' | 'membership' | 'clubhouse';
-  onOpenContact: () => void;
 }
 
-export const Header: React.FC<HeaderProps> = ({ onNavigate, currentPage, onOpenContact }) => {
+export const Header: React.FC<HeaderProps> = ({ onNavigate, currentPage }) => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
