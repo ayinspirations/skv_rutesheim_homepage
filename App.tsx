@@ -19,6 +19,7 @@ import { Rad } from './components/Rad';
 import { Saenger } from './components/Saenger';
 import { Sportabzeichen } from './components/Sportabzeichen';
 import { ContactModal } from './components/ContactModal';
+import { Impressum, Datenschutz } from './components/Legal';
 
 // Jede Seite ist per eigener URL direkt aufrufbar (siehe seo.ts; beim Build entsteht pro
 // Seite eine statische HTML-Datei, damit der Server /turnen usw. direkt ausliefert).
@@ -116,6 +117,13 @@ function App() {
 
         {currentPage === 'sportabzeichen' && (
           <Sportabzeichen onBack={() => setCurrentPage('home')} />
+        )}
+        {currentPage === 'impressum' && (
+          <Impressum onBack={() => setCurrentPage('home')} onNavigateDatenschutz={() => setCurrentPage('datenschutz')} />
+        )}
+
+        {currentPage === 'datenschutz' && (
+          <Datenschutz onBack={() => setCurrentPage('home')} />
         )}
       </motion.main>
       </AnimatePresence>

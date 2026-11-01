@@ -1,9 +1,10 @@
 
 import React from 'react';
 import { ClubLogo } from './ClubLogo';
+import type { Page } from '../seo';
 
 interface FooterProps {
-  onNavigate: (page: 'home' | 'membership' | 'clubhouse') => void;
+  onNavigate: (page: Page) => void;
 }
 
 export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
@@ -30,8 +31,8 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
           <button onClick={() => onNavigate('home')} className="hover:text-black transition-colors">Startseite</button>
           <button onClick={() => onNavigate('clubhouse')} className="hover:text-black transition-colors">Vereinsheim</button>
           <button onClick={() => onNavigate('membership')} className="hover:text-black transition-colors">Mitgliedschaft</button>
-          <button className="hover:text-black transition-colors">Impressum</button>
-          <button className="hover:text-black transition-colors">Datenschutz</button>
+          <a href="/impressum" onClick={(e) => { e.preventDefault(); onNavigate('impressum'); }} className="normal-case hover:text-black transition-colors">Impressum</a>
+          <a href="/datenschutz" onClick={(e) => { e.preventDefault(); onNavigate('datenschutz'); }} className="normal-case hover:text-black transition-colors">Datenschutz</a>
         </div>
 
         {/* Separator & Credits */}

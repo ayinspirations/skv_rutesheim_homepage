@@ -4,13 +4,13 @@ import React, { useEffect, useRef, useState } from 'react';
 const departments = [
   {
     title: "Fußball",
-    image: "https://images.unsplash.com/photo-1574629810360-7efbbe195018?auto=format&fit=crop&q=80&w=1000",
+    image: "/bilder/fussball.jpg",
     tag: "Aktiv",
     link: "https://skv-rutesheim.de/fussball/"
   },
   {
     title: "Turnen & Schwimmen",
-    image: "https://images.unsplash.com/photo-1519315901367-f34ff9154487?auto=format&fit=crop&q=80&w=1000",
+    image: "/bilder/turnen.jpg",
     tag: "Vielseitig",
     link: "/turnen",
     internal: true,
@@ -42,7 +42,7 @@ const departments = [
   },
   {
     title: "Tischtennis",
-    image: "https://images.unsplash.com/photo-1609710228159-0fa9bd7c0827?auto=format&fit=crop&q=80&w=1000",
+    image: "/bilder/tischtennis.jpg",
     tag: "Präzision",
     link: "https://www.ttrutesheim.de/"
   },

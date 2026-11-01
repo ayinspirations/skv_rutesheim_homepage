@@ -234,14 +234,15 @@ export const Hero: React.FC<HeroProps> = ({ onNavigateMembership }) => {
                   rel="noopener noreferrer"
                   className="relative block w-full aspect-[4/3] rounded-[1rem] overflow-hidden border border-white/5 group/map"
                 >
-                  <iframe 
-                    width="100%" 
-                    height="100%" 
-                    frameBorder="0" 
-                    scrolling="no" 
-                    src="https://maps.google.com/maps?q=Robert-Bosch-Str.%2055,%2071277%20Rutesheim&t=&z=14&ie=UTF8&iwloc=&output=embed"
-                    className="grayscale opacity-40 contrast-125 scale-110 transition-all duration-700 md:group-hover/map:grayscale-0 md:group-hover/map:opacity-100 md:group-hover/map:scale-100 pointer-events-none"
-                  ></iframe>
+                  {/* Lokale Karten-Grafik statt eingebetteter Google-Karte: keine Datenübertragung beim Seitenaufruf. */}
+                  <svg viewBox="0 0 240 180" className="absolute inset-0 w-full h-full opacity-50 transition-opacity duration-700 md:group-hover/map:opacity-90" aria-label="Lage des Sportparks Bühl – in Google Maps öffnen" role="img">
+                    <rect width="240" height="180" fill="#2a2a2a" />
+                    <path d="M0 120 C60 110 90 70 140 72 S220 40 240 30" stroke="#5a5a5a" strokeWidth="10" fill="none" />
+                    <path d="M30 0 L60 180 M150 0 L170 180 M0 40 L240 60 M0 160 L240 140" stroke="#444" strokeWidth="4" fill="none" />
+                    <rect x="95" y="95" width="60" height="38" rx="6" fill="#3d4a2e" />
+                    <circle cx="125" cy="88" r="9" fill="#D4FF6B" />
+                    <circle cx="125" cy="88" r="3.5" fill="#000" />
+                  </svg>
                   <div className="absolute inset-0 bg-black/10 transition-colors"></div>
                 </a>
               </div>

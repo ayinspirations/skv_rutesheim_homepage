@@ -6,7 +6,8 @@ export const SITE_URL = 'https://skv-rutesheim.de';
 
 export type Page =
   | 'home' | 'membership' | 'clubhouse' | 'leitbild'
-  | 'handball' | 'turnen' | 'rad' | 'saenger' | 'sportabzeichen';
+  | 'handball' | 'turnen' | 'rad' | 'saenger' | 'sportabzeichen'
+  | 'impressum' | 'datenschutz';
 
 export interface PageSeo { path: string; title: string; description: string }
 
@@ -55,6 +56,16 @@ export const pageSeo: Record<Page, PageSeo> = {
     path: '/sportabzeichen',
     title: 'Sportabzeichen – SKV Rutesheim',
     description: 'Deutsches Sportabzeichen bei der SKV Rutesheim: Termine, Leistungsanforderungen und Ansprechpartner.',
+  },
+  impressum: {
+    path: '/impressum',
+    title: 'Impressum – SKV Rutesheim',
+    description: 'Impressum der SKV Rutesheim 1945 e. V.: Anschrift, Kontakt, Vorstand und Vereinsregister.',
+  },
+  datenschutz: {
+    path: '/datenschutz',
+    title: 'Datenschutzerklärung – SKV Rutesheim',
+    description: 'Datenschutzerklärung der SKV Rutesheim 1945 e. V.: Hosting, Server-Logfiles, Google Maps und Ihre Rechte nach DSGVO.',
   },
 };
 

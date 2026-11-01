@@ -8,6 +8,47 @@ import { pageSeo, SITE_URL } from './seo';
 // und wird unter /volleyball/ ausgeliefert. Ein <base href="/volleyball/"> sorgt dafür, dass die
 // relativen Links/Bilder (style.css, bilder/..., training.html) auch bei /volleyball ohne
 // Schrägstrich funktionieren.
+// Bilder von Unsplash (Unsplash-Lizenz) werden beim Build einmalig heruntergeladen und von der
+// eigenen Domain ausgeliefert. So baut der Browser der Besucher keine Verbindung zu Unsplash auf.
+// Liegt eine Datei bereits in public/bilder/, wird diese verwendet.
+const REMOTE_IMAGES: Record<string, string> = {
+  'bilder/fussball.jpg': 'https://images.unsplash.com/photo-1574629810360-7efbbe195018?auto=format&fit=crop&q=80&w=1000&fm=jpg',
+  'bilder/turnen.jpg': 'https://images.unsplash.com/photo-1519315901367-f34ff9154487?auto=format&fit=crop&q=80&w=1000&fm=jpg',
+  'bilder/tischtennis.jpg': 'https://images.unsplash.com/photo-1609710228159-0fa9bd7c0827?auto=format&fit=crop&q=80&w=1000&fm=jpg',
+  'bilder/vereinsheim-innen.jpg': 'https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&q=80&w=2070&fm=jpg',
+};
+
+const localImages = (): Plugin => {
+  let isBuild = false;
+  return {
+    name: 'skv-local-images',
+    configResolved(config) { isBuild = config.command === 'build'; },
+    // Dev-Server: fehlende Dateien vorübergehend direkt von der Quelle laden.
+    configureServer(server) {
+      server.middlewares.use((req, res, next) => {
+        const rel = (req.url || '').split('?')[0].replace(/^\//, '');
+        const src = REMOTE_IMAGES[rel];
+        if (!src || fs.existsSync(path.resolve(__dirname, 'public', rel))) return next();
+        res.statusCode = 302;
+        res.setHeader('Location', src);
+        res.end();
+      });
+    },
+    async closeBundle() {
+      if (!isBuild) return;
+      const dist = path.resolve(__dirname, 'dist');
+      for (const [rel, src] of Object.entries(REMOTE_IMAGES)) {
+        const target = path.join(dist, rel);
+        if (fs.existsSync(target)) continue;
+        const res = await fetch(src);
+        if (!res.ok) throw new Error(`Bild ${rel} konnte nicht geladen werden (${res.status}). Datei manuell unter public/${rel} ablegen.`);
+        fs.mkdirSync(path.dirname(target), { recursive: true });
+        fs.writeFileSync(target, Buffer.from(await res.arrayBuffer()));
+      }
+    },
+  };
+};
+
 const VOLLEYBALL_SRC = path.resolve(__dirname, 'public', 'skv-rutesheim-volleyball');
 const VOLLEYBALL_PATH = '/volleyball';
 const withVolleyballBase = (html: string) =>
@@ -105,7 +146,7 @@ export default defineConfig(({ mode }) => {
         host: '0.0.0.0',
         allowedHosts: true,
       },
-      plugins: [react(), staticPages(), volleyballSite()],
+      plugins: [react(), staticPages(), volleyballSite(), localImages()],
       define: {
         'process.env.API_KEY': JSON.stringify(env.GEMINI_API_KEY),
         'process.env.GEMINI_API_KEY': JSON.stringify(env.GEMINI_API_KEY)
