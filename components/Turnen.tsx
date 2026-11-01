@@ -6,7 +6,6 @@ import { ErgebnisTabelle, bezirk2026Weiblich, bezirk2026Maennlich } from './Wett
 
 interface TurnenProps {
   onBack: () => void;
-  onOpenContact?: () => void;
   ctaPrimaryLabel?: string;
   ctaPrimaryHref?: string;
   ctaSecondaryLabel?: string;
@@ -133,8 +132,6 @@ const news: NewsItem[] = [
     links: [
       { label: "Ergebnisse der SKV weiblich...", href: "#bezirk-2026-weiblich" },
       { label: "Ergebnisse der SKV männlich...", href: "#bezirk-2026-maennlich" },
-      { label: "Alle Ergebnisse weiblich...", href: "https://skv-rutesheim.de/turnen/Wettk2026/GeTuBezirkErg/weiblich/v-1047891411.htm" },
-      { label: "Alle Ergebnisse männlich...", href: "https://skv-rutesheim.de/turnen/Wettk2026/GeTuBezirkErg/maennlich/v-1047891411.htm" },
     ],
   },
 ];
@@ -488,7 +485,6 @@ const sponsoren = [
 
 export const Turnen: React.FC<TurnenProps> = ({
   onBack,
-  onOpenContact,
   ctaPrimaryLabel = "Zur Anmeldung",
   ctaPrimaryHref = "#sportangebot",
   ctaSecondaryLabel = "Ansprechpartner kontaktieren",
@@ -676,11 +672,9 @@ export const Turnen: React.FC<TurnenProps> = ({
                 <div className="mt-4">
                   <ContactRequestButton email="turnen@skv-Rutesheim.de" />
                 </div>
-                {onOpenContact && (
-                  <button onClick={onOpenContact} className="block mt-4 text-sm font-black text-black hover:text-black/50 transition-colors">
-                    Allgemeines Kontaktformular →
-                  </button>
-                )}
+                <a href={mailHref('post@skv-rutesheim.de')} className="block mt-4 text-sm font-black text-black hover:text-black/50 transition-colors">
+                  Allgemeine Anfrage per E-Mail →
+                </a>
               </div>
               <div>
                 <span className="text-[10px] font-black uppercase tracking-widest text-black/30 mb-1 block">SKV-Rutesheim Geschäftsstelle</span>

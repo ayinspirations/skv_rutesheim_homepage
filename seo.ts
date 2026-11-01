@@ -6,7 +6,8 @@ export const SITE_URL = 'https://skv-rutesheim.de';
 
 export type Page =
   | 'home' | 'membership' | 'clubhouse' | 'leitbild'
-  | 'handball' | 'turnen' | 'rad' | 'saenger' | 'sportabzeichen';
+  | 'handball' | 'turnen' | 'rad' | 'saenger' | 'sportabzeichen'
+  | 'impressum' | 'datenschutz';
 
 export interface PageSeo { path: string; title: string; description: string }
 
@@ -14,7 +15,7 @@ export const pageSeo: Record<Page, PageSeo> = {
   home: {
     path: '/',
     title: 'SKV Rutesheim 1945 e. V. – Sport- und Kulturvereinigung',
-    description: 'Die SKV Rutesheim ist einer der größten Mehrspartenvereine im Altkreis Leonberg: Fußball, Turnen & Schwimmen, Handball, Volleyball, Rad, Tischtennis, Sänger und Sportabzeichen im Sportpark Bühl.',
+    description: 'Mehrspartenverein im Sportpark Bühl: Fußball, Turnen & Schwimmen, Handball, Volleyball, Rad, Tischtennis, Sänger und Sportabzeichen – Mitglied werden!',
   },
   membership: {
     path: '/mitgliedschaft',
@@ -39,12 +40,12 @@ export const pageSeo: Record<Page, PageSeo> = {
   turnen: {
     path: '/turnen',
     title: 'Turnen & Schwimmen – SKV Rutesheim',
-    description: 'Turnabteilung der SKV Rutesheim: Kinder- und Jugendsport, Wettkampfturnen, Erwachsenen- und Gesundheitssport, Fitnesskurse, Schwimmschule, Termine und Wettkampfergebnisse.',
+    description: 'Turnabteilung der SKV Rutesheim: Kinder- und Jugendsport, Wettkampfturnen, Gesundheits- und Fitnesskurse, Schwimmschule, Termine und Ergebnisse.',
   },
   rad: {
     path: '/rad',
     title: 'Rad – SKV Rutesheim',
-    description: 'Radabteilung der SKV Rutesheim: Ausfahrten, Touren, Termine und Kontakt.',
+    description: 'Radabteilung der SKV Rutesheim: gemeinsame Fahrradtouren von März bis Oktober – Abendausfahrten, Halbtages- und Tagestouren. Gäste sind willkommen.',
   },
   saenger: {
     path: '/saenger',
@@ -55,6 +56,16 @@ export const pageSeo: Record<Page, PageSeo> = {
     path: '/sportabzeichen',
     title: 'Sportabzeichen – SKV Rutesheim',
     description: 'Deutsches Sportabzeichen bei der SKV Rutesheim: Termine, Leistungsanforderungen und Ansprechpartner.',
+  },
+  impressum: {
+    path: '/impressum',
+    title: 'Impressum – SKV Rutesheim',
+    description: 'Impressum der SKV Rutesheim 1945 e. V.: Anschrift, Kontakt, Vorstand und Vereinsregister.',
+  },
+  datenschutz: {
+    path: '/datenschutz',
+    title: 'Datenschutzerklärung – SKV Rutesheim',
+    description: 'Datenschutzerklärung der SKV Rutesheim 1945 e. V.: Hosting, Server-Logfiles, Google Maps und Ihre Rechte nach DSGVO.',
   },
 };
 

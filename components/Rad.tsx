@@ -18,24 +18,11 @@ const cardClass = "bg-zinc-50 rounded-[2.5rem] p-8 md:p-14 border border-black/5
 const bodyText = "text-black/60 font-medium leading-relaxed";
 
 const mailHref = (email: string) => `mailto:${email}`;
-const telHref = (phone: string) => `tel:${phone.replace(/\s+/g, '')}`;
 
 const quickLinks = [
   { id: "uebersicht", label: "Übersicht" },
-  { id: "sicherheit", label: "Sicherheit" },
   { id: "downloads", label: "Downloads" },
   { id: "kontakt", label: "Kontakt" },
-];
-
-// TODO: Text der 6 Sicherheitsregeln liegt noch nicht vor (folgt laut Kunde in einem
-// separaten Anhang/Prompt) — 1:1 übernehmen, sobald geliefert.
-const sicherheitsregeln = [
-  "Regel 1 — Text folgt.",
-  "Regel 2 — Text folgt.",
-  "Regel 3 — Text folgt.",
-  "Regel 4 — Text folgt.",
-  "Regel 5 — Text folgt.",
-  "Regel 6 — Text folgt.",
 ];
 
 interface DownloadCard {
@@ -60,20 +47,16 @@ const downloads: DownloadCard[] = [
   },
 ];
 
-// TODO: Name, Telefon und E-Mail der 4 Ansprechpartner liegen noch nicht vor
-// (folgt laut Kunde in einem separaten Anhang/Prompt) — 1:1 übernehmen, sobald geliefert.
 interface Ansprechpartner {
   role: string;
   name: string;
-  phone: string;
   email: string;
 }
 
 const abteilungsleitung: Ansprechpartner[] = [
-  { role: "Abteilungsleitung", name: "Name folgt", phone: "", email: "" },
-  { role: "Abteilungsleitung", name: "Name folgt", phone: "", email: "" },
-  { role: "Abteilungsleitung", name: "Name folgt", phone: "", email: "" },
-  { role: "Abteilungsleitung", name: "Name folgt", phone: "", email: "" },
+  { role: "Abteilungsleiter", name: "Helmut Eck", email: "helandr@arcor.de" },
+  { role: "Stellv. Abteilungsleiter und Tourenbetreuung", name: "Harald Schaber", email: "harald.schaber@t-online.de" },
+  { role: "Schriftführerin", name: "Susanne Heizmann", email: "susanne.heizmann@web.de" },
 ];
 
 export const Rad: React.FC<RadProps> = ({
@@ -186,21 +169,6 @@ export const Rad: React.FC<RadProps> = ({
         </div>
       </section>
 
-      {/* Sicherheit */}
-      <section id="sicherheit" className="px-6 mb-20 md:mb-32 scroll-mt-32">
-        <div className="max-w-5xl mx-auto">
-          <span className={badgeClass}>Sicherheit</span>
-          <h2 className="text-3xl md:text-5xl font-black tracking-tighter mb-10">Unsere Sicherheitsregeln</h2>
-          <div className={cardClass}>
-            <ol className="space-y-4 list-decimal pl-5 marker:font-black marker:text-black">
-              {sicherheitsregeln.map((regel, idx) => (
-                <li key={idx} className={`${bodyText} text-sm md:text-base`}>{regel}</li>
-              ))}
-            </ol>
-          </div>
-        </div>
-      </section>
-
       {/* Downloads */}
       <section id="downloads" className="px-6 mb-20 md:mb-32 scroll-mt-32">
         <div className="max-w-5xl mx-auto">
@@ -230,18 +198,13 @@ export const Rad: React.FC<RadProps> = ({
       {/* Kontakt */}
       <section id="kontakt" className="px-6 scroll-mt-32">
         <div className="max-w-7xl mx-auto bg-black text-white rounded-[3rem] p-10 md:p-20">
-          <h2 className="text-3xl md:text-5xl font-black tracking-tight mb-14">Abteilungsleitung</h2>
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-10">
+          <h2 className="text-3xl md:text-5xl font-black tracking-tight mb-14">Ansprechpartner</h2>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10">
             {abteilungsleitung.map((person, idx) => (
               <div key={idx}>
                 <span className="text-[#D4FF6B] font-black uppercase tracking-widest text-xs mb-2 block">{person.role}</span>
                 <h4 className="text-lg font-black mb-2">{person.name}</h4>
                 <div className="flex flex-col gap-1">
-                  {person.phone && (
-                    <a href={telHref(person.phone)} className="inline-flex items-center gap-2 text-sm font-bold text-white/70 hover:text-white transition-colors">
-                      <span>📞</span> {person.phone}
-                    </a>
-                  )}
                   {person.email && (
                     <a href={mailHref(person.email)} className="inline-flex items-center gap-2 text-sm font-bold text-white/70 hover:text-white transition-colors">
                       <span>✉️</span> {person.email}

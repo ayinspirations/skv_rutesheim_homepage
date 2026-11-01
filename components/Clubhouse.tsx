@@ -1,6 +1,7 @@
 
 import React from 'react';
 import { motion } from 'framer-motion';
+import { MapConsent } from './MapConsent';
 
 interface ClubhouseProps {
   onBack: () => void;
@@ -80,7 +81,7 @@ export const Clubhouse: React.FC<ClubhouseProps> = ({ onBack }) => {
       <section className="px-6 mb-20 md:mb-32">
         <div className="max-w-7xl mx-auto h-[400px] md:h-[600px] rounded-[3rem] overflow-hidden relative group">
           <img 
-            src="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&q=80&w=2070" 
+            src="/bilder/vereinsheim-innen.jpg" 
             alt="Interior Restaurant" 
             className="w-full h-full object-cover grayscale transition-all duration-1000 group-hover:grayscale-0 group-hover:scale-105"
           />
@@ -188,15 +189,8 @@ export const Clubhouse: React.FC<ClubhouseProps> = ({ onBack }) => {
                Direkt am Stadion der SKV.
              </p>
           </div>
-          <div className="w-full md:w-2/3 h-[300px] rounded-[2rem] overflow-hidden border border-black/5 grayscale">
-            <iframe 
-              width="100%" 
-              height="100%" 
-              frameBorder="0" 
-              scrolling="no" 
-              src="https://maps.google.com/maps?q=Robert-Bosch-Str.%2055,%2071277%20Rutesheim&t=&z=14&ie=UTF8&iwloc=&output=embed"
-              className="opacity-80 grayscale contrast-125"
-            ></iframe>
+          <div className="w-full md:w-2/3 h-[300px] rounded-[2rem] overflow-hidden border border-black/5">
+            <MapConsent iframeClassName="opacity-80 grayscale contrast-125" />
           </div>
         </div>
       </section>

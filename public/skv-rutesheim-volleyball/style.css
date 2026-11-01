@@ -1,4 +1,164 @@
-@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Outfit:wght@400;500;600;700;800&display=swap');
+/* Schriften lokal eingebunden (keine Verbindung zu Google Fonts). Lizenz: SIL Open Font License 1.1 */
+@font-face {
+  font-family: 'DM Sans';
+  font-style: normal;
+  font-display: swap;
+  font-weight: 400;
+  src: url(fonts/dm-sans-latin-ext-400-normal.woff2) format('woff2');
+  unicode-range: U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF;
+}
+@font-face {
+  font-family: 'DM Sans';
+  font-style: normal;
+  font-display: swap;
+  font-weight: 400;
+  src: url(fonts/dm-sans-latin-400-normal.woff2) format('woff2');
+  unicode-range: U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD;
+}
+@font-face {
+  font-family: 'DM Sans';
+  font-style: normal;
+  font-display: swap;
+  font-weight: 500;
+  src: url(fonts/dm-sans-latin-ext-500-normal.woff2) format('woff2');
+  unicode-range: U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF;
+}
+@font-face {
+  font-family: 'DM Sans';
+  font-style: normal;
+  font-display: swap;
+  font-weight: 500;
+  src: url(fonts/dm-sans-latin-500-normal.woff2) format('woff2');
+  unicode-range: U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD;
+}
+@font-face {
+  font-family: 'DM Sans';
+  font-style: normal;
+  font-display: swap;
+  font-weight: 600;
+  src: url(fonts/dm-sans-latin-ext-600-normal.woff2) format('woff2');
+  unicode-range: U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF;
+}
+@font-face {
+  font-family: 'DM Sans';
+  font-style: normal;
+  font-display: swap;
+  font-weight: 600;
+  src: url(fonts/dm-sans-latin-600-normal.woff2) format('woff2');
+  unicode-range: U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD;
+}
+@font-face {
+  font-family: 'DM Sans';
+  font-style: normal;
+  font-display: swap;
+  font-weight: 700;
+  src: url(fonts/dm-sans-latin-ext-700-normal.woff2) format('woff2');
+  unicode-range: U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF;
+}
+@font-face {
+  font-family: 'DM Sans';
+  font-style: normal;
+  font-display: swap;
+  font-weight: 700;
+  src: url(fonts/dm-sans-latin-700-normal.woff2) format('woff2');
+  unicode-range: U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD;
+}
+@font-face {
+  font-family: 'DM Sans';
+  font-style: normal;
+  font-display: swap;
+  font-weight: 800;
+  src: url(fonts/dm-sans-latin-ext-800-normal.woff2) format('woff2');
+  unicode-range: U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF;
+}
+@font-face {
+  font-family: 'DM Sans';
+  font-style: normal;
+  font-display: swap;
+  font-weight: 800;
+  src: url(fonts/dm-sans-latin-800-normal.woff2) format('woff2');
+  unicode-range: U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD;
+}
+@font-face {
+  font-family: 'Outfit';
+  font-style: normal;
+  font-display: swap;
+  font-weight: 400;
+  src: url(fonts/outfit-latin-ext-400-normal.woff2) format('woff2');
+  unicode-range: U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF;
+}
+@font-face {
+  font-family: 'Outfit';
+  font-style: normal;
+  font-display: swap;
+  font-weight: 400;
+  src: url(fonts/outfit-latin-400-normal.woff2) format('woff2');
+  unicode-range: U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD;
+}
+@font-face {
+  font-family: 'Outfit';
+  font-style: normal;
+  font-display: swap;
+  font-weight: 500;
+  src: url(fonts/outfit-latin-ext-500-normal.woff2) format('woff2');
+  unicode-range: U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF;
+}
+@font-face {
+  font-family: 'Outfit';
+  font-style: normal;
+  font-display: swap;
+  font-weight: 500;
+  src: url(fonts/outfit-latin-500-normal.woff2) format('woff2');
+  unicode-range: U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD;
+}
+@font-face {
+  font-family: 'Outfit';
+  font-style: normal;
+  font-display: swap;
+  font-weight: 600;
+  src: url(fonts/outfit-latin-ext-600-normal.woff2) format('woff2');
+  unicode-range: U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF;
+}
+@font-face {
+  font-family: 'Outfit';
+  font-style: normal;
+  font-display: swap;
+  font-weight: 600;
+  src: url(fonts/outfit-latin-600-normal.woff2) format('woff2');
+  unicode-range: U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD;
+}
+@font-face {
+  font-family: 'Outfit';
+  font-style: normal;
+  font-display: swap;
+  font-weight: 700;
+  src: url(fonts/outfit-latin-ext-700-normal.woff2) format('woff2');
+  unicode-range: U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF;
+}
+@font-face {
+  font-family: 'Outfit';
+  font-style: normal;
+  font-display: swap;
+  font-weight: 700;
+  src: url(fonts/outfit-latin-700-normal.woff2) format('woff2');
+  unicode-range: U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD;
+}
+@font-face {
+  font-family: 'Outfit';
+  font-style: normal;
+  font-display: swap;
+  font-weight: 800;
+  src: url(fonts/outfit-latin-ext-800-normal.woff2) format('woff2');
+  unicode-range: U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF;
+}
+@font-face {
+  font-family: 'Outfit';
+  font-style: normal;
+  font-display: swap;
+  font-weight: 800;
+  src: url(fonts/outfit-latin-800-normal.woff2) format('woff2');
+  unicode-range: U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD;
+}
 :root{--navy:#102b52;--blue:#1765b5;--orange:#f77a17;--bg:#f6f8fc;--ink:#142a49;--muted:#617189;--line:#e3eaf2}*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.55 'DM Sans',Arial,sans-serif}a{color:inherit;text-decoration:none}h1,h2,h3{font-family:Outfit,Arial,sans-serif;line-height:1.12}h1{font-size:clamp(38px,4.2vw,62px)}h2{font-size:clamp(28px,3vw,39px)}h3{font-size:23px}p{margin-top:0}.wrap{width:min(1190px,calc(100% - 42px));margin:auto}.header{background:white;position:sticky;top:0;z-index:30;box-shadow:0 2px 12px #102b5210}.nav{min-height:81px;display:flex;align-items:center;gap:22px}.brand{display:flex;align-items:center;gap:12px;margin-right:auto;font:800 22px Outfit}.brand small{display:block;font:700 10px 'DM Sans';letter-spacing:.14em;color:#788aa1}.symbol{border-radius:50%;background:var(--navy);color:white;border:4px solid var(--orange);width:51px;height:51px;display:grid;place-items:center;font-size:26px}.navlinks{display:flex;gap:29px;align-items:center;font-weight:700;font-size:14px}.navlinks a.active,.navlinks a:hover{color:var(--blue)}.navlinks a.active{border-bottom:3px solid var(--orange);padding-bottom:4px}.btn{display:inline-block;background:var(--orange);color:white;padding:12px 18px;border-radius:8px;font-size:14px;font-weight:800;border:0;transition:.2s}.btn:hover{filter:brightness(.93);transform:translateY(-2px)}.btn.ghost{border:1px solid white;background:#102b5285}.menu{display:none;background:transparent;border:0;font-size:28px;cursor:pointer}.hero{min-height:370px;background:linear-gradient(108deg,#0b2041 5%,#153963d9 65%,#0d2e51 100%);color:white;position:relative;overflow:hidden}.hero:after{content:'🏐';position:absolute;right:10%;top:4%;font-size:255px;opacity:.16;transform:rotate(-16deg)}.hero .wrap{position:relative;z-index:2;padding:57px 0 65px}.hero p{max-width:610px;color:#deebf9;font-size:17px}.hero h1{max-width:680px;margin:14px 0 18px}.hero .buttons{display:flex;gap:12px;flex-wrap:wrap;margin-top:25px}.eyebrow{font-size:11px;font-weight:800;letter-spacing:.12em;color:var(--orange);text-transform:uppercase}.hero .eyebrow{color:#ffc37e}.section{padding:58px 0}.section-head{display:flex;justify-content:space-between;gap:20px;align-items:end;margin-bottom:24px}.section-head h2{margin:7px 0}.muted{color:var(--muted)}.grid3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:22px}.card{background:white;border:1px solid var(--line);border-radius:15px;overflow:hidden;box-shadow:0 10px 25px #142a490b}.image{height:166px;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;font-size:79px;background:linear-gradient(145deg,#173865,#3779a9)}.image.junior{background:linear-gradient(145deg,#0a3e67,#5da9c5)}.image.ref{background:linear-gradient(145deg,#17365e,#c16b26)}.image .tag{position:absolute;left:15px;top:14px;background:var(--orange);border-radius:5px;color:white;padding:5px 10px;font-size:11px;font-weight:800}.card-body{padding:22px}.card h3{margin:6px 0 11px}.card p{font-size:14px;color:var(--muted)}.more{font-size:14px;font-weight:800;color:var(--blue)}.panel{padding:23px;background:white;border:1px solid var(--line);border-radius:14px}.panel h3{margin:0 0 9px}.split3{display:grid;grid-template-columns:1.05fr 1.35fr 1fr;gap:20px}.summary{padding:28px 0 65px}.summary h2{font-size:24px}.summary .panel a{overflow-wrap:anywhere}.mini-item{padding:12px 0;border-bottom:1px solid var(--line);font-size:14px}.mini-item:last-child{border-bottom:0}.mini-item strong{display:block;color:var(--navy)}.tablewrap{overflow-x:auto}table{width:100%;border-collapse:collapse;background:white}th,td{text-align:left;padding:13px;border-bottom:1px solid var(--line);font-size:14px}th{background:#eaf1f9;color:var(--navy);font-size:12px}tr:last-child td{border-bottom:0}.notice{border-left:4px solid #e0a23b;background:#fff7e7;padding:15px 19px;color:#684f1c;border-radius:5px;margin-top:20px;font-size:14px}.pagehero{background:var(--navy);color:white;padding:54px 0}.pagehero p{color:#d5e3f6}.pagehero h1{margin:8px 0}.contacts{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}.contact{background:white;padding:25px;border:1px solid var(--line);border-radius:14px}.contact .avatar{display:grid;place-items:center;background:#e8f3ff;color:var(--blue);font-size:26px;width:56px;height:56px;border-radius:14px;margin-bottom:15px}.contact h3{margin:6px 0}.contact a{color:var(--blue);overflow-wrap:anywhere;font-size:14px;font-weight:700}.cta{background:#e8f1fb;padding:37px 0}.cta .wrap{display:flex;justify-content:space-between;align-items:center;gap:15px}.footer{background:#0d2545;color:#d7e4f5;padding:42px 0 25px;font-size:14px}.footgrid{display:grid;grid-template-columns:2fr 1fr 1.4fr;gap:30px}.footer a{display:block;margin:7px 0}.footer h3{font-size:18px;color:white}.footer small{color:#b7c8dc}.legal{border-top:1px solid #ffffff22;margin-top:26px;padding-top:16px;font-size:12px;color:#adc0d7}.prose{max-width:850px}.prose p,.prose li{color:#53647c}.team-meta{font-size:13px;font-weight:700;color:#2d6fb2}.site-note{font-size:12px;color:#77879a}@media(max-width:880px){.navlinks{gap:12px}.topcta{display:none}.split3{grid-template-columns:1fr 1fr}.split3>div:last-child{grid-column:1/-1}.grid3{grid-template-columns:repeat(2,1fr)}}@media(max-width:650px){.brand{font-size:16px}.nav{min-height:70px}.menu{display:block}.navlinks{display:none;position:absolute;top:70px;left:0;right:0;padding:20px;background:white;flex-direction:column;align-items:start;box-shadow:0 10px 20px #102b521c}.navlinks.open{display:flex}.hero:after{right:-80px;top:100px;font-size:190px}.hero .wrap{padding:45px 0}.grid3,.split3,.contacts,.footgrid{grid-template-columns:1fr}.split3>div:last-child{grid-column:auto}.cta .wrap{display:block}.cta .btn{margin-top:12px}.section{padding:40px 0}.section-head{display:block}.tablewrap table{min-width:520px}}
 
 /* Austauschbare Volleyball-Platzhalterillustrationen ohne externe Bilddienste */

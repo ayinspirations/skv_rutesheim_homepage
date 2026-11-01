@@ -3,15 +3,101 @@ import fs from 'fs';
 import { defineConfig, loadEnv, Plugin } from 'vite';
 import react from '@vitejs/plugin-react';
 import { pageSeo, SITE_URL } from './seo';
+import { umamiScriptTag } from './analytics';
 
 // Eigenständige Volleyball-Seite: liegt als statische Mini-Website in public/skv-rutesheim-volleyball
 // und wird unter /volleyball/ ausgeliefert. Ein <base href="/volleyball/"> sorgt dafür, dass die
 // relativen Links/Bilder (style.css, bilder/..., training.html) auch bei /volleyball ohne
 // Schrägstrich funktionieren.
+// Bilder von Unsplash (Unsplash-Lizenz) werden beim Build einmalig heruntergeladen und von der
+// eigenen Domain ausgeliefert. So baut der Browser der Besucher keine Verbindung zu Unsplash auf.
+// Liegt eine Datei bereits in public/bilder/, wird diese verwendet.
+const REMOTE_IMAGES: Record<string, string> = {
+  'bilder/fussball.jpg': 'https://images.unsplash.com/photo-1574629810360-7efbbe195018?auto=format&fit=crop&q=80&w=1000&fm=jpg',
+  'bilder/turnen.jpg': 'https://images.unsplash.com/photo-1519315901367-f34ff9154487?auto=format&fit=crop&q=80&w=1000&fm=jpg',
+  'bilder/tischtennis.jpg': 'https://images.unsplash.com/photo-1609710228159-0fa9bd7c0827?auto=format&fit=crop&q=80&w=1000&fm=jpg',
+  'bilder/vereinsheim-innen.jpg': 'https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&q=80&w=2070&fm=jpg',
+};
+
+const localImages = (): Plugin => {
+  let isBuild = false;
+  return {
+    name: 'skv-local-images',
+    configResolved(config) { isBuild = config.command === 'build'; },
+    // Dev-Server: fehlende Dateien vorübergehend direkt von der Quelle laden.
+    configureServer(server) {
+      server.middlewares.use((req, res, next) => {
+        const rel = (req.url || '').split('?')[0].replace(/^\//, '');
+        const src = REMOTE_IMAGES[rel];
+        if (!src || fs.existsSync(path.resolve(__dirname, 'public', rel))) return next();
+        res.statusCode = 302;
+        res.setHeader('Location', src);
+        res.end();
+      });
+    },
+    async closeBundle() {
+      if (!isBuild) return;
+      const dist = path.resolve(__dirname, 'dist');
+      for (const [rel, src] of Object.entries(REMOTE_IMAGES)) {
+        const target = path.join(dist, rel);
+        if (fs.existsSync(target)) continue;
+        const res = await fetch(src);
+        if (!res.ok) throw new Error(`Bild ${rel} konnte nicht geladen werden (${res.status}). Datei manuell unter public/${rel} ablegen.`);
+        fs.mkdirSync(path.dirname(target), { recursive: true });
+        fs.writeFileSync(target, Buffer.from(await res.arrayBuffer()));
+      }
+    },
+  };
+};
+
 const VOLLEYBALL_SRC = path.resolve(__dirname, 'public', 'skv-rutesheim-volleyball');
 const VOLLEYBALL_PATH = '/volleyball';
-const withVolleyballBase = (html: string) =>
-  html.replace(/<head([^>]*)>/i, `<head$1><base href="${VOLLEYBALL_PATH}/">`);
+const volleyballPages = () =>
+  fs.existsSync(VOLLEYBALL_SRC) ? fs.readdirSync(VOLLEYBALL_SRC).filter((f) => f.endsWith('.html')) : [];
+const volleyballUrl = (file: string) => `${SITE_URL}${VOLLEYBALL_PATH}/${file === 'index.html' ? '' : file}`;
+const escAttr = (v: string) => v.replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/</g, '&lt;');
+const GENERIC_VB_DESCRIPTION = /SKV Rutesheim Volleyball: News, Trainingszeiten/;
+
+// <base>, Favicon, Canonical, eigene Beschreibung je Unterseite (erster Absatz unter der Überschrift),
+// Open-Graph-Angaben und ggf. Statistik-Skript in eine Volleyball-Seite einsetzen.
+const withVolleyballBase = (html: string, file = 'index.html') => {
+  let out = html;
+  if (file === 'index.html') out = out.replace(/<title>[^<]*<\/title>/, '<title>Volleyball – SKV Rutesheim</title>');
+  const descMatch = out.match(/<meta content="([^"]*)" name="description"\s*\/?>/);
+  let description = descMatch ? descMatch[1] : '';
+  if (file !== 'index.html' && GENERIC_VB_DESCRIPTION.test(description)) {
+    const lead = out.match(/<\/h1>\s*<p>([\s\S]*?)<\/p>/);
+    if (lead) {
+      description = lead[1].replace(/<[^>]+>/g, '').replace(/\s+/g, ' ').trim();
+      out = out.replace(descMatch![0], `<meta content="${escAttr(description)}" name="description"/>`);
+    }
+  }
+  const title = (out.match(/<title>([^<]*)<\/title>/) || [])[1] || 'Volleyball – SKV Rutesheim';
+  const url = volleyballUrl(file);
+  const head = [
+    `<base href="${VOLLEYBALL_PATH}/">`,
+    `<link rel="canonical" href="${url}"/>`,
+    '<link rel="icon" href="/favicon.ico" sizes="48x48"/>',
+    '<link rel="icon" type="image/png" sizes="192x192" href="/favicon-192.png"/>',
+    '<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"/>',
+    '<meta property="og:type" content="website"/>',
+    '<meta property="og:locale" content="de_DE"/>',
+    '<meta property="og:site_name" content="SKV Rutesheim 1945 e. V."/>',
+    `<meta property="og:title" content="${escAttr(title)}"/>`,
+    `<meta property="og:description" content="${escAttr(description)}"/>`,
+    `<meta property="og:url" content="${url}"/>`,
+  ].join('');
+  return out
+    .replace(/<head([^>]*)>/i, `<head$1>${head}`)
+    .replace(/<\/head>/i, `${umamiScriptTag()}</head>`);
+};
+
+// Statistik-Skript (Umami) in die Hauptseite einfügen, sofern eine Website-ID hinterlegt ist.
+const umami = (): Plugin => ({
+  name: 'skv-umami',
+  apply: 'build',
+  transformIndexHtml: (html) => html.replace('</head>', `${umamiScriptTag()}</head>`),
+});
 
 const volleyballSite = (): Plugin => {
   let isBuild = false;
@@ -28,7 +114,7 @@ const volleyballSite = (): Plugin => {
       if (!file.startsWith(VOLLEYBALL_SRC) || !fs.existsSync(file) || !fs.statSync(file).isFile()) return next();
       if (file.endsWith('.html')) {
         res.setHeader('Content-Type', 'text/html; charset=utf-8');
-        res.end(withVolleyballBase(fs.readFileSync(file, 'utf8')));
+        res.end(withVolleyballBase(fs.readFileSync(file, 'utf8'), path.basename(file)));
       } else {
         req.url = '/skv-rutesheim-volleyball/' + rel;
         next();
@@ -49,7 +135,7 @@ const volleyballSite = (): Plugin => {
     for (const f of fs.readdirSync(to)) {
       if (f.endsWith('.html')) {
         const fp = path.join(to, f);
-        fs.writeFileSync(fp, withVolleyballBase(fs.readFileSync(fp, 'utf8')));
+        fs.writeFileSync(fp, withVolleyballBase(fs.readFileSync(fp, 'utf8'), f));
       }
     }
     // Direktaufruf /volleyball (ohne Schrägstrich) auf jedem statischen Hosting.
@@ -90,8 +176,8 @@ const staticPages = (): Plugin => ({
     const today = new Date().toISOString().slice(0, 10);
     const sitemap =
       '<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n' +
-      [...pages.map((pg) => pg.path), VOLLEYBALL_PATH + '/']
-        .map((p) => `  <url><loc>${SITE_URL}${p}</loc><lastmod>${today}</lastmod></url>`).join('\n') +
+      [...pages.map((pg) => SITE_URL + pg.path), ...volleyballPages().map(volleyballUrl)]
+        .map((u) => `  <url><loc>${u}</loc><lastmod>${today}</lastmod></url>`).join('\n') +
       '\n</urlset>\n';
     fs.writeFileSync(path.join(dist, 'sitemap.xml'), sitemap);
   },
@@ -105,7 +191,7 @@ export default defineConfig(({ mode }) => {
         host: '0.0.0.0',
         allowedHosts: true,
       },
-      plugins: [react(), staticPages(), volleyballSite()],
+      plugins: [react(), umami(), staticPages(), volleyballSite(), localImages()],
       define: {
         'process.env.API_KEY': JSON.stringify(env.GEMINI_API_KEY),
         'process.env.GEMINI_API_KEY': JSON.stringify(env.GEMINI_API_KEY)

@@ -26,6 +26,20 @@
   to = "/volleyball/:splat"
   status = 301
 
+# Umami-Statistik über die eigene Domain ausliefern (Proxy): Besucher verbinden sich nicht direkt
+# mit Umami, die Sicherheitsregeln (CSP) bleiben bei 'self'. Siehe analytics.ts.
+[[redirects]]
+  from = "/stats/script.js"
+  to = "https://cloud.umami.is/script.js"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/stats/api/send"
+  to = "https://cloud.umami.is/api/send"
+  status = 200
+  force = true
+
 # Alle übrigen unbekannten alten Adressen auf die Startseite umleiten.
 [[redirects]]
   from = "/*"
@@ -38,3 +52,8 @@
     X-Content-Type-Options = "nosniff"
     Referrer-Policy = "strict-origin-when-cross-origin"
     X-Frame-Options = "SAMEORIGIN"
+    Strict-Transport-Security = "max-age=31536000; includeSubDomains"
+    Permissions-Policy = "camera=(), microphone=(), geolocation=(), payment=(), usb=(), interest-cohort=()"
+    Cross-Origin-Opener-Policy = "same-origin"
+    # Nur eigene Ressourcen; einzige Ausnahme: Google-Maps-Karte (lädt erst nach Klick, siehe Datenschutz).
+    Content-Security-Policy = "default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; connect-src 'self'; frame-src https://maps.google.com https://www.google.com; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'self'; upgrade-insecure-requests"
