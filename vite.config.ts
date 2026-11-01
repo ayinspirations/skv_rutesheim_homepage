@@ -4,6 +4,60 @@ import { defineConfig, loadEnv, Plugin } from 'vite';
 import react from '@vitejs/plugin-react';
 import { pageSeo, SITE_URL } from './seo';
 
+// Eigenständige Volleyball-Seite: liegt als statische Mini-Website in public/skv-rutesheim-volleyball
+// und wird unter /volleyball/ ausgeliefert. Ein <base href="/volleyball/"> sorgt dafür, dass die
+// relativen Links/Bilder (style.css, bilder/..., training.html) auch bei /volleyball ohne
+// Schrägstrich funktionieren.
+const VOLLEYBALL_SRC = path.resolve(__dirname, 'public', 'skv-rutesheim-volleyball');
+const VOLLEYBALL_PATH = '/volleyball';
+const withVolleyballBase = (html: string) =>
+  html.replace(/<head([^>]*)>/i, `<head$1><base href="${VOLLEYBALL_PATH}/">`);
+
+const volleyballSite = (): Plugin => {
+  let isBuild = false;
+  return {
+  name: 'skv-volleyball-site',
+  configResolved(config) { isBuild = config.command === 'build'; },
+  // Dev-Server: /volleyball und /volleyball/* aus dem public-Ordner bedienen.
+  configureServer(server) {
+    server.middlewares.use((req, res, next) => {
+      const url = (req.url || '').split('?')[0];
+      if (url !== VOLLEYBALL_PATH && !url.startsWith(VOLLEYBALL_PATH + '/')) return next();
+      let rel = decodeURIComponent(url.slice(VOLLEYBALL_PATH.length)).replace(/^\/+/, '') || 'index.html';
+      const file = path.resolve(VOLLEYBALL_SRC, rel);
+      if (!file.startsWith(VOLLEYBALL_SRC) || !fs.existsSync(file) || !fs.statSync(file).isFile()) return next();
+      if (file.endsWith('.html')) {
+        res.setHeader('Content-Type', 'text/html; charset=utf-8');
+        res.end(withVolleyballBase(fs.readFileSync(file, 'utf8')));
+      } else {
+        req.url = '/skv-rutesheim-volleyball/' + rel;
+        next();
+      }
+    });
+  },
+  // Build: Ordner nach dist/volleyball verschieben und <base> in alle HTML-Dateien einsetzen.
+  closeBundle() {
+    if (!isBuild) return;
+    const dist = path.resolve(__dirname, 'dist');
+    const from = path.join(dist, 'skv-rutesheim-volleyball');
+    if (!fs.existsSync(from)) return;
+    const to = path.join(dist, VOLLEYBALL_PATH.slice(1));
+    fs.rmSync(to, { recursive: true, force: true });
+    fs.renameSync(from, to);
+    // Interne Notizen nicht öffentlich ausliefern.
+    fs.rmSync(path.join(to, 'README.txt'), { force: true });
+    for (const f of fs.readdirSync(to)) {
+      if (f.endsWith('.html')) {
+        const fp = path.join(to, f);
+        fs.writeFileSync(fp, withVolleyballBase(fs.readFileSync(fp, 'utf8')));
+      }
+    }
+    // Direktaufruf /volleyball (ohne Schrägstrich) auf jedem statischen Hosting.
+    fs.copyFileSync(path.join(to, 'index.html'), path.join(dist, 'volleyball.html'));
+  },
+  };
+};
+
 // Erzeugt beim Build pro Seite eine eigene HTML-Datei (z. B. dist/turnen/index.html und
 // dist/turnen.html) mit passendem Titel/Meta/Canonical. Dadurch funktionieren Direktaufrufe
 // wie /turnen auf jedem statischen Hosting, und Google sieht pro Seite eigene Angaben.
@@ -36,7 +90,8 @@ const staticPages = (): Plugin => ({
     const today = new Date().toISOString().slice(0, 10);
     const sitemap =
       '<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n' +
-      pages.map((pg) => `  <url><loc>${SITE_URL}${pg.path}</loc><lastmod>${today}</lastmod></url>`).join('\n') +
+      [...pages.map((pg) => pg.path), VOLLEYBALL_PATH + '/']
+        .map((p) => `  <url><loc>${SITE_URL}${p}</loc><lastmod>${today}</lastmod></url>`).join('\n') +
       '\n</urlset>\n';
     fs.writeFileSync(path.join(dist, 'sitemap.xml'), sitemap);
   },
@@ -50,7 +105,7 @@ export default defineConfig(({ mode }) => {
         host: '0.0.0.0',
         allowedHosts: true,
       },
-      plugins: [react(), staticPages()],
+      plugins: [react(), staticPages(), volleyballSite()],
       define: {
         'process.env.API_KEY': JSON.stringify(env.GEMINI_API_KEY),
         'process.env.GEMINI_API_KEY': JSON.stringify(env.GEMINI_API_KEY)
