@@ -6,7 +6,7 @@ const departments = [
     title: "Fußball",
     image: "/bilder/fussball.jpg",
     tag: "Aktiv",
-    link: "https://skv-rutesheim.de/fussball/"
+    link: "https://www.skv-rutesheim-fussball.de"
   },
   {
     title: "Turnen & Schwimmen",
