@@ -27,7 +27,10 @@ const departments = [
   {
     title: "Volleyball",
     image: "/volleyball.jpg",
-    tag: "Teamgeist"
+    tag: "Teamgeist",
+    // Eigenständige statische Seite (public/skv-rutesheim-volleyball), beim Build unter /volleyball/ ausgeliefert.
+    link: "/volleyball/",
+    sameTab: true
   },
   {
     title: "Rad",
@@ -105,7 +108,7 @@ export const Departments: React.FC<DepartmentsProps> = ({ onNavigateHandball, on
   );
 };
 
-const DepartmentCard: React.FC<{ title: string; image: string; tag: string; index: number; link?: string; onClick?: () => void }> = ({ title, image, tag, index, link, onClick }) => {
+const DepartmentCard: React.FC<{ title: string; image: string; tag: string; index: number; link?: string; sameTab?: boolean; onClick?: () => void }> = ({ title, image, tag, index, link, sameTab, onClick }) => {
   const ref = useRef<HTMLElement>(null);
   const prefersReducedMotion = typeof window !== 'undefined' && window.matchMedia?.('(prefers-reduced-motion: reduce)').matches;
   const hasIO = typeof IntersectionObserver !== 'undefined';
@@ -136,7 +139,10 @@ const DepartmentCard: React.FC<{ title: string; image: string; tag: string; inde
       // Internal route (e.g. /handball): real href for accessibility/right-click,
       // but intercepted on primary click to navigate within the SPA (no full reload).
       ? { href: link, onClick: (e: React.MouseEvent) => { e.preventDefault(); onClick(); } }
-      : { href: link, target: '_blank', rel: 'noopener noreferrer' }
+      : sameTab
+        // Eigene Seite auf dieser Domain (z. B. /volleyball/): normaler Seitenwechsel im selben Tab.
+        ? { href: link }
+        : { href: link, target: '_blank', rel: 'noopener noreferrer' }
     : {};
 
   return (

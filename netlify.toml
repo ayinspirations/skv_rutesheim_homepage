@@ -20,6 +20,12 @@
   to = "/turnen"
   status = 301
 
+# Volleyball-Seite liegt unter /volleyball/ (Quelle: public/skv-rutesheim-volleyball).
+[[redirects]]
+  from = "/skv-rutesheim-volleyball/*"
+  to = "/volleyball/:splat"
+  status = 301
+
 # Alle übrigen unbekannten alten Adressen auf die Startseite umleiten.
 [[redirects]]
   from = "/*"
