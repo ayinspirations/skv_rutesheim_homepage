@@ -118,7 +118,7 @@ export const Impressum: React.FC<{ onBack: () => void; onNavigateDatenschutz: ()
       </p>
       <h3>Bildnachweise</h3>
       <ul>
-        <li>Einzelne Symbolbilder (u. a. Fußball, Turnen, Tischtennis, Vereinsheim): <Ext href="https://unsplash.com">Unsplash</Ext> (Unsplash-Lizenz)</li>
+        <li>Einzelne Symbolbilder: <Ext href="https://unsplash.com">Unsplash</Ext>, <Ext href="https://www.pexels.com/de-de/">Pexels</Ext> und <Ext href="https://pixabay.com/de/">Pixabay</Ext> (jeweilige Lizenz des Anbieters)</li>
         <li>Übrige Fotos und Grafiken: SKV Rutesheim 1945 e. V. bzw. die jeweiligen Abteilungen</li>
       </ul>
     </section>
