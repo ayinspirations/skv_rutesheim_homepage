@@ -15,7 +15,7 @@ export const pageSeo: Record<Page, PageSeo> = {
   home: {
     path: '/',
     title: 'SKV Rutesheim 1945 e. V. – Sport- und Kulturvereinigung',
-    description: 'Die SKV Rutesheim ist einer der größten Mehrspartenvereine im Altkreis Leonberg: Fußball, Turnen & Schwimmen, Handball, Volleyball, Rad, Tischtennis, Sänger und Sportabzeichen im Sportpark Bühl.',
+    description: 'Mehrspartenverein im Sportpark Bühl: Fußball, Turnen & Schwimmen, Handball, Volleyball, Rad, Tischtennis, Sänger und Sportabzeichen – Mitglied werden!',
   },
   membership: {
     path: '/mitgliedschaft',
@@ -40,12 +40,12 @@ export const pageSeo: Record<Page, PageSeo> = {
   turnen: {
     path: '/turnen',
     title: 'Turnen & Schwimmen – SKV Rutesheim',
-    description: 'Turnabteilung der SKV Rutesheim: Kinder- und Jugendsport, Wettkampfturnen, Erwachsenen- und Gesundheitssport, Fitnesskurse, Schwimmschule, Termine und Wettkampfergebnisse.',
+    description: 'Turnabteilung der SKV Rutesheim: Kinder- und Jugendsport, Wettkampfturnen, Gesundheits- und Fitnesskurse, Schwimmschule, Termine und Ergebnisse.',
   },
   rad: {
     path: '/rad',
     title: 'Rad – SKV Rutesheim',
-    description: 'Radabteilung der SKV Rutesheim: Ausfahrten, Touren, Termine und Kontakt.',
+    description: 'Radabteilung der SKV Rutesheim: gemeinsame Fahrradtouren von März bis Oktober – Abendausfahrten, Halbtages- und Tagestouren. Gäste sind willkommen.',
   },
   saenger: {
     path: '/saenger',

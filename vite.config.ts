@@ -52,10 +52,45 @@ const localImages = (): Plugin => {
 
 const VOLLEYBALL_SRC = path.resolve(__dirname, 'public', 'skv-rutesheim-volleyball');
 const VOLLEYBALL_PATH = '/volleyball';
-const withVolleyballBase = (html: string) =>
-  html
-    .replace(/<head([^>]*)>/i, `<head$1><base href="${VOLLEYBALL_PATH}/">`)
+const volleyballPages = () =>
+  fs.existsSync(VOLLEYBALL_SRC) ? fs.readdirSync(VOLLEYBALL_SRC).filter((f) => f.endsWith('.html')) : [];
+const volleyballUrl = (file: string) => `${SITE_URL}${VOLLEYBALL_PATH}/${file === 'index.html' ? '' : file}`;
+const escAttr = (v: string) => v.replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/</g, '&lt;');
+const GENERIC_VB_DESCRIPTION = /SKV Rutesheim Volleyball: News, Trainingszeiten/;
+
+// <base>, Favicon, Canonical, eigene Beschreibung je Unterseite (erster Absatz unter der Überschrift),
+// Open-Graph-Angaben und ggf. Statistik-Skript in eine Volleyball-Seite einsetzen.
+const withVolleyballBase = (html: string, file = 'index.html') => {
+  let out = html;
+  if (file === 'index.html') out = out.replace(/<title>[^<]*<\/title>/, '<title>Volleyball – SKV Rutesheim</title>');
+  const descMatch = out.match(/<meta content="([^"]*)" name="description"\s*\/?>/);
+  let description = descMatch ? descMatch[1] : '';
+  if (file !== 'index.html' && GENERIC_VB_DESCRIPTION.test(description)) {
+    const lead = out.match(/<\/h1>\s*<p>([\s\S]*?)<\/p>/);
+    if (lead) {
+      description = lead[1].replace(/<[^>]+>/g, '').replace(/\s+/g, ' ').trim();
+      out = out.replace(descMatch![0], `<meta content="${escAttr(description)}" name="description"/>`);
+    }
+  }
+  const title = (out.match(/<title>([^<]*)<\/title>/) || [])[1] || 'Volleyball – SKV Rutesheim';
+  const url = volleyballUrl(file);
+  const head = [
+    `<base href="${VOLLEYBALL_PATH}/">`,
+    `<link rel="canonical" href="${url}"/>`,
+    '<link rel="icon" href="/favicon.ico" sizes="48x48"/>',
+    '<link rel="icon" type="image/png" sizes="192x192" href="/favicon-192.png"/>',
+    '<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"/>',
+    '<meta property="og:type" content="website"/>',
+    '<meta property="og:locale" content="de_DE"/>',
+    '<meta property="og:site_name" content="SKV Rutesheim 1945 e. V."/>',
+    `<meta property="og:title" content="${escAttr(title)}"/>`,
+    `<meta property="og:description" content="${escAttr(description)}"/>`,
+    `<meta property="og:url" content="${url}"/>`,
+  ].join('');
+  return out
+    .replace(/<head([^>]*)>/i, `<head$1>${head}`)
     .replace(/<\/head>/i, `${umamiScriptTag()}</head>`);
+};
 
 // Statistik-Skript (Umami) in die Hauptseite einfügen, sofern eine Website-ID hinterlegt ist.
 const umami = (): Plugin => ({
@@ -79,7 +114,7 @@ const volleyballSite = (): Plugin => {
       if (!file.startsWith(VOLLEYBALL_SRC) || !fs.existsSync(file) || !fs.statSync(file).isFile()) return next();
       if (file.endsWith('.html')) {
         res.setHeader('Content-Type', 'text/html; charset=utf-8');
-        res.end(withVolleyballBase(fs.readFileSync(file, 'utf8')));
+        res.end(withVolleyballBase(fs.readFileSync(file, 'utf8'), path.basename(file)));
       } else {
         req.url = '/skv-rutesheim-volleyball/' + rel;
         next();
@@ -100,7 +135,7 @@ const volleyballSite = (): Plugin => {
     for (const f of fs.readdirSync(to)) {
       if (f.endsWith('.html')) {
         const fp = path.join(to, f);
-        fs.writeFileSync(fp, withVolleyballBase(fs.readFileSync(fp, 'utf8')));
+        fs.writeFileSync(fp, withVolleyballBase(fs.readFileSync(fp, 'utf8'), f));
       }
     }
     // Direktaufruf /volleyball (ohne Schrägstrich) auf jedem statischen Hosting.
@@ -141,8 +176,8 @@ const staticPages = (): Plugin => ({
     const today = new Date().toISOString().slice(0, 10);
     const sitemap =
       '<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n' +
-      [...pages.map((pg) => pg.path), VOLLEYBALL_PATH + '/']
-        .map((p) => `  <url><loc>${SITE_URL}${p}</loc><lastmod>${today}</lastmod></url>`).join('\n') +
+      [...pages.map((pg) => SITE_URL + pg.path), ...volleyballPages().map(volleyballUrl)]
+        .map((u) => `  <url><loc>${u}</loc><lastmod>${today}</lastmod></url>`).join('\n') +
       '\n</urlset>\n';
     fs.writeFileSync(path.join(dist, 'sitemap.xml'), sitemap);
   },
